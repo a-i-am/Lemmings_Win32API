@@ -1,0 +1,19 @@
+#pragma once
+
+#define FUN_MODE 0
+#define TRICKY_MODE 1
+#define TAXING_MODE 2
+
+#define WINDOW_WIDTH 960
+#define WINDOW_HEIGHT 591
+
+#define CAMERA_WIDTH 320
+#define CAMERA_HEIGHT 197
+
+#define LEVEL_WIDTH 320
+
+#define LEVEL_HEIGHT 160
+#define LEVEL_WIDTH 320
+#define LEVEL_HEIGHT 160
+
+#define SCROLL_WIDTH 5
