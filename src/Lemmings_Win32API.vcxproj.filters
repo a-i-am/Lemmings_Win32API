@@ -22,14 +22,32 @@
     <Filter Include="소스 파일\Game">
       <UniqueIdentifier>{b3caa974-96b6-402c-a242-5774e1974f6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Input">
-      <UniqueIdentifier>{368600e9-1d19-46b5-8244-7f8a58c266a5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="소스 파일\Utils">
       <UniqueIdentifier>{6ca0af21-fc10-4053-8cfb-ff732728dae6}</UniqueIdentifier>
     </Filter>
     <Filter Include="소스 파일\Manager">
       <UniqueIdentifier>{e71f9b09-7c9a-48f3-90ee-f936fa6e61d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{9ee34bac-6a06-4eb6-bdcf-ccf2efdf5119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\UI">
+      <UniqueIdentifier>{159e31d3-1dc6-43af-a098-dc8bedd6381e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Mask">
+      <UniqueIdentifier>{9773703f-739c-4a31-b628-0321023ab83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Keyboard">
+      <UniqueIdentifier>{7b303429-8c75-4afa-9793-0a3fdaf5126c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\Mouse">
+      <UniqueIdentifier>{19a46889-76e0-4989-8460-718d380a0129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Manager\System">
+      <UniqueIdentifier>{50224f93-b28f-47d0-8bac-e70ec5ea0e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Image">
+      <UniqueIdentifier>{ef3de4d8-8bf5-4b21-b91e-775d8b71e81b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,64 +60,175 @@
     <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Lemmings_Win32API.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
     <ClInclude Include="common_defs.h">
       <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GameState.h">
-      <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardManager.h">
-      <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseManager.h">
-      <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneKeyboardManager.h">
-      <Filter>소스 파일\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneMouseManager.h">
-      <Filter>소스 파일\Input</Filter>
     </ClInclude>
     <ClInclude Include="Defines.h">
       <Filter>소스 파일\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
     <ClInclude Include="UIManager.h">
-      <Filter>소스 파일\Manager</Filter>
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EasyMaskManager.h">
+      <Filter>소스 파일\Manager\Mask</Filter>
+    </ClInclude>
+    <ClInclude Include="MaskManager.h">
+      <Filter>소스 파일\Manager\Mask</Filter>
+    </ClInclude>
+    <ClInclude Include="HardMaskManager.h">
+      <Filter>소스 파일\Manager\Mask</Filter>
+    </ClInclude>
+    <ClInclude Include="LobbyScene.h">
+      <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Lemmings_Win32API.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>소스 파일\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Cursor.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardManager.h">
+      <Filter>소스 파일\Manager\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseManager.h">
+      <Filter>소스 파일\Manager\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystemManager.h">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneKeyboardManager.h">
+      <Filter>소스 파일\Manager\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMouseManager.h">
+      <Filter>소스 파일\Manager\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Scroller.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Word.h">
+      <Filter>소스 파일\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckLevelScene.h">
+      <Filter>소스 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderer.h">
+      <Filter>소스 파일\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageRenderer.h">
+      <Filter>소스 파일\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureInfo.h">
+      <Filter>소스 파일\Image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Lemmings_Win32API.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>소스 파일\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameState.cpp">
-      <Filter>소스 파일\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Defines.cpp">
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="SceneKeyboardManager.cpp">
-      <Filter>소스 파일\Input</Filter>
+    <ClCompile Include="GameState.cpp">
+      <Filter>소스 파일\Game</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMouseManager.cpp">
-      <Filter>소스 파일\Input</Filter>
+    <ClCompile Include="Game.cpp">
+      <Filter>소스 파일\Game</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
-      <Filter>소스 파일\Manager</Filter>
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CheckLevelScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="EasyMaskManager.cpp">
+      <Filter>소스 파일\Manager\Mask</Filter>
+    </ClCompile>
+    <ClCompile Include="HardMaskManager.cpp">
+      <Filter>소스 파일\Manager\Mask</Filter>
+    </ClCompile>
+    <ClCompile Include="MaskManager.cpp">
+      <Filter>소스 파일\Manager\Mask</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>소스 파일\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="LobbyScene.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Cursor.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scroller.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Word.cpp">
+      <Filter>소스 파일\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Lemmings_Win32API.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystemManager.cpp">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneKeyboardManager.cpp">
+      <Filter>소스 파일\Manager\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMouseManager.cpp">
+      <Filter>소스 파일\Manager\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>소스 파일\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>소스 파일\Manager\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageRenderer.cpp">
+      <Filter>소스 파일\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>소스 파일\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

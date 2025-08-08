@@ -126,33 +126,70 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Actor.h" />
+    <ClInclude Include="CheckLevelScene.h" />
     <ClInclude Include="common_defs.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Cursor.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="EasyMaskManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="HardMaskManager.h" />
+    <ClInclude Include="ImageRenderer.h" />
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="Lemmings_Win32API.h" />
+    <ClInclude Include="LobbyScene.h" />
+    <ClInclude Include="MaskManager.h" />
     <ClInclude Include="MouseManager.h" />
+    <ClInclude Include="ParticleSystemManager.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SceneKeyboardManager.h" />
     <ClInclude Include="SceneMouseManager.h" />
+    <ClInclude Include="Scroller.h" />
+    <ClInclude Include="SoundManager.h" />
+    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureInfo.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="Word.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="CheckLevelScene.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Defines.cpp" />
+    <ClCompile Include="EasyMaskManager.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="HardMaskManager.cpp" />
+    <ClCompile Include="ImageRenderer.cpp" />
     <ClCompile Include="Lemmings_Win32API.cpp" />
+    <ClCompile Include="LobbyScene.cpp" />
+    <ClCompile Include="MaskManager.cpp" />
+    <ClCompile Include="ParticleSystemManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
     </ClCompile>
-    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="SceneKeyboardManager.cpp" />
     <ClCompile Include="SceneMouseManager.cpp" />
+    <ClCompile Include="Scroller.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
+    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="StateManager.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="Word.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Lemmings_Win32API.rc" />

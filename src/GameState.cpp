@@ -1,11 +1,13 @@
 #include "pch.h"
-#include "GameState.h"
+
 #include "common_defs.h"
+#include "GameState.h"
+
 
 void GameState::keyPressed(int key)
 {
 	// InputState에서 선언한 키보드매니저 참조로 키 입력을 받는다
-	keyboardManager->KeyPressed(key);
+	keyboardManager->keyPressed(key);
 	keys[key] = true;
 }
 void GameState::keyReleased(int key)
@@ -22,14 +24,18 @@ void GameState::specialKeyReleased(int key)
 	specialKeys[key] = false;
 }
 
-void GameState::mouseMove(int x, int y)
+void GameState::mouseMove(int x, int y, HWND hWnd)
 {
-	int windowWidth = glutGet(GLUT_WINDOW_WIDTH);
-	int windowHeight = glutGet(GLUT_WINDOW_HEIGHT);
+	RECT clientRect;
+	GetClientRect(hWnd, &clientRect); // hWnd는 현재 윈도우 핸들
+
+	int windowWidth = clientRect.right - clientRect.left;
+	int windowHeight = clientRect.bottom - clientRect.top;
 
 	// 마우스는 카메라 범위 내에서만 움직이면 된다.
 	float aspectRatioX = (float(CAMERA_WIDTH) / windowWidth);
 	float aspectRatioy = (float(CAMERA_HEIGHT) / windowHeight);
+
 	mouseX = x * aspectRatioX;
 	mouseY = y * aspectRatioy;
 
@@ -38,12 +44,12 @@ void GameState::mouseMove(int x, int y)
 
 void GameState::mousePress(int button)
 {
-	if (button == GLUT_LEFT_BUTTON)
+	if (button == VK_LBUTTON)
 	{
 		bLeftMouse = true;
 		mouseManager->mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 	}
-	else if (button == GLUT_RIGHT_BUTTON)
+	else if (button == VK_RBUTTON)
 	{
 		bRightMouse = true;
 		mouseManager->mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
@@ -52,12 +58,12 @@ void GameState::mousePress(int button)
 
 void GameState::mouseRelease(int button)
 {
-	if (button == GLUT_LEFT_BUTTON) {
+	if (button == VK_LBUTTON) {
 		bLeftMouse = false;
 		mouseManager->mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 	}
 
-	else if (button == GLUT_RIGHT_BUTTON) {
+	else if (button == VK_RBUTTON) {
 		bRightMouse = false;
 		mouseManager->mouseMoved(mouseX, mouseY, bLeftMouse, bRightMouse);
 	}

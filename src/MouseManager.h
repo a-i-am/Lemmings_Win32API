@@ -1,4 +1,3 @@
-
 #pragma once
 class MouseManager
 {
@@ -10,4 +9,3 @@ public:
 private:
 	int posX, posY;
 };
-

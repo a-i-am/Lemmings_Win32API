@@ -4,21 +4,16 @@
 #include "KeyboardManager.h"
 
 
-
 class GameState
 {
 
 public:
-	virtual void Init() = 0;
-	virtual void Update(int deltaTime) = 0;
-	virtual void Render() = 0;
-
 	// Input 콜백 메서드
 	void keyPressed(int key);
 	void keyReleased(int key);
 	void specialKeyPressed(int key);
 	void specialKeyReleased(int key);
-	void mouseMove(int x, int y);
+	void mouseMove(int x, int y, HWND hWnd);
 	void mousePress(int button);
 	void mouseRelease(int button);
 

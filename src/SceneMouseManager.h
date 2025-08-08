@@ -21,8 +21,8 @@ public:
 	};
 
 	enum ScreenMovedArea {
-		SCROOL_AREA_LEFT,
-		SCROOL_AREA_RIGHT,
+		SCROLL_AREA_LEFT,
+		SCROLL_AREA_RIGHT,
 		LEVEL,
 		NONE_AREA
 	};

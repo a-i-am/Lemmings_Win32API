@@ -11,9 +11,9 @@
 #define CAMERA_HEIGHT 197
 
 #define LEVEL_WIDTH 320
+#define LEVEL_HEIGHT 160
 
-#define LEVEL_HEIGHT 160
-#define LEVEL_WIDTH 320
-#define LEVEL_HEIGHT 160
+#define UI_WIDTH 320
+#define UI_HEIGHT 37
 
 #define SCROLL_WIDTH 5

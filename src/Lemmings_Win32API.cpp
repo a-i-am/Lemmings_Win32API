@@ -2,8 +2,12 @@
 //
 #include "pch.h"
 #include "framework.h"
-//#include "Game.h"
 #include "Lemmings_Win32API.h"
+#include <string>
+#include <windowsx.h>
+#include <format>
+#include "Game.h"
+//#include "InputManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -40,16 +44,43 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_LEMMINGSWIN32API));
+    MSG msg = {};
 
-    MSG msg;
+    //### ------------- Game 메인 루프 ------------- ###//
+    HWND hWnd = FindWindow(szWindowClass, szTitle);
+
+    Game& game = Game::getInstance();
+    game.init(hWnd);
+
+    const float targetFrameTime = 1000.0f / 120.f;  // 초당(1000ms) 120 프레임
+
+    LARGE_INTEGER frequency, now, prev;
+    ::QueryPerformanceFrequency(&frequency);
+    ::QueryPerformanceCounter(&prev);
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (msg.message != WM_QUIT)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (::PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            ::TranslateMessage(&msg);
+            ::DispatchMessage(&msg);
+        }
+        else
+        {
+            ::QueryPerformanceCounter(&now);
+            float elapsed = (now.QuadPart - prev.QuadPart) / static_cast<float>(frequency.QuadPart) * 1000.0f;
+
+            if (elapsed >= targetFrameTime)
+            {
+                int deltaTime = static_cast<int>(elapsed);
+
+                game.update(deltaTime);
+                game.render();
+
+                prev = now;
+            }
+
         }
     }
 
@@ -77,7 +108,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_LEMMINGSWIN32API));
     wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_LEMMINGSWIN32API);
+    wcex.lpszMenuName = nullptr;//MAKEINTRESOURCEW(IDC_LEMMINGSWIN32API);
     wcex.lpszClassName  = szWindowClass;
     wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -97,9 +128,11 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+   RECT windowRect = { 0, 0, GWinSizeX, GWinSizeY };
+   ::AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+       CW_USEDEFAULT, 0, windowRect.right - windowRect.left, windowRect.bottom - windowRect.top, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -147,7 +180,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
+
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+            
+
+
+            
             EndPaint(hWnd, &ps);
         }
         break;

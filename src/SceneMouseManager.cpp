@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "common_defs.h"
 #include "SceneMouseManager.h"
 
 void SceneMouseManager::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
@@ -8,7 +9,7 @@ void SceneMouseManager::mouseMoved(int mouseX, int mouseY, bool bLeftButton, boo
 
 	ScreenClickedArea screenClickedArea = getClickedScreenArea(mouseX, mouseY);
 	screenMovedArea = getMovedScreenArea(mouseX, mouseY);
-	if (screenMovedArea == SCROOL_AREA_LEFT) // 레벨 씬에서의 현재 마우스 스크롤링 상태
+	if (screenMovedArea == SCROLL_AREA_LEFT) // 레벨 씬에서의 현재 마우스 스크롤링 상태
 	{
 		int a = 2;
 	}
@@ -68,11 +69,11 @@ void SceneMouseManager::update()
 {
 	//updateCursorPostion();
 	/*
-	if (screenMovedArea == ScreenMovedArea::SCROOL_AREA_LEFT) {
+	if (screenMovedArea == ScreenMovedArea::SCROLL_AREA_LEFT) {
 		//Scroller::getInstance().scrollLeft();
 		//Cursor::getInstance().setScrollLeftCursor();
 	}
-	else if (screenMovedArea == ScreenMovedArea::SCROOL_AREA_RIGHT) {
+	else if (screenMovedArea == ScreenMovedArea::SCROLL_AREA_RIGHT) {
 		//Scroller::getInstance().scrollRight();
 		//Cursor::getInstance().setScrollRightCursor();
 	}
@@ -119,6 +120,7 @@ SceneMouseManager::ScreenMovedArea SceneMouseManager::getMovedScreenArea(int mou
 {
 	if (0 <= mouseX && mouseX < SCROLL_WIDTH && mouseY < LEVEL_HEIGHT) {
 		return ScreenMovedArea::SCROLL_AREA_LEFT;
+		
 	}
 	else if (LEVEL_WIDTH - SCROLL_WIDTH <= mouseX && mouseX < LEVEL_WIDTH && mouseY < LEVEL_HEIGHT) {
 		return ScreenMovedArea::SCROLL_AREA_RIGHT;

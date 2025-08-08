@@ -1,5 +1,4 @@
 #pragma once
-
 class KeyboardManager
 {
 
@@ -9,4 +8,3 @@ public:
 	virtual void specialKeyPressed(int key) = 0;
 	virtual void specialKeyReleased(int key) = 0;
 };
-
