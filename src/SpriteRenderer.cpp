@@ -103,5 +103,3 @@ void SpriteRenderer::setFrameRange(int32 startX, int32 startY, int32 countX, int
 	_isEnd = false;
 	_sumTime = 0.0f;
 }
-
-

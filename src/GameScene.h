@@ -5,6 +5,7 @@
 
 class Texture;
 class ImageRenderer;
+class SpriteRenderer;
 
 class GameScene : public GameState
 {
@@ -14,8 +15,11 @@ private:
 	bool speedUp = false;
 
 	ImageRenderer* mapRenderer = nullptr;
-
-	void initSpriteSheets();
+	SpriteRenderer* trapdoorRenderer = nullptr;
+	SpriteRenderer* doorRenderer = nullptr;
+	SpriteRenderer* lemmingRenderer = nullptr;
+	
+		void initSpriteSheets();
 	void initImages();
 
 public:

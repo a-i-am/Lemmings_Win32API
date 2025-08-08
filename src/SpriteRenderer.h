@@ -16,6 +16,7 @@ public:
 	bool IsEnd() { return _isEnd; }
 
 	void setFrameRange(int32 startX, int32 startY, int32 countX, int32 countY);
+	void setRenderSize(int32 sizeX, int32 sizeY) { _renderSizeX = sizeX, _renderSizeY = sizeY; }
 
 private:
 

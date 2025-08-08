@@ -127,14 +127,17 @@ void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool ap
 			::TransparentBlt(hdc,
 					(int32)screenPos.x - (renderSize.x / 2),	// 텍스처를 중심좌표로 그리기위해 size의 절반만큼 빼준다.
 					(int32)screenPos.y - (renderSize.y / 2),
+					
+					// 텍스쳐가 화면에 보여질 크기
 					renderSize.x,
-					renderSize.y,						// 텍스쳐가 그려져야하는 크기 height	// 64
-					_hdc,							// 텍스처의 정보
-					src.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
-					src.y,								// 원본 텍스쳐의 Y	
-					renderSize.x,						// 원본 텍스쳐의 width					// 64
-					renderSize.y,						// 원본 텍스쳐의 height					// 64
-					_transparent);				// 어떤색상을 투명하게 그릴까
+					renderSize.y,								
+					_hdc,										// 텍스처의 정보
+					(int32)src.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
+					(int32)src.y,								// 원본 텍스쳐의 Y	
+					// 잘라올 원본 크기
+					_frameWidth,
+					_frameHeight,
+					_transparent);								// 어떤색상을 투명하게 그릴까
 		}
 }
 

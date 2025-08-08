@@ -68,28 +68,34 @@ void GameScene::initSpriteSheets()
 	
 	Actor* trapdoors = new Actor();
 	
-	SpriteRenderer* spriteRenderer = trapdoors->addComponent<SpriteRenderer>("trapdoors", 1.0f);
-	trapdoors->setPosition(Vector{ 550, 150 }); // 위치 지정
+	trapdoorRenderer = trapdoors->addComponent<SpriteRenderer>("trapdoors", 1.0f);
+	trapdoorRenderer->setFrameRange(0, 0, 1, 10); // 2x10 스프라이트 중, 0번 가로 라인만 사용 (세로 10프레임)
+	trapdoorRenderer->setRenderSize(41 * 2.5, 25 * 2.5);
 	
-	spriteRenderer->setFrameRange(0, 0, 1, 10); // 2x10 스프라이트 중, 0번 가로 라인만 사용 (세로 10프레임)
+	trapdoors->setPosition(Vector{ 600, 170 }); // 위치 지정
 
 
 // doors(나가는 곳) 초기화
 	ResourceManager::getInstance()->loadTexture("doors", "levels/lemming_doors.bmp", RGB(255, 255, 255), 3, 8);
 	Actor* doors = new Actor();
-	doors->addComponent<SpriteRenderer>("doors", 1.0f);
-	doors->setPosition(Vector{ 900, 350 });
-
-	spriteRenderer->setFrameRange(0, 0, 3, 2);
+	
+	doorRenderer = doors->addComponent<SpriteRenderer>("doors", 1.0f);
+	doorRenderer->setFrameRange(0, 0, 3, 2);
+	doorRenderer->setRenderSize(40 * 2.5, 32 * 2.5);
+	
+	doors->setPosition(Vector{ 930, 385 });
 
 
 // 레밍 초기화
 	ResourceManager::getInstance()->loadTexture("lemming", "lemming_anim.bmp", RGB(255, 255, 255), 16, 14);
 	Actor* lemming = new Actor();
-	lemming->addComponent<SpriteRenderer>("lemming", 1.0f);
-	lemming->setPosition(Vector{ 550, 150 });
+	
+	lemmingRenderer = lemming->addComponent<SpriteRenderer>("lemming", 1.0f);
+	lemmingRenderer->setFrameRange(0, 0, 16, 1);
+	lemmingRenderer->setRenderSize(16 * 2.5, 16 * 2.5);
 
-	spriteRenderer->setFrameRange(0, 0, 16, 1);
+	lemming->setPosition(Vector{ 570, 160 });
+
 	
 	// Actor 목록에 저장
 	_actors.push_back(lemming); 

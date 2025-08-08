@@ -55,9 +55,3 @@ private:
 
 	std::vector<BYTE> _pixels; // 픽셀 데이터 보관용
 };
-/*
-
-
-
-
-*/
