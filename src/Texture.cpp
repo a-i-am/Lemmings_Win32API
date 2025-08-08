@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Texture.h"
-#include "TextureInfo.h"
 #include "Game.h"
 #include "ResourceManager.h"
 
@@ -35,41 +34,41 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 
 	// 2. TextureInfo 생성
 
-	_info = new TextureInfo();
-	_info->hBitmap = bitmap;
-	_info->hdc = textureHdc;
-	_info->transparent = transparent;
-	_info->originTexSizeX = bit.bmWidth;
-	_info->originTexSizeY = bit.bmHeight;
-	_info->frameCountX = xFrameCount;
-	_info->frameCountY = yFrameCount;
-	_info->frameWidth = bit.bmWidth / xFrameCount;
-	_info->frameHeight = bit.bmHeight / yFrameCount;
-
+	_hBitmap = bitmap;
+	_hdc = textureHdc;
+	_transparent = transparent;
+	_originTexSizeX = bit.bmWidth;
+	_originTexSizeY = bit.bmHeight;
+	_frameCountX = xFrameCount;
+	_frameCountY = yFrameCount;
+	_frameWidth = bit.bmWidth / xFrameCount;
+	_frameHeight = bit.bmHeight / yFrameCount;
+	_width = _originTexSizeX;
+	_height = _originTexSizeY;
 
 	// bitmap info
-	_info->bitmapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-	_info->bitmapInfo.bmiHeader.biWidth = bit.bmWidth;
-	_info->bitmapInfo.bmiHeader.biHeight = bit.bmHeight;
-	_info->bitmapInfo.bmiHeader.biPlanes = 1;
-	_info->bitmapInfo.bmiHeader.biBitCount = 32;
-	_info->bitmapInfo.bmiHeader.biCompression = BI_RGB;
-	_info->bitmapInfo.bmiHeader.biSizeImage = 0;
-	_info->bitmapInfo.bmiHeader.biXPelsPerMeter = 0;
-	_info->bitmapInfo.bmiHeader.biYPelsPerMeter = 0;
-	_info->bitmapInfo.bmiHeader.biClrUsed = 0;
-	_info->bitmapInfo.bmiHeader.biClrImportant = 0;
+	_bitmapInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	_bitmapInfo.bmiHeader.biWidth = bit.bmWidth;
+	_bitmapInfo.bmiHeader.biHeight = bit.bmHeight;
+	_bitmapInfo.bmiHeader.biPlanes = 1;
+	_bitmapInfo.bmiHeader.biBitCount = 32;
+	_bitmapInfo.bmiHeader.biCompression = BI_RGB;
+	_bitmapInfo.bmiHeader.biSizeImage = 0;
+	_bitmapInfo.bmiHeader.biXPelsPerMeter = 0;
+	_bitmapInfo.bmiHeader.biYPelsPerMeter = 0;
+	_bitmapInfo.bmiHeader.biClrUsed = 0;
+	_bitmapInfo.bmiHeader.biClrImportant = 0;
 
-	int dwBmpSize = ((bit.bmWidth * _info->bitmapInfo.bmiHeader.biBitCount + 31) / 32) * 4 * bit.bmHeight;
-	_info->rawData = new BYTE[dwBmpSize];
+	int dwBmpSize = ((bit.bmWidth * _bitmapInfo.bmiHeader.biBitCount + 31) / 32) * 4 * bit.bmHeight;
+	_rawData = new BYTE[dwBmpSize];
 
-	GetDIBits(hdc, bitmap, 0, bit.bmHeight, _info->rawData, &_info->bitmapInfo, DIB_RGB_COLORS);
+	GetDIBits(hdc, bitmap, 0, bit.bmHeight, _rawData, &_bitmapInfo, DIB_RGB_COLORS);
 
 
 	// 3. 알파 마스크 처리
 	
-	int width = _info->originTexSizeX;
-	int height = _info->originTexSizeY;
+	int width = _originTexSizeX;
+	int height = _originTexSizeY;
 	int rowSize = width * 4; // 32bit → 4바이트 per 픽셀
 	
 	// 마스크 비트맵 로드 (ex: 맵)
@@ -82,16 +81,16 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 			{
 				int index = invertedY * rowSize + x * 4;
 	
-				BYTE red = _info->rawData[index + 2];
-				BYTE green = _info->rawData[index + 1];
-				BYTE blue = _info->rawData[index + 0];
-				//BYTE alpha = _info->rawData[index + 3]; // 사용하지 않아도 무방
+				BYTE red = _rawData[index + 2];
+				BYTE green = _rawData[index + 1];
+				BYTE blue = _rawData[index + 0];
+				//BYTE alpha = _rawData[index + 3]; // 사용하지 않아도 무방
 	
 				if (RGB(red, green, blue) == RGB(255, 255, 255))
 				{
-					_info->rawData[index + 2] = 0;
-					_info->rawData[index + 1] = 0;
-					_info->rawData[index + 0] = 0;
+					_rawData[index + 2] = 0;
+					_rawData[index + 1] = 0;
+					_rawData[index + 0] = 0;
 				}
 			}
 		}
@@ -105,7 +104,7 @@ void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool ap
 	Vector screenPos = _centerAlign ? Vector(pos.x - renderSize.x * 0.5f, pos.y - renderSize.y * 0.5f) : pos;
 
 		// 불투명 처리(맵 이미지 여백을 배경색으로 변환해 출력)
-		if (_info->transparent == -1) //  렌더링 시 게임 씬 맵 이미지 기본 배경색(Black)과 통일할 이미지인지 확인
+		if (_transparent == -1) //  렌더링 시 게임 씬 맵 이미지 기본 배경색(Black)과 통일할 이미지인지 확인
 		{
 			// 2. 전체 이미지 출력
 			//픽셀 버퍼를 통째로 HDC에 한 번에 그려줌(SetPixel보다 빠름
@@ -115,9 +114,9 @@ void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool ap
 				renderSize.x,
 				renderSize.y,
 				0, 0, // DIB 원본 좌상귀 X, Y 좌표
-				_info->originTexSizeX, _info->originTexSizeY, // 첫번째 스캔 라인, 출력할 스캔 라인 개수
-				_info->rawData,
-				&_info->bitmapInfo,
+				_originTexSizeX, _originTexSizeY, // 첫번째 스캔 라인, 출력할 스캔 라인 개수
+				_rawData,
+				&_bitmapInfo,
 				DIB_RGB_COLORS,
 				SRCCOPY
 			);
@@ -130,12 +129,12 @@ void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool ap
 					(int32)screenPos.y - (renderSize.y / 2),
 					renderSize.x,
 					renderSize.y,						// 텍스쳐가 그려져야하는 크기 height	// 64
-					_info->hdc,							// 텍스처의 정보
+					_hdc,							// 텍스처의 정보
 					src.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
 					src.y,								// 원본 텍스쳐의 Y	
 					renderSize.x,						// 원본 텍스쳐의 width					// 64
 					renderSize.y,						// 원본 텍스쳐의 height					// 64
-					_info->transparent);				// 어떤색상을 투명하게 그릴까
+					_transparent);				// 어떤색상을 투명하게 그릴까
 		}
 }
 

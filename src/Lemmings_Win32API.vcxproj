@@ -156,7 +156,6 @@
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureInfo.h" />
     <ClInclude Include="UIManager.h" />
     <ClInclude Include="Word.h" />
   </ItemGroup>

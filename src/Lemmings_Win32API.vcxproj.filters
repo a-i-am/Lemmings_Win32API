@@ -147,9 +147,6 @@
     <ClInclude Include="Actor.h">
       <Filter>소스 파일\Game</Filter>
     </ClInclude>
-    <ClInclude Include="TextureInfo.h">
-      <Filter>소스 파일\Image</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Defines.cpp">

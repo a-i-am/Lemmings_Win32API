@@ -4,13 +4,16 @@
 Actor::~Actor()
 {
     for (Component* comp : _components)
+    {
+        comp->setOwner(nullptr); // 이 줄 추가 권장
         delete comp;
+    }
     _components.clear();
 }
 void Actor::init()
 {
     for (Component* comp : _components)
-        comp->initCompoent();
+        comp->initComponent();
 }
 
 void Actor::update(float deltaTime)

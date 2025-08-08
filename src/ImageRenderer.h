@@ -1,6 +1,6 @@
 #pragma once
-
 #include "Component.h"
+
 class Texture;
 
 class ImageRenderer : public Component
@@ -9,17 +9,15 @@ class ImageRenderer : public Component
 public:
 	ImageRenderer(string textureKey);
 
-	virtual void initCompoent() override;
+	virtual void initComponent() override;
 	virtual void updateComponent(float deltaTime) override;
 	virtual void renderComponent(HDC hdc, Vector pos) override;
 
-	int32 getTextureWidth();
-	Texture* getTexture() { return _textureInfo; }
+	Texture* getTexture() { return _texture; }
 	void setApplyCameraPos(bool apply) { _applyCameraPos = apply; }
 
 private:
-	Texture* _textureInfo = nullptr;	// 리소스 매니저를 통해서 가져온 정보 : 공용 자산
+	Texture* _texture = nullptr;	// 리소스 매니저를 통해서 가져온 정보 : 공용 자산
 	bool _applyCameraPos = true;
 };
-
 

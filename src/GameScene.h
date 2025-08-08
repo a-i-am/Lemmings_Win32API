@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameState.h"
+#include "Actor.h"
 
 class Texture;
 class ImageRenderer;
@@ -8,12 +9,9 @@ class ImageRenderer;
 class GameScene : public GameState
 {
 private:
+	std::vector<Actor*> _actors;  // 모든 액터를 저장
 	bool paused = false;
 	bool speedUp = false;
-
-	Vector mapPos;
-	Vector trapDoorPos;
-	Vector doorPos;
 
 	ImageRenderer* mapRenderer = nullptr;
 
@@ -54,7 +52,9 @@ protected:
 
 	//VariableTexture maskTex;
 
-
+	//	Vector mapPos;
+//	Vector trapDoorPos;
+//	Vector doorPos;
 */
 
 

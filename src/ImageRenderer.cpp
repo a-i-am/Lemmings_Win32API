@@ -5,12 +5,12 @@
 
 ImageRenderer::ImageRenderer(string textureKey)
 {
-	_textureInfo = ResourceManager::getInstance()->getTextureInfo(textureKey);
+	_texture = ResourceManager::getInstance()->getTexture(textureKey);
 }
 
-void ImageRenderer::initCompoent()
+void ImageRenderer::initComponent()
 {
-	Super::initCompoent();
+	Super::initComponent();
 }
 
 void ImageRenderer::updateComponent(float deltaTime)
@@ -22,13 +22,8 @@ void ImageRenderer::renderComponent(HDC hdc, Vector pos)
 {
 	Super::renderComponent(hdc, pos);
 
-	if (_textureInfo == nullptr)
+	if (_texture == nullptr)
 		return;
 
-	_textureInfo->render(hdc, pos, Vector(0, 0), Vector(_textureInfo->_sizeX, _textureInfo->_sizeY), _applyCameraPos);
-}
-
-int32 ImageRenderer::getTextureWidth()
-{
-	return _textureInfo->getTextureWidth();
+	_texture->render(hdc, pos, Vector(0, 0), Vector(_texture->getTextureWidth(), _texture->getTextureHeight()), _applyCameraPos);
 }

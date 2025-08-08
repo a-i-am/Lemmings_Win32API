@@ -11,9 +11,9 @@ class ResourceManager : public Singleton<ResourceManager>
 public:
 
 	void init();
-	void destory(); // 府家胶 沥府
+	void destroy(); // 府家胶 沥府
 
-	Texture* getTextureInfo(string meshName);
+	Texture* getTexture(string key);
 	void loadTexture(string key, string texturePath, int32 transparnet, int32 xFrameCount = 1, int32 yFrameCount = 1);
 
 private:

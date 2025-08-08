@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include "Component.h"
-#include <vector>
 
 class Actor
 {
@@ -39,15 +38,17 @@ public:
     template <typename T>
     void removeComponent()
     {
-        for (auto it = _components.begin(); it != _components.end(); ++it)
+        auto it = std::remove_if(_components.begin(), _components.end(),
+            [](Component* comp) {
+                return dynamic_cast<T*>(comp) != nullptr;
+            });
+
+        for (auto iter = it; iter != _components.end(); ++iter)
         {
-            if (dynamic_cast<T*>(*it))
-            {
-                delete* it;
-                _components.erase(it);
-                return;
-            }
+            delete* iter;
         }
+
+        _components.erase(it, _components.end());
     }
 
 protected:

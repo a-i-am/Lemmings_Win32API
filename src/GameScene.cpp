@@ -47,18 +47,54 @@ void GameScene::init()
 void GameScene::initImages()
 {
 	// 맵 초기화 
-	// ex : ResourceManager::GetInstance()->LoadTexture("Effect_Crash", "Effect_Crash.bmp", RGB(0, 0, 0), 3, 1);
-	ResourceManager::getInstance()->loadTexture("map", "levels/fun1/map.bmp", RGB(255, 255, 255), 1, 1);
-	mapRenderer = new ImageRenderer("map");
-	mapPos = Vector{ GWinSizeX * 0.5f, GWinSizeY * 0.5f };
+	
+	ResourceManager::getInstance()->loadTexture("map", "levels/fun1/map.bmp", -1, 1, 1);
+	// 액터 생성
+	Actor* map = new Actor();
+	map->addComponent<ImageRenderer>("map");
+	mapRenderer = map->getComponent<ImageRenderer>(); // 컴포넌트 캐싱
+	mapRenderer->getTexture()->setTextureWidth(GWinSizeX);
+	mapRenderer->getTexture()->setTextureHeight(GWinSizeY);
+
+	
+	map->setPosition(Vector{ GWinSizeX * 0.5f, GWinSizeY * 0.5f }); // 위치 지정
+	_actors.push_back(map); // Actor 목록에 저장
 }
-
-
 
 void GameScene::initSpriteSheets()
 {
-//	ResourceManager::getInstance()->loadTexture("doors", "levels/lemming_doors.bmp", 1, 1, RGB(255, 255, 255));
-//	ResourceManager::getInstance()->loadTexture("doors", "levels/lemming_trapdoors.bmp", 1, 1, RGB(255, 255, 255));
+// trapdoors(배출구) 초기화 
+	ResourceManager::getInstance()->loadTexture("trapdoors", "levels/lemming_trapdoors.bmp", RGB(255, 255, 255), 2, 10);
+	
+	Actor* trapdoors = new Actor();
+	
+	SpriteRenderer* spriteRenderer = trapdoors->addComponent<SpriteRenderer>("trapdoors", 1.0f);
+	trapdoors->setPosition(Vector{ 550, 150 }); // 위치 지정
+	
+	spriteRenderer->setFrameRange(0, 0, 1, 10); // 2x10 스프라이트 중, 0번 가로 라인만 사용 (세로 10프레임)
+
+
+// doors(나가는 곳) 초기화
+	ResourceManager::getInstance()->loadTexture("doors", "levels/lemming_doors.bmp", RGB(255, 255, 255), 3, 8);
+	Actor* doors = new Actor();
+	doors->addComponent<SpriteRenderer>("doors", 1.0f);
+	doors->setPosition(Vector{ 900, 350 });
+
+	spriteRenderer->setFrameRange(0, 0, 3, 2);
+
+
+// 레밍 초기화
+	ResourceManager::getInstance()->loadTexture("lemming", "lemming_anim.bmp", RGB(255, 255, 255), 16, 14);
+	Actor* lemming = new Actor();
+	lemming->addComponent<SpriteRenderer>("lemming", 1.0f);
+	lemming->setPosition(Vector{ 550, 150 });
+
+	spriteRenderer->setFrameRange(0, 0, 16, 1);
+	
+	// Actor 목록에 저장
+	_actors.push_back(lemming); 
+	_actors.push_back(doors); 
+	_actors.push_back(trapdoors);
 }
 
 void GameScene::destory()
@@ -75,9 +111,11 @@ void GameScene::updateUI()
 
 void GameScene::render(HDC hdc)
 {
-	//mapTex.render(hdc, mapPos, Vector{ 0, 0 });
-	//trapDoors.render(hdc, trapDoorPos, Vector{ 0, 0 });
-
+	for (Actor* actor : _actors)
+	{
+		// * 이 구조는 Actor::render(hdc)가 내부적으로 ImageRenderer 또는 SpriteRenderer를 찾아서 그려주는 구조를 전제로 함.
+		actor->render(hdc); // 각 actor가 가진 Renderer가 draw 하도록 위임
+	}
 }
 
 
@@ -144,22 +182,15 @@ void GameScene::applySpecialMask(int x, int y)
 {
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
-
+* //	ResourceManager::getInstance()->loadTexture("doors", "levels/lemming_doors.bmp", 1, 1, RGB(255, 255, 255));
+//	ResourceManager::getInstance()->loadTexture("doors", "levels/lemming_trapdoors.bmp", 1, 1, RGB(255, 255, 255));
+	//trapDoors.setSize(246, 750); //원본x3
+*
+	//mapTex.render(hdc, mapPos, Vector{ 0, 0 });
+	//trapDoors.render(hdc, trapDoorPos, Vector{ 0, 0 });
+	//mapRenderer = new ImageRenderer("map");
+	//mapPos = Vector{ GWinSizeX * 0.5f, GWinSizeY * 0.5f };
 //mapTex.load(L"levels/fun1/map.bmp", 1, 1, RGB(255, 255, 255));
 //mapTex.setSize(GWinSizeX, GWinSizeY);
 //mapPos = Vector{ GWinSizeX * 0.5f , GWinSizeY * 0.5f };

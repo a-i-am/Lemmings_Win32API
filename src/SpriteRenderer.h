@@ -10,26 +10,31 @@ class SpriteRenderer : public Component
 public:
 	SpriteRenderer(string textureKey, float dur);
 
-	virtual void initCompoent() override;
+	virtual void initComponent() override;
 	virtual void updateComponent(float deltaTime) override;
 	virtual void renderComponent(HDC hdc, Vector pos) override;
-
-	void SetFrameX(int32 x) { _frameX = x; }
-	void SetFrameY(int32 y) { _frameY = y; }
-
-	int32 GetRenderSizeX() { return _renderSizeX; }
 	bool IsEnd() { return _isEnd; }
-	void SetApplyCameraPos(bool apply) { _applyCameraPos = apply; }
 
+	void setFrameRange(int32 startX, int32 startY, int32 countX, int32 countY);
 
 private:
 
-	Texture* _textureInfo = nullptr; // 리소스 매니저를 통해 가져온 정보 : 공용 자산
+	Texture* _texture = nullptr; // 리소스 매니저를 통해 가져온 정보 : 공용 자산
 
 	// 개별 텍스처가 현재 어떤 프레임을 그리고 있는지
-	int32 _frameX = 0;
-	int32 _frameY = 0;
 
+	int32 _startFrameX = 0;
+	int32 _startFrameY = 0;
+	// 고정된 프레임 수
+	int32 _frameCountX = 0;
+	int32 _frameCountY = 0;
+	// 현재 위치를 추적하는 변수
+	int32 _currFrameX = 0;
+	int32 _currFrameY = 0;
+
+
+
+		
 	// 한 프레임당 사이즈
 	int32 _renderSizeX = 0;
 	int32 _renderSizeY = 0;
@@ -42,3 +47,8 @@ private:
 	bool _applyCameraPos = true;
 };
 
+/*
+	void SetFrameX(int32 x) { _frameX = x; }
+	void SetFrameY(int32 y) { _frameY = y; }
+	void SetApplyCameraPos(bool apply) { _applyCameraPos = apply; }
+*/
