@@ -3,7 +3,7 @@
 #include "ResourceManager.h"
 #include "Texture.h"
 
-ImageRenderer::ImageRenderer(string textureKey)
+ImageRenderer::ImageRenderer(string textureKey, int32 width, int32 height)
 {
 	_texture = ResourceManager::getInstance()->getTexture(textureKey);
 }
@@ -25,5 +25,5 @@ void ImageRenderer::renderComponent(HDC hdc, Vector pos)
 	if (_texture == nullptr)
 		return;
 
-	_texture->render(hdc, pos, Vector(0, 0), Vector(_texture->getTextureWidth(), _texture->getTextureHeight()), _applyCameraPos);
+	_texture->render(hdc, pos, Vector(0, 0), Vector(_texture->getTextureWidth(), _texture->getTextureHeight()), Vector(1.f, 1.f), _applyCameraPos);
 }

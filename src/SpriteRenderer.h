@@ -15,8 +15,12 @@ public:
 	virtual void renderComponent(HDC hdc, Vector pos) override;
 	bool IsEnd() { return _isEnd; }
 
-	void setFrameRange(int32 startX, int32 startY, int32 countX, int32 countY);
-	void setRenderSize(int32 sizeX, int32 sizeY) { _renderSizeX = sizeX, _renderSizeY = sizeY; }
+	void setAnimationClip(int32 startIndex, int32 totalCount);
+	void setFrameSize(int32 sizeX, int32 sizeY, float xRatio, float yRatio)
+	{
+		_frameSizeX = sizeX, _frameSizeY = sizeY;
+		_frameRatioX = xRatio, _frameRatioY = yRatio;
+	}
 
 private:
 
@@ -26,6 +30,7 @@ private:
 
 	int32 _startFrameX = 0;
 	int32 _startFrameY = 0;
+
 	// 고정된 프레임 수
 	int32 _frameCountX = 0;
 	int32 _frameCountY = 0;
@@ -34,22 +39,26 @@ private:
 	int32 _currFrameY = 0;
 
 
+	// 프레임 수 기반 애니메이션 재생
+	int32 _startFrameIndex = 0;
+	int32 _totalFrameCount = 0;
+	int32 _framePerRow = 0;
+	int32 _framePerCol = 0;
 
-		
+	int32 _currentFrameIndex = 0;
+
 	// 한 프레임당 사이즈
-	int32 _renderSizeX = 0;
-	int32 _renderSizeY = 0;
+	int32 _frameSizeX = 0;
+	int32 _frameSizeY = 0;
+
+	float _frameRatioX = 0.f;
+	float _frameRatioY = 0.f;
+
 
 	bool  _isEnd = false;
 
-	float _duration = 0;
-	float _sumTime = 0;
+	float _sumTime = 0.0f;
+	float _duration = 0.1f; // 한 프레임 당 0.1초(10fps)
 
 	bool _applyCameraPos = true;
 };
-
-/*
-	void SetFrameX(int32 x) { _frameX = x; }
-	void SetFrameY(int32 y) { _frameY = y; }
-	void SetApplyCameraPos(bool apply) { _applyCameraPos = apply; }
-*/

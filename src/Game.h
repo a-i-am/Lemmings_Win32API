@@ -4,8 +4,7 @@
 #include "GameScene.h"
 #include "GameState.h"
 #include "Texture.h"
-
-#include "SoundManager.h"
+#include "TimeManager.h"
 #include "MouseManager.h"
 #include "KeyboardManager.h"
 
@@ -30,7 +29,7 @@ public:
 	void init(HWND hwnd);
 	void destroy();
 
-	bool update(int deltaTime);
+	bool update(float deltaTime);
 	void render();
 
 	HWND getHwnd() { return _hwnd; }

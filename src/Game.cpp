@@ -29,8 +29,8 @@ void Game::init(HWND hwnd)
 
 	// 게임과 관련된 초기화가 필요한 항목들은 여기서
 	//InputManager::GetInstance()->Init(hwnd);	// 객체를 생성
-	//TimeManager::GetInstance()->Init();
-	//ResourceManager::GetInstance()->Init();	// 모든 리소스 로딩
+	TimeManager::getInstance()->init();
+	ResourceManager::getInstance()->init();	// 모든 리소스 로딩
 
 	//// 시작씬은 게임으로 설정
 	_currScene = new GameScene();
@@ -41,7 +41,7 @@ void Game::destroy()
 {
 	// 게임과 관련된 삭제가 필요한 항목들은 여기서
 	//InputManager::DestroyInstance();	// 객체를 생성
-	//TimeManager::DestroyInstance();
+	TimeManager::destroyInstance();
 
 	//ResourceManager::GetInstance()->Destroy();
 
@@ -54,12 +54,12 @@ void Game::destroy()
 	GdiplusShutdown(_gdiplusToken);
 }
 
-bool Game::update(int deltaTime)
+bool Game::update(float deltaTime)
 {
-	//gameState->update(deltaTime);
-
+	_currScene->update(deltaTime);
 	return bPlay;
 
+}
 	// CurScene 변경 요청이 있으면, 현재 씬을 변경먼저 하고, 해당 씬 업데이트를 수행한다.
 	//if (_nextScene)
 	//{
@@ -69,23 +69,17 @@ bool Game::update(int deltaTime)
 	//		delete _currScene;
 	//		_currScene = nullptr;
 	//	}
-
 	//	_currScene = _nextScene;
 	//	_currScene->Init();
 
 	//	_nextScene = nullptr;
 	//}
-
-
 	//InputManager::GetInstance()->Update();
-	//TimeManager::GetInstance()->Update();
-
 	//if (_currScene)
 	//{
 	//	_currScene->Update(TimeManager::GetInstance()->GetDeltaTime());
 	//	_currScene->PostUpdate(TimeManager::GetInstance()->GetDeltaTime());
 	//}
-}
 
 void Game::render()
 {

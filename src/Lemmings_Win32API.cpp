@@ -7,7 +7,6 @@
 #include <windowsx.h>
 #include <format>
 #include "Game.h"
-//#include "InputManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -50,6 +49,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HWND hWnd = FindWindow(szWindowClass, szTitle);
 
     Game& game = Game::getInstance();
+    TimeManager* timeManager = TimeManager::getInstance();
+    
+
     game.init(hWnd);
 
     const float targetFrameTime = 1000.0f / 120.f;  // 초당(1000ms) 120 프레임
@@ -58,6 +60,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ::QueryPerformanceFrequency(&frequency);
     ::QueryPerformanceCounter(&prev);
 
+                
     // 기본 메시지 루프입니다:
     while (msg.message != WM_QUIT)
     {
@@ -69,18 +72,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             ::QueryPerformanceCounter(&now);
-            float elapsed = (now.QuadPart - prev.QuadPart) / static_cast<float>(frequency.QuadPart) * 1000.0f;
+              timeManager->update();
 
-            if (elapsed >= targetFrameTime)
-            {
-                int deltaTime = static_cast<int>(elapsed);
+              float deltaTime = timeManager->getDeltaTime();
+              
+              game.update(deltaTime);
+              game.render();
 
-                game.update(deltaTime);
-                game.render();
-
-                prev = now;
-            }
-
+              prev = now;
         }
     }
 

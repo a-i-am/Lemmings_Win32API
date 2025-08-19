@@ -7,7 +7,7 @@ class ImageRenderer : public Component
 {
 	using Super = Component;
 public:
-	ImageRenderer(string textureKey);
+	ImageRenderer(string textureKey, int32 width, int32 height);
 
 	virtual void initComponent() override;
 	virtual void updateComponent(float deltaTime) override;

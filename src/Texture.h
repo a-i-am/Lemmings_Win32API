@@ -6,13 +6,12 @@ public:
 	Texture();
 
 	void load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount);
-	void render(HDC hdc, Vector pos, Vector src, Vector rederSize, bool applyCameraPos = true);
-
-	int32 getTextureWidth() const  { return _width;  }
-	int32 getTextureHeight() const { return _height; }
+	void render(HDC hdc, Vector pos, Vector srcPos, Vector srcSize, Vector ratio, bool applyCameraPos = true);
 
 	void setTextureWidth(int32 width) { _width = width; }
 	void setTextureHeight(int32 height) { _height = height; }
+	int32 getTextureWidth() const  { return _width;  }
+	int32 getTextureHeight() const { return _height; }
 
 	int32 getFrameCountX() const { return _frameCountX; }
 	int32 getFrameCountY() const { return _frameCountY; }
@@ -22,9 +21,18 @@ public:
 
 	HDC getHDC() const { return _hdc; }
 	HBITMAP getBitmap() const { return _hBitmap; }
+	BYTE* getRawData() const { return _rawData; }
 
 	bool isCenterAligned() const { return _centerAlign; }
 	void setCenterAlign(bool center) { _centerAlign = center; }
+
+	COLORREF getPixelColor(int x, int y) const
+	{
+		if (x < 0 || y < 0 || x >= _width || y >= _height)
+			return RGB(0, 0, 0);
+		return _pixels[y * _width + x];
+	}
+
 
 private:
 	// GDI 관련
@@ -32,15 +40,16 @@ private:
 	HDC			_hdc = nullptr;
 	BITMAPINFO	_bitmapInfo = {};
 	BYTE* _rawData = nullptr;
-
+	vector<COLORREF> _colorData;
+	
 	// 텍스처 관련 정보
+	int32 _width;
+	int32 _height;
 	int32		_transparent = -1;
 
 	int32		_originTexSizeX = 0;
 	int32		_originTexSizeY = 0;
 	
-	int32 _width;
-	int32 _height;
 
 
 	// 연속 텍스처 : frameCount가 2 이상

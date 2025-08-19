@@ -17,7 +17,7 @@ public:
 		// 2) static 변수 : 안정성
 		return &_instance;
 	}
-	static void DestroyInstance()
+	static void destroyInstance()
 	{
 		//if (_instance != nullptr)
 		//{

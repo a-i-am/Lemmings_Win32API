@@ -5,24 +5,25 @@
 class Actor
 {
 public:
+    Actor(Vector pos);
     virtual ~Actor();
 
-    void init();
-    void update(float deltaTime);
-    void render(HDC hdc);
+    virtual void init();
+    virtual void update(float deltaTime);
+    virtual void render(HDC hdc);
 
     void setPosition(Vector pos);
     Vector getPosition() const;
 
     // 구현 포함된 템플릿 함수들
-    template <typename T, typename... Args>
-    T* addComponent(Args&&... args)
-    {
-        T* component = new T(std::forward<Args>(args)...);
-        component->setOwner(this);
-        _components.push_back(component);
-        return component;
-    }
+    //template <typename T, typename... Args>
+    //T* addComponent(Args&&... args)
+    //{
+    //    T* component = new T(std::forward<Args>(args)...);
+    //    component->setOwner(this);
+    //    _components.push_back(component);
+    //    return component;
+    //}
 
     template <typename T>
     T* getComponent()
@@ -51,7 +52,13 @@ public:
         _components.erase(it, _components.end());
     }
 
+//protected:
+    class SpriteRenderer* CreateSpriteComponent(string spriteInfo, int32 dur, int32 width = 0, int32 height = 0);
+    class ImageRenderer* CreateTextureComponent(string bitmapKey, int32 width = 0, int32 height = 0);
+    
+    // 충돌은 Actor가 거의 레밍 혹은 레벨 뿐이고 레벨도 통 이미지니까 픽셀 충돌로 처리
+
 protected:
-    Vector _position = { 0, 0 };
-    std::vector<Component*> _components;
+	Vector _pos = {};
+	vector<Component*> _components;
 };

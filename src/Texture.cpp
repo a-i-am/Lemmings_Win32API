@@ -31,7 +31,6 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	BITMAP bit = {};
 	::GetObject(bitmap, sizeof(BITMAP), &bit);
 
-
 	// 2. TextureInfo 생성
 
 	_hBitmap = bitmap;
@@ -43,6 +42,8 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	_frameCountY = yFrameCount;
 	_frameWidth = bit.bmWidth / xFrameCount;
 	_frameHeight = bit.bmHeight / yFrameCount;
+	
+	// getter/setter Texture Info
 	_width = _originTexSizeX;
 	_height = _originTexSizeY;
 
@@ -72,8 +73,8 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	int rowSize = width * 4; // 32bit → 4바이트 per 픽셀
 	
 	// 마스크 비트맵 로드 (ex: 맵)
-
-		for (int y = 0; y < height; ++y)
+	/*
+			for (int y = 0; y < height; ++y)
 		{
 			int invertedY = height - 1 - y; // 비트맵은 bottom-up 저장
 	
@@ -94,14 +95,16 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 				}
 			}
 		}
+	*/
+
 
 ReleaseDC(Game::getInstance().getHwnd(), hdc);
 }
 
-void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool applyCameraPos)
+void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vector ratio, bool applyCameraPos)
 {
 	// 월드좌표를 카메라 좌표로 변환
-	Vector screenPos = _centerAlign ? Vector(pos.x - renderSize.x * 0.5f, pos.y - renderSize.y * 0.5f) : pos;
+	Vector screenPos = _centerAlign ? Vector(pos.x - frameSize.x * 0.5f, pos.y - frameSize.y * 0.5f) : pos;
 
 		// 불투명 처리(맵 이미지 여백을 배경색으로 변환해 출력)
 		if (_transparent == -1) //  렌더링 시 게임 씬 맵 이미지 기본 배경색(Black)과 통일할 이미지인지 확인
@@ -111,8 +114,8 @@ void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool ap
 			StretchDIBits(hdc,
 				(int32)screenPos.x,
 				(int32)screenPos.y,
-				renderSize.x,
-				renderSize.y,
+				frameSize.x,
+				frameSize.y,
 				0, 0, // DIB 원본 좌상귀 X, Y 좌표
 				_originTexSizeX, _originTexSizeY, // 첫번째 스캔 라인, 출력할 스캔 라인 개수
 				_rawData,
@@ -125,15 +128,15 @@ void Texture::render(HDC hdc, Vector pos, Vector src, Vector renderSize, bool ap
 		{
 			// 텍스처의 전체 크기를 구하고, 애니메이션 되어야 하는 개수로 나누기를 하면, 한장의 Sprite 크기를 구할수 있다.
 			::TransparentBlt(hdc,
-					(int32)screenPos.x - (renderSize.x / 2),	// 텍스처를 중심좌표로 그리기위해 size의 절반만큼 빼준다.
-					(int32)screenPos.y - (renderSize.y / 2),
+					(int32)screenPos.x - (frameSize.x / 2),	// 텍스처를 중심좌표로 그리기위해 size의 절반만큼 빼준다.
+					(int32)screenPos.y - (frameSize.y / 2),
 					
 					// 텍스쳐가 화면에 보여질 크기
-					renderSize.x,
-					renderSize.y,								
+					frameSize.x * ratio.x,
+					frameSize.y * ratio.y,
 					_hdc,										// 텍스처의 정보
-					(int32)src.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
-					(int32)src.y,								// 원본 텍스쳐의 Y	
+					(int32)srcPos.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
+					(int32)srcPos.y,								// 원본 텍스쳐의 Y	
 					// 잘라올 원본 크기
 					_frameWidth,
 					_frameHeight,

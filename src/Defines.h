@@ -28,7 +28,20 @@ bool IsInPoint(RECT rect, POINT pos);
 
 enum class RenderLayer
 {
-	Background,
+	Background,	// 최하위 그림이 그려져야 한다.
+	Default,
+	Lemming,
+	Effect,	// 최상위에 그림이 그려져야한다.
+
+	Max,
+};
+
+enum class ActorType
+{
+	None,		// 기본 재정의 안됨
+	Lemming,
+
+	Max,
 };
 
 // 모든 텍스처의 Sprite 구분 식별자
@@ -40,7 +53,6 @@ struct SpriteInfo
 	bool loop = false;
 	string textureKey;
 };
-
 
 // vector 구현 ((방향+크기)를 나타내는 벡터)
 struct Vector

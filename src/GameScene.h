@@ -1,5 +1,7 @@
 #pragma once
-
+#include "Terrain.h"
+#include "Lemming.h"
+#include "ResourceManager.h"
 #include "GameState.h"
 #include "Actor.h"
 
@@ -14,24 +16,15 @@ private:
 	bool paused = false;
 	bool speedUp = false;
 
-	ImageRenderer* mapRenderer = nullptr;
-	SpriteRenderer* trapdoorRenderer = nullptr;
-	SpriteRenderer* doorRenderer = nullptr;
-	SpriteRenderer* lemmingRenderer = nullptr;
 	
-		void initSpriteSheets();
-	void initImages();
-
 public:
 	virtual	void init() ;
 	virtual void destory() ;
-	virtual void update(int deltaTime) ;
+	virtual void update(float deltaTime) ;
 	virtual void render(HDC hdc) ;
 
 protected:
 	//virtual void loadResource();
-	virtual void updateUI();
-
 	virtual void eraseMask(int x, int y);
 	virtual void applyMask(int x, int y);
 	virtual void eraseSpecialMask(int x, int y);
@@ -41,7 +34,15 @@ protected:
 	virtual void changeSpeedUpStatus();
 	virtual bool isPaused();
 	virtual bool isSpeedUp();
+
+private:
+	Terrain* _terrain;
+	vector<Lemming> _lemmings;
+	Vector _lemmingPos;
 };
+
+
+
 /*
 	//Texture* mapCut[8] = {};
 	Vector mapCutPos[8] = {};
