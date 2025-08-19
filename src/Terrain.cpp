@@ -20,7 +20,6 @@ void Terrain::load()
 	BYTE* mapRawData = mapTexture->getRawData();
 
 
-
 	//int rowSize = _width * 4; // 32bit → 4바이트 per 픽셀
 	//for (int y = 0; y < _height; ++y)
 	//{

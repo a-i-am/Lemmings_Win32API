@@ -34,8 +34,8 @@ void SpriteRenderer::updateComponent(float deltaTime)
 		return;
 
 	// deltaTime이 ms 단위라면 초 단위로 변환
-	float deltaTimeSeconds = deltaTime * 0.001f;
-	_sumTime += deltaTimeSeconds;
+	//float deltaTimeSeconds = deltaTime * 0.001f;
+	_sumTime += deltaTime;
 
 	float delta = _duration / _totalFrameCount;
 

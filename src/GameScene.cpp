@@ -29,7 +29,6 @@ void GameScene::init()
 	keyboardManager = &SceneKeyboardManager::getInstance();
 	mouseManager = &SceneMouseManager::getInstance();
 	
-
 	_terrain = new Terrain(Vector{ GWinSizeX * 0.5f, GWinSizeY * 0.5f });
 	_terrain->load();
 	_actors.push_back(_terrain);

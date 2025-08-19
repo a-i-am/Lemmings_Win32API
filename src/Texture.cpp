@@ -73,7 +73,7 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	int rowSize = width * 4; // 32bit °Ê 4πŸ¿Ã∆Æ per «»ºø
 	
 	// ∏∂Ω∫≈© ∫Ò∆Æ∏  ∑ŒµÂ (ex: ∏ )
-	/*
+	
 			for (int y = 0; y < height; ++y)
 		{
 			int invertedY = height - 1 - y; // ∫Ò∆Æ∏ ¿∫ bottom-up ¿˙¿Â
@@ -95,7 +95,7 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 				}
 			}
 		}
-	*/
+	
 
 
 ReleaseDC(Game::getInstance().getHwnd(), hdc);
