@@ -10,6 +10,7 @@ void ResourceManager::init()
     loadTexture("trapdoors", "levels/lemming_trapdoors1.bmp", RGB(255, 255, 255), 1, 10);
     loadTexture("doors", "levels/lemming_doors.bmp", RGB(255, 255, 255), 3, 8);
     loadTexture("lemming", "lemming_anim.bmp", RGB(255, 255, 255), 16, 14);
+    loadTexture("rotated_lemming", "rotated_lemming_anim.bmp", RGB(255, 255, 255), 16, 14);
 }
 
 // 동적 할당된 Texture 객체를 전부 delete 후, map 초기화

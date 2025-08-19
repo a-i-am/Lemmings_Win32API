@@ -2,21 +2,35 @@
 #include "Lemming.h"
 #include "Collider.h"
 #include "ResourceManager.h"
+#include "Game.h"
+#include "GameScene.h"
+
+
+
 Lemming::Lemming(Vector pos) : Super(pos) 
 {
+	_spriteMoveRight = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
+	_spriteMoveRight->setAnimationClip(0, 10);
 
-	_sprite = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-	_sprite->setAnimationClip(0, 8);
+	_spriteMoveLeft = CreateSpriteComponent("rotated_lemming", 1.0f, 16 * 3.f, 14 * 3.f);
+	_spriteMoveLeft->setAnimationClip(6, 15);
+
+
+	// 땅파는 모션
+	//_spriteDig = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
+	//_spriteDig->setAnimationClip(0, 8);
+
+	_sprite = _spriteMoveRight;
 }
 
 void Lemming::update(float deltaTime)
 {
-	Vector nextPos = _pos;
+	Vector nextPos = _pos;	 // 10, 10
 	float moveAmount = _speed * deltaTime;
-	_pos.x += moveAmount;
+
 	// 이동 방향에 따라 위치 계산
 	if (_walkingRight)
-		nextPos.x += moveAmount;
+		nextPos.x += moveAmount;	// 11, 10
 	else
 		nextPos.x -= moveAmount;
 
@@ -24,20 +38,30 @@ void Lemming::update(float deltaTime)
 	Vector checkPos = nextPos;
 	checkPos.y += 1;
 
-	//if (_collider->isColliding(checkPos))
+	_pos = nextPos;
+
+	//GameScene* gameScene = Game::getGameScene();
+	//if (gameScene && gameScene->GetTerrain())
 	//{
-	//	// 충돌이 있으면 현재 방향 유지
-	//	_position = nextPos;
-	//}
-	//else
-	//{
-	//	// 충돌 없으면 떨어짐
-	//	_position.y += moveAmount;
+	//	gameScene->GetTerrain()->픽셀충돌
+
 	//}
 
 	// 화면 경계 체크
-	if (_pos.x < 0) { _pos.x = 0; _walkingRight = true; }
-	if (_pos.x > 800) { _pos.x = 800; _walkingRight = false; }
+	if (_pos.x < 200) 
+	{ 
+		_pos.x = 200; 
+		_walkingRight = true; 
+		_sprite = _spriteMoveRight;	// 오른쪽 이미지로 교체
+	}
+	
+	if (_pos.x > 500) 
+	{
+		_pos.x = 500; 
+		_walkingRight = false; 
+		_sprite = _spriteMoveLeft;	// 왼쪽 이미지로 교체
+
+	}
 
 	_sprite->updateComponent(deltaTime);
 }

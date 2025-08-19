@@ -13,39 +13,42 @@ void Terrain::load()
 	_width = GWinSizeX;
 	_height = GWinSizeY;
 	
-
 	Texture* mapTexture = _levelTexture->getTexture();
-
-	// 픽셀 데이터 채우기(텍스처 데이터 순회)
 	BYTE* mapRawData = mapTexture->getRawData();
 
 
-	//int rowSize = _width * 4; // 32bit → 4바이트 per 픽셀
-	//for (int y = 0; y < _height; ++y)
-	//{
-	//	for (int x = 0; x < _width; ++x)
-	//	{
-	//		int rawDataIndex = (_height - 1 - y) * (_width * 4) + x * 4;
-	//		BYTE red = mapRawData[rawDataIndex + 2];
-	//		BYTE green = mapRawData[rawDataIndex + 1];
-	//		BYTE blue = mapRawData[rawDataIndex + 0];
-	//		//BYTE alpha = _rawData[index + 3]; // 사용하지 않아도 무방
+	_pixelData.resize(_width * _height);
 
-	//		if (RGB(red, green, blue) == RGB(255, 255, 255)) 
-	//		{
-	//			_pixelData[y * _width + x] = 0;
 
-	//			// 알파 마스크 처리
-	//			_pixelData[rawDataIndex + 2] = 0; 
-	//			_pixelData[rawDataIndex + 1] = 0;
-	//			_pixelData[rawDataIndex + 0] = 0;
-	//		}
-	//		else
-	//		{
-	//			_pixelData[y * _width + x] = 1; // 충돌 가능
-	//		}
-	//	}
-	//}
+	int rowSize = _width * 4; // 32bit → 4바이트 per 픽셀
+	
+	for (int y = 0; y < _height; ++y)
+	{
+		for (int x = 0; x < _width; ++x)
+		{
+			int rawDataIndex = (_height - 1 - y) * (_width * 4) + x * 4;
+			BYTE red = mapRawData[rawDataIndex + 2];
+			BYTE green = mapRawData[rawDataIndex + 1];
+			BYTE blue = mapRawData[rawDataIndex + 0];
+			//BYTE alpha = _rawData[index + 3]; // 사용하지 않아도 무방
+
+			if (RGB(red, green, blue) == RGB(255, 255, 255)) 
+			{
+				_pixelData[y * _width + x] = 0;
+
+				// 알파 마스크 처리
+				_pixelData[rawDataIndex + 2] = 0; 
+				_pixelData[rawDataIndex + 1] = 0;
+				_pixelData[rawDataIndex + 0] = 0;
+
+				_pixelData[y * _width + x] = 0;
+			}
+			else
+			{
+				_pixelData[y * _width + x] = 1; // 충돌 가능
+			}
+		}
+	}
 }
 
 Vector Terrain::worldToLocal(float worldX, float worldY) const

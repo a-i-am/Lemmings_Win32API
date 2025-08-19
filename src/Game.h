@@ -43,6 +43,9 @@ public:
 	GameState* getGameState();
 	void setGameState(GameState* state);
 
+
+	static class GameScene* getGameScene();
+
 private:
 	//SoundManager soundManager;
 	bool bPlay; // "Continue to play game?"

@@ -103,6 +103,11 @@ void Game::setGameState(GameState* state)
 {
 	gameState = state;
 }
+GameScene* Game::getGameScene()
+{
+	GameScene* gameScene = dynamic_cast<GameScene*>(Game::getInstance().getGameState());
+	return gameScene;
+}
 void Game::changeBplay()
 {
 	bPlay = !bPlay;

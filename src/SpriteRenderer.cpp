@@ -33,8 +33,6 @@ void SpriteRenderer::updateComponent(float deltaTime)
 	if (_duration == 0 || _isEnd || _texture == nullptr || _totalFrameCount <= 0)
 		return;
 
-	// deltaTime이 ms 단위라면 초 단위로 변환
-	//float deltaTimeSeconds = deltaTime * 0.001f;
 	_sumTime += deltaTime;
 
 	float delta = _duration / _totalFrameCount;

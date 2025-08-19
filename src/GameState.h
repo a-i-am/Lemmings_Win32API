@@ -6,8 +6,9 @@
 
 class GameState
 {
-
 public:
+	virtual ~GameState() {}
+
 	// Input 콜백 메서드
 	void keyPressed(int key);
 	void keyReleased(int key);
