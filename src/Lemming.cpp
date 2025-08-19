@@ -38,6 +38,8 @@ void Lemming::update(float deltaTime)
 	// 화면 경계 체크
 	if (_pos.x < 0) { _pos.x = 0; _walkingRight = true; }
 	if (_pos.x > 800) { _pos.x = 800; _walkingRight = false; }
+
+	_sprite->updateComponent(deltaTime);
 }
 
 void Lemming::render(HDC hdc)
