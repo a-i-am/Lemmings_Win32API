@@ -8,9 +8,6 @@
 #include "MouseManager.h"
 #include "KeyboardManager.h"
 
-
-//#include "ShaderManager.h"
-
 class Game
 {
 
@@ -37,14 +34,12 @@ public:
 	void changeBplay();
 	bool isHardMode();
 	void swapDifficultyMode();
-	
-	//const SoundManager* getSoundManager() const;
 
 	GameState* getGameState();
 	void setGameState(GameState* state);
 
-
 	static class GameScene* getGameScene();
+	
 
 private:
 	//SoundManager soundManager;

@@ -6,12 +6,15 @@ public:
 	Texture();
 
 	void load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount);
-	void render(HDC hdc, Vector pos, Vector srcPos, Vector srcSize, Vector ratio, bool applyCameraPos = true);
+	void render(HDC hdc, Vector pos, Vector srcPos, Vector srcSize, Vector ratio);
 
 	void setTextureWidth(int32 width) { _width = width; }
 	void setTextureHeight(int32 height) { _height = height; }
 	int32 getTextureWidth() const  { return _width;  }
 	int32 getTextureHeight() const { return _height; }
+
+	int32 getoriginTextureWidth() const { return _originTexSizeX; }
+	int32 getoriginTextureHeight() const { return _originTexSizeY; }
 
 	int32 getFrameCountX() const { return _frameCountX; }
 	int32 getFrameCountY() const { return _frameCountY; }
@@ -26,12 +29,12 @@ public:
 	bool isCenterAligned() const { return _centerAlign; }
 	void setCenterAlign(bool center) { _centerAlign = center; }
 
-	COLORREF getPixelColor(int x, int y) const
-	{
-		if (x < 0 || y < 0 || x >= _width || y >= _height)
-			return RGB(0, 0, 0);
-		return _pixels[y * _width + x];
-	}
+	//COLORREF getPixelColor(int x, int y) const
+	//{
+	//	if (x < 0 || y < 0 || x >= _width || y >= _height)
+	//		return RGB(0, 0, 0);
+	//	return _pixels[y * _width + x];
+	//}
 
 
 private:
@@ -62,5 +65,5 @@ private:
 
 	bool		_centerAlign = true; // 기본은 가운데 위치를 기준으로 텍스처 그리기
 
-	std::vector<BYTE> _pixels; // 픽셀 데이터 보관용
+	//vector<BYTE> _pixels; // 픽셀 데이터 보관용
 };

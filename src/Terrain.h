@@ -1,7 +1,7 @@
 #pragma once
 #include "Actor.h"
-#include "Collider.h"
 #include "ImageRenderer.h"
+#include "Texture.h"
 
 class Terrain : public Actor
 {
@@ -11,7 +11,6 @@ public:
     void load();
     Vector worldToLocal(float worldX, float worldY) const;
     bool isSolid(int x, int y) const;
-
 
     // Collider를 통해 Lemming 충돌 체크에 사용 가능
     // Collider* getCollider() { return _collider.get(); }

@@ -59,6 +59,4 @@ private:
 
 	float _sumTime = 0.0f;
 	float _duration = 0.1f; // 한 프레임 당 0.1초(10fps)
-
-	bool _applyCameraPos = true;
 };

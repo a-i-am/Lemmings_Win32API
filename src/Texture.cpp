@@ -60,48 +60,46 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	_bitmapInfo.bmiHeader.biClrUsed = 0;
 	_bitmapInfo.bmiHeader.biClrImportant = 0;
 
-	int dwBmpSize = ((bit.bmWidth * _bitmapInfo.bmiHeader.biBitCount + 31) / 32) * 4 * bit.bmHeight;
+
+	int rowStride = ((bit.bmWidth * _bitmapInfo.bmiHeader.biBitCount + 31) / 32) * 4;
+	int dwBmpSize = rowStride * bit.bmHeight;
+
+
 	_rawData = new BYTE[dwBmpSize];
-
-	GetDIBits(hdc, bitmap, 0, bit.bmHeight, _rawData, &_bitmapInfo, DIB_RGB_COLORS);
-
-
-	// 3. 알파 마스크 처리
 	
-	int width = _originTexSizeX;
-	int height = _originTexSizeY;
-	int rowSize = width * 4; // 32bit → 4바이트 per 픽셀
+
+	int ret = GetDIBits(hdc, bitmap, 0, bit.bmHeight, _rawData, &_bitmapInfo, DIB_RGB_COLORS);
+
+	float scaleX = (float)bit.bmWidth / GWinSizeX;
+	float scaleY = (float)bit.bmHeight / GWinSizeY;
 	
-	// 마스크 비트맵 로드 (ex: 맵)
-	/*
-			for (int y = 0; y < height; ++y)
+	// BGR(A) → COLORREF 변환 (픽셀 충돌)
+	for (int y = 0; y < GWinSizeY; ++y)
+	{
+		int srcY = (int)(y * scaleY);
+		for (int x = 0; x < GWinSizeX; ++x) 
 		{
-			int invertedY = height - 1 - y; // 비트맵은 bottom-up 저장
-	
-			for (int x = 0; x < width; ++x)
+			int srcX = (int)(x * scaleX);
+			int rawDataIndex = (bit.bmHeight - 1 - srcY) * rowStride + srcX * 4;
+
+			BYTE blue = _rawData[rawDataIndex + 0];
+			BYTE green = _rawData[rawDataIndex + 1];
+			BYTE red = _rawData[rawDataIndex + 2];
+
+			// 흰색 -> 검정색 배경색 적용
+			if (RGB(red, green, blue) == RGB(255, 255, 255))
 			{
-				int index = invertedY * rowSize + x * 4;
-	
-				BYTE red = _rawData[index + 2];
-				BYTE green = _rawData[index + 1];
-				BYTE blue = _rawData[index + 0];
-				//BYTE alpha = _rawData[index + 3]; // 사용하지 않아도 무방
-	
-				if (RGB(red, green, blue) == RGB(255, 255, 255))
-				{
-					_rawData[index + 2] = 0;
-					_rawData[index + 1] = 0;
-					_rawData[index + 0] = 0;
-				}
+				_rawData[rawDataIndex + 2] = 0;
+				_rawData[rawDataIndex + 1] = 0;
+				_rawData[rawDataIndex + 0] = 0;
 			}
 		}
-	*/
+	}
 
-
-ReleaseDC(Game::getInstance().getHwnd(), hdc);
+	ReleaseDC(Game::getInstance().getHwnd(), hdc);
 }
 
-void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vector ratio, bool applyCameraPos)
+void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vector ratio)
 {
 	// 월드좌표를 카메라 좌표로 변환
 	Vector screenPos = _centerAlign ? Vector(pos.x - frameSize.x * 0.5f, pos.y - frameSize.y * 0.5f) : pos;
@@ -128,8 +126,8 @@ void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vecto
 		{
 			// 텍스처의 전체 크기를 구하고, 애니메이션 되어야 하는 개수로 나누기를 하면, 한장의 Sprite 크기를 구할수 있다.
 			::TransparentBlt(hdc,
-					(int32)screenPos.x - (frameSize.x / 2),	// 텍스처를 중심좌표로 그리기위해 size의 절반만큼 빼준다.
-					(int32)screenPos.y - (frameSize.y / 2),
+					(int32)screenPos.x,	// 텍스처를 중심좌표로 그리기위해 size의 절반만큼 빼준다.
+					(int32)screenPos.y,
 					
 					// 텍스쳐가 화면에 보여질 크기
 					frameSize.x * ratio.x,

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Lemming.h"
-#include "Collider.h"
 #include "ResourceManager.h"
 #include "Game.h"
 #include "GameScene.h"
@@ -25,43 +24,71 @@ Lemming::Lemming(Vector pos) : Super(pos)
 
 void Lemming::update(float deltaTime)
 {
+
 	Vector nextPos = _pos;	 // 10, 10
 	float moveAmount = _speed * deltaTime;
-
+	
 	// 이동 방향에 따라 위치 계산
-	if (_walkingRight)
-		nextPos.x += moveAmount;	// 11, 10
-	else
-		nextPos.x -= moveAmount;
+	//if (_walkingRight)
+	//	nextPos.x += moveAmount;	// 11, 10
+	//else
+	//	nextPos.x -= moveAmount;
 
 	// 아래 방향 중력/낙하 처리 (간단히 1픽셀씩 내려가면서 충돌 확인
-	Vector checkPos = nextPos;
-	checkPos.y += 1;
+	nextPos.y += 20.0f * deltaTime;
 
-	_pos = nextPos;
+	const int spriteWidth = 16;
+	const int spriteHeight = 16;
 
-	//GameScene* gameScene = Game::getGameScene();
-	//if (gameScene && gameScene->GetTerrain())
-	//{
-	//	gameScene->GetTerrain()->픽셀충돌
+	// srcX, srcY 부터 시작해서 16레밍즈 한칸 크기만큼
+// 충돌체크
+// for( y 16 )
+//		for( x 16)
+//{
+		// 레밍즈 자체도 구멍이 있기때문에, 
+		//해당 x, y 픽셀을 레밍즈 자체 충돌체크용 픽셀 데이터와 비교해서
+		// 0이 아닌경우만, Terrain이랑 충돌체크 실행
+		// 
+//}
 
-	//}
+
+	GameScene* gameScene = Game::getGameScene();
+	if (gameScene && gameScene->GetTerrain())
+	{
+		if (gameScene->GetTerrain()->isSolid(nextPos.x, nextPos.y))
+		{
+			//if (_sprite == _spriteMoveRight)
+			//{
+			//	_walkingRight = false;
+			//	_sprite = _spriteMoveLeft;
+			//}
+			//else
+			//{
+			//	_walkingRight = true;
+			//	_sprite = _spriteMoveRight;
+			//}
+		}
+		else
+		{
+			_pos = nextPos;
+		}
+	}
 
 	// 화면 경계 체크
-	if (_pos.x < 200) 
-	{ 
-		_pos.x = 200; 
-		_walkingRight = true; 
-		_sprite = _spriteMoveRight;	// 오른쪽 이미지로 교체
-	}
-	
-	if (_pos.x > 500) 
-	{
-		_pos.x = 500; 
-		_walkingRight = false; 
-		_sprite = _spriteMoveLeft;	// 왼쪽 이미지로 교체
+	//if (_pos.x < 400) 
+	//{ 
+	//	_walkingRight = true; 
+	//	_sprite = _spriteMoveRight;
+	//	_pos.x = 400; 
+	//}
+	//
+	//if (_pos.x > 500) 
+	//{
+	//	_pos.x = 500; 
+	//	_walkingRight = false; 
+	//	_sprite = _spriteMoveLeft;
 
-	}
+	//}
 
 	_sprite->updateComponent(deltaTime);
 }

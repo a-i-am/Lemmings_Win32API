@@ -55,9 +55,6 @@
     <Filter Include="소스 파일\Game\Lemmings Acting">
       <UniqueIdentifier>{b6300b46-c329-4aeb-ae1b-90b7f01bc0f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Collision">
-      <UniqueIdentifier>{015833c8-f17b-4e00-a3bf-d2a2531e5d91}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -168,9 +165,6 @@
     <ClInclude Include="Component.h">
       <Filter>소스 파일\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>소스 파일\Collision</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Defines.cpp">
@@ -259,9 +253,6 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>소스 파일\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

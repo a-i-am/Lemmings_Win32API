@@ -70,9 +70,10 @@ void SpriteRenderer::renderComponent(HDC hdc, Vector pos)
 	int32 srcY = frameY * _texture->getFrameHeight();
 
 
+
 	_texture->render(hdc, pos, Vector(srcX, srcY),
 		Vector(_frameSizeX, _frameSizeY), Vector(_frameRatioX, _frameRatioY)
-		,_applyCameraPos);
+		);
 }
 
 void SpriteRenderer::setAnimationClip(int32 startIndex, int32 totalCount)

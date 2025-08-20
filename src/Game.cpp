@@ -34,6 +34,7 @@ void Game::init(HWND hwnd)
 
 	//// 시작씬은 게임으로 설정
 	_currScene = new GameScene();
+	this->setGameState(_currScene);
 	_currScene->init();
 }
 

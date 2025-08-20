@@ -128,7 +128,6 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="CheckLevelScene.h" />
-    <ClInclude Include="Collider.h" />
     <ClInclude Include="common_defs.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cursor.h" />
@@ -167,7 +166,6 @@
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CheckLevelScene.cpp" />
-    <ClCompile Include="Collider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Defines.cpp" />

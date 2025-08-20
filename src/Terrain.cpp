@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Terrain.h"
-#include "Collider.h"
 
 Terrain::Terrain(Vector pos) : Super(pos)
 {
@@ -13,42 +12,74 @@ void Terrain::load()
 	_width = GWinSizeX;
 	_height = GWinSizeY;
 	
+	
 	Texture* mapTexture = _levelTexture->getTexture();
+	
 	BYTE* mapRawData = mapTexture->getRawData();
 
-
+	// 픽셀 충돌체크용 데이터 만들기
 	_pixelData.resize(_width * _height);
 
+	float scaleX = (float)mapTexture->getoriginTextureWidth() / _width;
+	float scaleY = (float)mapTexture->getoriginTextureHeight() / _height;
 
-	int rowSize = _width * 4; // 32bit → 4바이트 per 픽셀
-	
+	// _bitmapInfo.bmiHeader.biBitCount : 32
+	int biBitCount = 32;
+	int rowStride = ((mapTexture->getoriginTextureWidth() * biBitCount + 31) / 32) * 4;
+
+	// BGR(A) → COLORREF 변환 (픽셀 충돌)
 	for (int y = 0; y < _height; ++y)
 	{
+		int srcY = (int)(y * scaleY);
 		for (int x = 0; x < _width; ++x)
 		{
-			int rawDataIndex = (_height - 1 - y) * (_width * 4) + x * 4;
-			BYTE red = mapRawData[rawDataIndex + 2];
-			BYTE green = mapRawData[rawDataIndex + 1];
+			int srcX = (int)(x * scaleX);
+			int rawDataIndex = (mapTexture->getoriginTextureHeight() - 1 - srcY) * rowStride + srcX * 4;
+
 			BYTE blue = mapRawData[rawDataIndex + 0];
-			//BYTE alpha = _rawData[index + 3]; // 사용하지 않아도 무방
+			BYTE green = mapRawData[rawDataIndex + 1];
+			BYTE red = mapRawData[rawDataIndex + 2];
 
-			if (RGB(red, green, blue) == RGB(255, 255, 255)) 
-			{
-				_pixelData[y * _width + x] = 0;
-
-				// 알파 마스크 처리
-				_pixelData[rawDataIndex + 2] = 0; 
-				_pixelData[rawDataIndex + 1] = 0;
-				_pixelData[rawDataIndex + 0] = 0;
-
-				_pixelData[y * _width + x] = 0;
-			}
-			else
-			{
-				_pixelData[y * _width + x] = 1; // 충돌 가능
-			}
+			_pixelData[y * _width + x] = RGB(red, green, blue);
 		}
 	}
+
+	//}
+
+	//	for (int y = 1; y < _height - 1; ++y)
+	//{
+	//	for (int x = 1; x < _width - 1; ++x)
+	//	{
+	//		COLORREF currentPixelColor = mapTexture->getPixelColor(x, y);
+	//		
+	//		// 현재 픽셀이 검은색도 아니고 흰색도 아닌 경우에만 검사
+	//		// 흰색은 맵의 배경이므로 충돌 영역에서 제외
+	//		if (currentPixelColor != RGB(0, 0, 0) && currentPixelColor != RGB(255, 255, 255))
+	//		{
+	//			bool isEdge = false;
+	//			// (주변 8방향 검사 로직)
+	//			// ...
+	//			for (int dy = -1; dy <= 1; ++dy) {
+	//				for (int dx = -1; dx <= 1; ++dx) {
+	//					if (dx == 0 && dy == 0) continue;
+	//					COLORREF neighborColor = mapTexture->getPixelColor(x + dx, y + dy);
+	//					if (neighborColor == RGB(0, 0, 0))
+	//					{
+	//						isEdge = true;
+	//						break;
+	//					}
+	//				}
+	//				if (isEdge) break;
+	//			}
+
+	//			if (isEdge)
+	//			{
+	//				_pixelData[y * _width + x] = 1;
+	//			}
+	//		}
+	//	}
+	//}
+
 }
 
 Vector Terrain::worldToLocal(float worldX, float worldY) const
@@ -66,4 +97,3 @@ bool Terrain::isSolid(int x, int y) const
 		return false;
 	return _pixelData[y * _width + x] != 0;
 }
-

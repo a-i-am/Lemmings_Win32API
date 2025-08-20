@@ -25,5 +25,5 @@ void ImageRenderer::renderComponent(HDC hdc, Vector pos)
 	if (_texture == nullptr)
 		return;
 
-	_texture->render(hdc, pos, Vector(0, 0), Vector(_texture->getTextureWidth(), _texture->getTextureHeight()), Vector(1.f, 1.f), _applyCameraPos);
+	_texture->render(hdc, pos, Vector(0, 0), Vector(_texture->getTextureWidth(), _texture->getTextureHeight()), Vector(1.f, 1.f));
 }

@@ -14,10 +14,8 @@ public:
 	virtual void renderComponent(HDC hdc, Vector pos) override;
 
 	Texture* getTexture() { return _texture; }
-	void setApplyCameraPos(bool apply) { _applyCameraPos = apply; }
 
 private:
 	Texture* _texture = nullptr;	// 리소스 매니저를 통해서 가져온 정보 : 공용 자산
-	bool _applyCameraPos = true;
 };
 

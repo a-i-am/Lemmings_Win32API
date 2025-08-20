@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Actor.h"
-#include "Collider.h"
 #include "SpriteRenderer.h"
 #include "Job.h"
 //#include <memory>
