@@ -16,7 +16,10 @@ public:
 	bool isWalkingRight();
 	void setWalkingRight(bool right);
 
+
+
 private:
+	bool isSolid(Vector nextPos);
 	bool outOfMap();
 	//Job* job;
 	SpriteRenderer* _sprite = nullptr;  // 원본 생성된 객체중에서 현재는 무슨 상태를 그려야하는지 나타내는 변수

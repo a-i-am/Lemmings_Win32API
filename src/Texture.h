@@ -24,10 +24,14 @@ public:
 
 	HDC getHDC() const { return _hdc; }
 	HBITMAP getBitmap() const { return _hBitmap; }
-	BYTE* getRawData() const { return _rawData; }
+	const vector<COLORREF>& getPixelData() const { return _pixelData; }
 
 	bool isCenterAligned() const { return _centerAlign; }
 	void setCenterAlign(bool center) { _centerAlign = center; }
+
+	void generateCollisionData(int32 targetWidth, int32 targetHeight);
+	
+
 
 	//COLORREF getPixelColor(int x, int y) const
 	//{
@@ -43,7 +47,7 @@ private:
 	HDC			_hdc = nullptr;
 	BITMAPINFO	_bitmapInfo = {};
 	BYTE* _rawData = nullptr;
-	vector<COLORREF> _colorData;
+	vector<COLORREF> _pixelData;
 	
 	// 텍스처 관련 정보
 	int32 _width;

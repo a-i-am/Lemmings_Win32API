@@ -21,6 +21,11 @@ public:
 		_frameSizeX = sizeX, _frameSizeY = sizeY;
 		_frameRatioX = xRatio, _frameRatioY = yRatio;
 	}
+	
+	Texture* getTexture() { return _texture; }
+
+	int32 srcX = 0;
+	int32 srcY = 0;
 
 private:
 
@@ -37,6 +42,8 @@ private:
 	// 현재 위치를 추적하는 변수
 	int32 _currFrameX = 0;
 	int32 _currFrameY = 0;
+
+
 
 
 	// 프레임 수 기반 애니메이션 재생

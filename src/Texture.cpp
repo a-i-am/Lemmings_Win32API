@@ -61,43 +61,51 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	_bitmapInfo.bmiHeader.biClrImportant = 0;
 
 
-	int rowStride = ((bit.bmWidth * _bitmapInfo.bmiHeader.biBitCount + 31) / 32) * 4;
-	int dwBmpSize = rowStride * bit.bmHeight;
+	ReleaseDC(Game::getInstance().getHwnd(), hdc);
+}
 
+void Texture::generateCollisionData(int32 targetWidth, int32 targetHeight)
+{
+	_pixelData.resize(targetWidth * targetHeight);
 
+	float scaleX = (float)_originTexSizeX / targetWidth;
+	float scaleY = (float)_originTexSizeY / targetHeight;
+
+	int rowStride = ((_originTexSizeX * _bitmapInfo.bmiHeader.biBitCount + 31) / 32) * 4;
+
+	int dwBmpSize = rowStride * _originTexSizeY;
 	_rawData = new BYTE[dwBmpSize];
-	
 
-	int ret = GetDIBits(hdc, bitmap, 0, bit.bmHeight, _rawData, &_bitmapInfo, DIB_RGB_COLORS);
+	GetDIBits(_hdc, _hBitmap, 0, _bitmapInfo.bmiHeader.biHeight, _rawData, &_bitmapInfo, DIB_RGB_COLORS);
 
-	float scaleX = (float)bit.bmWidth / GWinSizeX;
-	float scaleY = (float)bit.bmHeight / GWinSizeY;
-	
 	// BGR(A) → COLORREF 변환 (픽셀 충돌)
-	for (int y = 0; y < GWinSizeY; ++y)
+	for (int y = 0; y < targetHeight; ++y)
 	{
 		int srcY = (int)(y * scaleY);
-		for (int x = 0; x < GWinSizeX; ++x) 
+		for (int x = 0; x < targetWidth; ++x)
 		{
 			int srcX = (int)(x * scaleX);
-			int rawDataIndex = (bit.bmHeight - 1 - srcY) * rowStride + srcX * 4;
+			int rawDataIndex = (_originTexSizeY - 1 - srcY) * rowStride + srcX * 4;
 
 			BYTE blue = _rawData[rawDataIndex + 0];
 			BYTE green = _rawData[rawDataIndex + 1];
 			BYTE red = _rawData[rawDataIndex + 2];
 
-			// 흰색 -> 검정색 배경색 적용
-			if (RGB(red, green, blue) == RGB(255, 255, 255))
+			COLORREF color = RGB(red, green, blue);
+
+			if (color == RGB(255, 255, 255))
 			{
-				_rawData[rawDataIndex + 2] = 0;
-				_rawData[rawDataIndex + 1] = 0;
+				color = RGB(0, 0, 0);
 				_rawData[rawDataIndex + 0] = 0;
+				_rawData[rawDataIndex + 1] = 0;
+				_rawData[rawDataIndex + 2] = 0;
 			}
+
+			_pixelData[y * targetWidth + x] = color;
 		}
 	}
-
-	ReleaseDC(Game::getInstance().getHwnd(), hdc);
 }
+
 
 void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vector ratio)
 {
@@ -141,8 +149,6 @@ void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vecto
 					_transparent);								// 어떤색상을 투명하게 그릴까
 		}
 }
-
-
 
 
 /*

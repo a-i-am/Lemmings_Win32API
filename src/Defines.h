@@ -1,8 +1,8 @@
 #pragma once
 
 //  우리가 정의하는 공용 선언들.
-constexpr int GWinSizeX = 1250;
-constexpr int GWinSizeY = 750;
+constexpr int32 GWinSizeX = 1250;
+constexpr int32 GWinSizeY = 750;
 
 //const int LEVEL_SIZE_X = 20;
 //const int LEVEL_SIZE_Y = 36;

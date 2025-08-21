@@ -66,8 +66,8 @@ void SpriteRenderer::renderComponent(HDC hdc, Vector pos)
 
 	// 원본텍스처의 시작 위치를 계산한다.
 	// 텍스처의 특정 frame 으로 그려야 해서
-	int32 srcX = frameX * _texture->getFrameWidth();
-	int32 srcY = frameY * _texture->getFrameHeight();
+	srcX = frameX * _texture->getFrameWidth();
+	srcY = frameY * _texture->getFrameHeight();
 
 
 

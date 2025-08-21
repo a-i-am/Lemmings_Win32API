@@ -1,4 +1,4 @@
-#include "pch.h"
+ï»¿#include "pch.h"
 #include "Terrain.h"
 
 Terrain::Terrain(Vector pos) : Super(pos)
@@ -7,80 +7,18 @@ Terrain::Terrain(Vector pos) : Super(pos)
 
 void Terrain::load()
 {
-	// ÅØ½ºÃ³, Äİ¶óÀÌ´õ ·Îµå
-	_levelTexture = CreateTextureComponent("map", GWinSizeX, GWinSizeY);
 	_width = GWinSizeX;
 	_height = GWinSizeY;
 	
-	
-	Texture* mapTexture = _levelTexture->getTexture();
-	
-	BYTE* mapRawData = mapTexture->getRawData();
-
-	// ÇÈ¼¿ Ãæµ¹Ã¼Å©¿ë µ¥ÀÌÅÍ ¸¸µé±â
-	_pixelData.resize(_width * _height);
-
-	float scaleX = (float)mapTexture->getoriginTextureWidth() / _width;
-	float scaleY = (float)mapTexture->getoriginTextureHeight() / _height;
-
-	// _bitmapInfo.bmiHeader.biBitCount : 32
-	int biBitCount = 32;
-	int rowStride = ((mapTexture->getoriginTextureWidth() * biBitCount + 31) / 32) * 4;
-
-	// BGR(A) ¡æ COLORREF º¯È¯ (ÇÈ¼¿ Ãæµ¹)
-	for (int y = 0; y < _height; ++y)
-	{
-		int srcY = (int)(y * scaleY);
-		for (int x = 0; x < _width; ++x)
-		{
-			int srcX = (int)(x * scaleX);
-			int rawDataIndex = (mapTexture->getoriginTextureHeight() - 1 - srcY) * rowStride + srcX * 4;
-
-			BYTE blue = mapRawData[rawDataIndex + 0];
-			BYTE green = mapRawData[rawDataIndex + 1];
-			BYTE red = mapRawData[rawDataIndex + 2];
-
-			_pixelData[y * _width + x] = RGB(red, green, blue);
-		}
-	}
-
-	//}
-
-	//	for (int y = 1; y < _height - 1; ++y)
-	//{
-	//	for (int x = 1; x < _width - 1; ++x)
-	//	{
-	//		COLORREF currentPixelColor = mapTexture->getPixelColor(x, y);
-	//		
-	//		// ÇöÀç ÇÈ¼¿ÀÌ °ËÀº»öµµ ¾Æ´Ï°í Èò»öµµ ¾Æ´Ñ °æ¿ì¿¡¸¸ °Ë»ç
-	//		// Èò»öÀº ¸ÊÀÇ ¹è°æÀÌ¹Ç·Î Ãæµ¹ ¿µ¿ª¿¡¼­ Á¦¿Ü
-	//		if (currentPixelColor != RGB(0, 0, 0) && currentPixelColor != RGB(255, 255, 255))
-	//		{
-	//			bool isEdge = false;
-	//			// (ÁÖº¯ 8¹æÇâ °Ë»ç ·ÎÁ÷)
-	//			// ...
-	//			for (int dy = -1; dy <= 1; ++dy) {
-	//				for (int dx = -1; dx <= 1; ++dx) {
-	//					if (dx == 0 && dy == 0) continue;
-	//					COLORREF neighborColor = mapTexture->getPixelColor(x + dx, y + dy);
-	//					if (neighborColor == RGB(0, 0, 0))
-	//					{
-	//						isEdge = true;
-	//						break;
-	//					}
-	//				}
-	//				if (isEdge) break;
-	//			}
-
-	//			if (isEdge)
-	//			{
-	//				_pixelData[y * _width + x] = 1;
-	//			}
-	//		}
-	//	}
-	//}
+	_levelTexture = CreateTextureComponent("map", _width, _height);
+	_levelTexture->getTexture()->generateCollisionData(_width, _height);
 
 }
+//
+//void Terrain::update(float deltaTime)
+//{
+//	_levelTexture->updateComponent(deltaTime);
+//}
 
 Vector Terrain::worldToLocal(float worldX, float worldY) const
 {
@@ -90,10 +28,10 @@ Vector Terrain::worldToLocal(float worldX, float worldY) const
 	return Vector{ worldX - mapLeft, worldY - mapTop };
 }
 
-// Æ¯Á¤ ÁÂÇ¥°¡ Ãæµ¹ ¿µ¿ªÀÎÁö ÆÇÁ¤
-bool Terrain::isSolid(int x, int y) const
+// íŠ¹ì • ì¢Œí‘œê°€ ì¶©ëŒ ì˜ì—­ì¸ì§€ íŒì •
+bool Terrain::isSolid(int32 x, int32 y) const
 {
 	if (x < 0 || x >= _width || y < 0 || y >= _height)
 		return false;
-	return _pixelData[y * _width + x] != 0;
+	return _levelTexture->getTexture()->getPixelData()[y * _width + x] != 0;
 }
