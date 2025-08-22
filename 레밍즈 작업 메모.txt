@@ -31,3 +31,20 @@ y값은 y < spriteHeight / 2 - n 으로  발바닥 높이 기준으로, 해당 �
 (월드 좌표에서늘어난 만큼)
 
 스프라이트 크기는 RECT 또는 SIZE로 관리
+
+
+	// 화면 경계 체크
+	//if (_pos.x < 400) 
+	//{ 
+	//	_walkingRight = true; 
+	//	_sprite = _spriteMoveRight;
+	//	_pos.x = 400; 
+	//}
+	//
+	//if (_pos.x > 500) 
+	//{
+	//	_pos.x = 500; 
+	//	_walkingRight = false; 
+	//	_sprite = _spriteMoveLeft;
+
+	//}

@@ -36,15 +36,3 @@ bool Terrain::isSolid(int32 x, int32 y) const
 	return _levelTexture->getTexture()->getPixelData()[y * _width + x] != 0;
 }
 
-int Terrain::getGroundY(float x, float startY, float maxCheckDist)
-{
-	for (int dy = 0; dy < maxCheckDist; ++dy)
-	{
-		int checkY = static_cast<int>(startY + dy);
-		if (isSolid(x, checkY))
-		{
-			return checkY; // 제일 먼저 닿은 픽셀의 Y 좌표
-		}
-	}
-	return -1; // 못 찾음
-}

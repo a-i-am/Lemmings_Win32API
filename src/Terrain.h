@@ -13,7 +13,6 @@ public:
 
     Vector worldToLocal(float worldX, float worldY) const;
     bool isSolid(int32 x, int32 y) const;
-    int getGroundY(float x, float startY, float maxCheckDist);
 
     // Collider를 통해 Lemming 충돌 체크에 사용 가능
     // Collider* getCollider() { return _collider.get(); }

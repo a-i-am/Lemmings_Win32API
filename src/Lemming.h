@@ -13,12 +13,15 @@ public:
 	void update(float deltaTime) override;
 	void render(HDC hdc) override;
 
+
 	bool isWalkingRight();
 	void setWalkingRight(bool right);
 
 
 
 private:
+	bool isSolidWall(Vector nextPos);
+	bool isSolidFloor(Vector nextPos, float& landedY);
 	bool isSolid(Vector nextPos);
 	bool outOfMap();
 	//Job* job;
@@ -27,8 +30,10 @@ private:
 	SpriteRenderer* _spriteMoveRight = nullptr;	// 盔夯 积己等 按眉
 	SpriteRenderer* _spriteMoveLeft = nullptr;	// 盔夯 积己等 按眉
 	SpriteRenderer* _spriteDig = nullptr; // 盔夯 积己等 按眉
-	bool  _isWalkingRight = true;
+	bool  _isWalkingRight;
+	bool _isOnGround = false;
 	float _speed = 50.f;
+	
 
 
 };
