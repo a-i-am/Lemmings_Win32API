@@ -33,7 +33,7 @@ void GameScene::init()
 	_terrain->load();
 	_actors.push_back(_terrain);
 
-	Actor* trapdoors = new Actor(Vector{ 650, 200 });
+	Actor* trapdoors = new Actor(Vector{ 650, 150.f });
 	trapdoors->CreateSpriteComponent("trapdoors", 1.0f, 41 * 3.f, 25 * 3.f);
 	trapdoors->getComponent<SpriteRenderer>()->setAnimationClip(0, 10);
 	_actors.push_back(trapdoors);
@@ -43,7 +43,7 @@ void GameScene::init()
 	doors->getComponent<SpriteRenderer>()->setAnimationClip(0, 6);
 	_actors.push_back(doors);
 
-	_lemmingPos = { 650, 200.f };
+	_lemmingPos = { 650, 150.f };
 	Lemming* lemming = new Lemming(Vector{ _lemmingPos });
 
 	_actors.push_back(lemming);

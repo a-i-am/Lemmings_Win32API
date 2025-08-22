@@ -6,7 +6,7 @@
 // Game::init() 또는 SceneManager 초기화 시 호출하도록 해야 함
 void ResourceManager::init()
 {
-    loadTexture("map", "levels/fun1/map.bmp", -1, 1, 1);
+    loadTexture("map", "levels/fun1/map_Flat.bmp", -1, 1, 1);
     loadTexture("trapdoors", "levels/lemming_trapdoors1.bmp", RGB(255, 255, 255), 1, 10);
     loadTexture("doors", "levels/lemming_doors.bmp", RGB(255, 255, 255), 3, 8);
     loadTexture("lemming", "lemming_anim.bmp", RGB(255, 255, 255), 16, 14);

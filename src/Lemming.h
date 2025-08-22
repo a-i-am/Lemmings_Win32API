@@ -27,7 +27,7 @@ private:
 	SpriteRenderer* _spriteMoveRight = nullptr;	// 盔夯 积己等 按眉
 	SpriteRenderer* _spriteMoveLeft = nullptr;	// 盔夯 积己等 按眉
 	SpriteRenderer* _spriteDig = nullptr; // 盔夯 积己等 按眉
-	bool  _walkingRight = true;
+	bool  _isWalkingRight = true;
 	float _speed = 50.f;
 
 
