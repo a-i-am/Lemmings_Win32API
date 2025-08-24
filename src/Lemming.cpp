@@ -17,8 +17,8 @@ Lemming::Lemming(Vector pos) : Super(pos)
 	// 땅파는 모션
 	//_spriteDig = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
 	//_spriteDig->setAnimationClip(0, 8);
-	_spriteMoveRight->getTexture()->generateCollisionData(256, 224);
-	_spriteMoveLeft->getTexture()->generateCollisionData(256, 224);
+	_spriteMoveRight->getTexture()->GenerateCollisionData(256, 224);
+	_spriteMoveLeft->getTexture()->GenerateCollisionData(256, 224);
 
 	setWalkingRight(true);
 	_sprite = _spriteMoveRight;
@@ -35,280 +35,170 @@ void Lemming::setWalkingRight(bool value)
 
 	if (_isWalkingRight) {
 		state = WALKING_RIGHT_STATE;
+
+		if(_sprite != _spriteMoveRight) 
+		_sprite = _spriteMoveRight;
 	}
 	else {
-		_isWalkingRight = false;
 		state = WALKING_LEFT_STATE;
+
+		if (_sprite != _spriteMoveLeft)
+			_sprite = _spriteMoveLeft;
+
 	}
 }
-
-
 
 void Lemming::update(float deltaTime)
 {
 	GameScene* gameScene = Game::getGameScene();
-	//Vector nextPos = _pos;	 // 10, 10
-	if(!gameScene || !gameScene->GetTerrain()) return;
+	if (!gameScene || !gameScene->GetTerrain()) return;
 
-	//float landedY;
-	//if (isSolidFloor(nextPos, landedY))
-	//{
-	//	_isOnGround = true;
-	//	nextPos.y = landedY;
-	//}
-	//else
-	//{
-	//	// 아래 방향 중력/낙하 처리 (간단히 1픽셀씩 내려가면서 충돌 확인
-	//	nextPos.y += 20.0f * deltaTime;
-	//	_pos.y = nextPos.y;
-	//}
-
-	//float moveAmount = _speed * deltaTime;
-	//// 수평 이동 처리: 바닥에 있고 벽이 없을 때만
-	//if (_isOnGround)
-	//{
-	//	// 이동할 다음 x 위치를 미리 계산
-	//	
-	//	if (_isWalkingRight)
-	//		nextPos.x += _speed * deltaTime;
-	//	else
-	//		nextPos.x -= _speed * deltaTime;
-	//
-	//}
-// 바닥에 닿았을 때 _pos.y는 업데이트하지 않음
-// 대신 nextPos.y를 사용하여 정확한 충돌 위치를 찾을 수 있음
-// 아래로 떨어지는데 충돌체크 항상 수행
-// 아래쪽 발밑 Y 값을 찾아와야한다.
-// nextPos.y = 충돌된 Y
-// 발 아래가 충돌이 안되었다면 떨어지는중.
-// _onGround = true or false;
-
+	Vector nextPos = _pos;
 	int fall;
 
 	switch (state)
 	{
 	case WALKING_LEFT_STATE:
-		_pos += Vector(-1, +2);
+		// 걷기
+		nextPos += Vector(-1, 0) * deltaTime * _speed;
 
-		if (isSolid())
+		// 벽 충돌 검사
+		if (isSolid(nextPos))
 		{
-			_pos -= Vector(-1, +2);
-			_isWalkingRight = true;
+			// 되돌리기 + 방향 전환
+			nextPos -= Vector(-1, 0) * deltaTime * _speed;
+			setWalkingRight(true);
 		}
 		else
 		{
-			fall = isSolidFloor(4);
+			// 낙하 검사
+			fall = isSolidFloor(nextPos, 4);
 			if (fall < 4) {
-				_pos += Vector(0, fall);
+				nextPos += Vector(0, fall);
 			}
-
 		}
 		break;
+
 	case WALKING_RIGHT_STATE:
-		_pos += Vector(1, +2);
-		if (isSolid())
+		// 걷기
+		nextPos += Vector(+1, 0) * deltaTime * _speed;
+
+		// 벽 충돌 검사
+		if (isSolid(nextPos))
 		{
-			_pos -= Vector(1, +2);
-			_isWalkingRight = false;
+			nextPos -= Vector(+1, 0) * deltaTime * _speed;
+			setWalkingRight(false);
 		}
 		else
 		{
-			fall = isSolidFloor(4);
+			fall = isSolidFloor(nextPos, 4);
 			if (fall < 4) {
-				_pos += Vector(0, fall);
+				nextPos += Vector(0, fall);
 			}
 		}
 		break;
 	}
-	
+
+	_pos = nextPos;
 	_sprite->updateComponent(deltaTime);
 }
 
-void Lemming::render(HDC hdc)
-{
-	if (_sprite)
-	{
-		_sprite->renderComponent(hdc, _pos);
-	}
 
-
-#pragma region 충돌 영역 표시
-//	HPEN hOldPen, hNewPen;
-//	HBRUSH hOldBrush, hNewBrush;
-//
-//	hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-//	hNewBrush = (HBRUSH)GetStockObject(NULL_BRUSH);//투명 브러쉬
-//
-//	hOldPen = (HPEN)SelectObject(hdc, hNewPen);
-//	hOldBrush = (HBRUSH)SelectObject(hdc, hNewBrush);
-//
-//	const int spriteWidth = 16 * 3;
-//	const int spriteHeight = 16 * 3;
-//
-//	// 레밍 좌표를 좌상단 좌표로 변환
-//	int left = _pos.x - spriteWidth / 2;
-//	int top = _pos.y - spriteHeight / 2;
-//	int right = _pos.x + spriteWidth / 2;
-//	int bottom = _pos.y + spriteHeight / 2;
-//
-//	// 바닥 충돌 검사 ( 노란색 )
-//	hNewPen = CreatePen(PS_SOLID, 1, RGB(255, 255, 0));
-//	SelectObject(hdc, hNewPen);
-//
-//	int floorCheckLeft = left;
-//	int floorCheckTop = bottom - (3 * 3); // 바닥 검사 영역을 레밍 발바닥 근처로 설정
-//	int floorCheckRight = right;
-//	int floorCheckBottom = bottom + (3 * 3);
-//	Rectangle(hdc, floorCheckLeft, floorCheckTop, floorCheckRight, floorCheckBottom);
-//
-//	// 벽 충돌 검사 ( 초록색 )
-//	hNewPen = CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-//	SelectObject(hdc, hNewPen);
-//
-//	int wallCheckWidth = 3 * 3; // 3픽셀 * 3배 스케일
-//	int wallCheckHeight = spriteHeight;
-//
-//	// 오른쪽/왼쪽 벽 충돌 검사
-//	int rightWallLeft = right - wallCheckWidth;
-//	int rightWallTop = top;
-//	int rightWallRight = right;
-//	int rightWallBottom = bottom;
-//
-//	int leftWallLeft = left;
-//	int leftWallTop = top;
-//	int leftWallRight = left + wallCheckWidth;
-//	int leftWallBottom = bottom;
-//
-//	// 펜과 브러쉬 복원
-//	SelectObject(hdc, hOldPen);
-//	SelectObject(hdc, hOldBrush);
-//	DeleteObject(hNewPen);
-//	DeleteObject(hNewBrush);
-#pragma endregion
-
-}
-
-int Lemming::isSolidFloor(int maxFall)
+bool Lemming::isSolid(Vector nextPos)
 {
 	GameScene* gameScene = Game::getGameScene();
-	if (gameScene == nullptr)
-		return false;
+	if (!gameScene || !gameScene->GetTerrain()) return false;
 
-	if (gameScene->GetTerrain() == nullptr)
-		return false;
+	_debugFrontPoints.clear();
 
-	const int spriteWidth = 16;
-	const int spriteHeight = 16;
-	const int textureWidth = _sprite->getTexture()->getTextureWidth();
-	const int scale = 3;
+	// 발 앞으로 충돌 검사 (스프라이트 좌표 기준)
+	Vector frontPoint1(2, 5);
+	Vector frontPoint2(-2, 5);
 
-	bool bContact = false;
-	int fall = 0;
+	Vector mapCollisionPos1 = nextPos + (frontPoint1 * 3.f);
+	Vector mapCollisionPos2 = nextPos + (frontPoint2 * 3.f);
 
-	Vector lemingTexturePos(_sprite->srcX + spriteWidth * 0.5f, _sprite->srcY + spriteHeight * 0.5f);
-	
-	Vector posBase = _pos;
+	_debugFrontPoints.push_back(mapCollisionPos1);
+	_debugFrontPoints.push_back(mapCollisionPos2);
 
-	//for (int y = spriteHeight / 2 + 1; y > -spriteHeight / 2; --y)
-	//{
-	//	for (int x = -spriteWidth / 2; x < spriteWidth / 2; ++x) // 중간 기준 왼~오 전부
-	//	{
-	//		Vector mapCollisionPos = Vector(lemingTexturePos.x + (x * scale),
-	//										lemingTexturePos.y + (y * scale));
-	//	}
-	//}
-
-	while (fall < maxFall && !bContact)
+	// Terrain에 실제 픽셀이 있으면 벽
+	if (gameScene->GetTerrain()->isSolid(mapCollisionPos1.x, mapCollisionPos1.y) != 0 ||
+		gameScene->GetTerrain()->isSolid(mapCollisionPos2.x, mapCollisionPos2.y) != 0)
 	{
-		if ((gameScene->GetTerrain()->isSolid(posBase.x, posBase.y) == 0)
-		&& (gameScene->GetTerrain()->isSolid(posBase.x + 1, posBase.y) == 0))
+		return true;
+	}
+
+	return false;
+}
+int Lemming::isSolidFloor(Vector nextPos, int maxFall)
+{
+	GameScene* gameScene = Game::getGameScene();
+	if (!gameScene || !gameScene->GetTerrain()) return 0;
+
+	_debugFloorPoints.clear();
+
+	// 레밍 발바닥 기준 좌표 (스프라이트 좌상단 기준 offset)
+	Vector footPoint1(2, 16);
+	Vector footPoint2(-2, 16);
+
+	int fall = 0;
+	bool bContact = false;
+
+	while ((fall < maxFall) && !bContact)
+	{
+		Vector mapCollisionPos1 = nextPos + (footPoint1 + Vector(0, fall)) * 3.f;
+		Vector mapCollisionPos2 = nextPos + (footPoint2 + Vector(0, fall)) * 3.f;
+
+		_debugFloorPoints.push_back(mapCollisionPos1);
+		_debugFloorPoints.push_back(mapCollisionPos2);
+
+		// 두 지점 모두 빈 공간이면 계속 낙하
+		if (gameScene->GetTerrain()->isSolid(mapCollisionPos1.x, mapCollisionPos1.y) == 0 &&
+			gameScene->GetTerrain()->isSolid(mapCollisionPos2.x, mapCollisionPos2.y) == 0)
 		{
 			fall += 1;
 		}
 		else
 		{
-			bContact = true;
+			bContact = true; // 땅을 찾음
+
 		}
 	}
 
-	//		// 레밍 텍스처 중에 충돌검사할 좌표만 넣는다
-	//		Vector lemingCollisionPos = Vector(lemingTexturePos.x + x,
-	//										   lemingTexturePos.y + y);
-	//		// 월드좌표 위치 + 레밍 충돌 검사할 범위 = 맵과 충돌감지할 레밍의 실제 렌더 범위
-	//		// 실제 맵 픽셀과 충돌하는지 확인하기 위해 렌더링되는 비율 똑같이 맞춰준다.
-
-	//		std::stringstream ss;
-	//		ss << "[DEBUG] x=" << x
-	//			<< " lemingTex=(" << lemingCollisionPos.x << "," << lemingCollisionPos.y << ")"
-	//			<< " map=(" << mapCollisionPos.x << "," << mapCollisionPos.y << ")"
-	//			<< " nextPos=(" << _pos.x << "," << _pos.y << ")\n";
-	//		OutputDebugStringA(ss.str().c_str());
-	//		// 그 값을 레밍즈 원본 텍스처의 픽셀을 구하는 좌표계에 넣는다.
-	//		if (_sprite->getTexture()->getPixelData()[lemingCollisionPos.y * textureWidth + lemingCollisionPos.x] != 0)
-	//		{
-	//			// 맵과 충돌하니?
-	//			if (gameScene->GetTerrain()->isSolid(mapCollisionPos.x, mapCollisionPos.y))
-	//			{
-	//				// 맵과의 충돌 지점을 넘겨준다.
-	//				//landedY = mapCollisionPos.y;
-	//				
-	//				return true;
-	//			}
-	//		}
-	//	}
-	//}
-
-	return false;
+	return fall;
 }
 
-bool Lemming::isSolid()
+void Lemming::Render(HDC hdc)
 {
-	// nextPos 는 월드상(윈도우 화면상의) 좌표계
-	GameScene* gameScene = Game::getGameScene();
-	if (gameScene == nullptr)
-		return false;
-
-	if (gameScene->GetTerrain() == nullptr)
-		return false;
-
-	const int spriteWidth = 16;
-	const int spriteHeight = 16;
-	const int textureWidth = _sprite->getTexture()->getTextureWidth();
-	const int scale = 3;
-
-	// 스프라이트가 그려지고 있는 위치는 센터기준
-	Vector lemingTexturePos(_sprite->srcX + spriteWidth*0.5f, _sprite->srcY + spriteHeight * 0.5f);
-	
-	Vector posBase = _pos;
-	posBase += Vector(7, 15);
-
-	if ((gameScene->GetTerrain()->isSolid(posBase.x, posBase.y) == 0)
-		&& (gameScene->GetTerrain()->isSolid(posBase.x + 1, posBase.y) == 0))
+	if (_sprite)
 	{
-		return false;
+		_sprite->renderComponent(hdc, _pos);
+
+		GameScene* gameScene = Game::getGameScene();
+		if (!gameScene || !gameScene->GetTerrain()) return;
+		Terrain* terrain = gameScene->GetTerrain();
+
+		// 🔹 디버그 충돌 영역 표시
+
+		HBRUSH frontBrush = CreateSolidBrush(RGB(0, 255, 0));
+		for (auto& p : _debugFrontPoints)
+		{
+			// 월드 좌표 → Terrain 좌상단 기준 화면 좌표
+			Vector local = terrain->worldToLocal(p.x, p.y);
+			RECT rc = { (int)local.x, (int)local.y, (int)local.x + 2, (int)local.y + 2 };
+			FillRect(hdc, &rc, frontBrush);
+		}
+		DeleteObject(frontBrush);
+
+		HBRUSH floorBrush = CreateSolidBrush(RGB(255, 0, 0));
+		for (auto& p : _debugFloorPoints)
+		{
+			Vector local = terrain->worldToLocal(p.x, p.y);
+			RECT rc = { (int)local.x, (int)local.y, (int)local.x + 2, (int)local.y + 2 };
+			FillRect(hdc, &rc, floorBrush);
+		}
+		DeleteObject(floorBrush);
 	}
-
-	
-	//for (int y = spriteHeight / 2 - 1; y > -spriteHeight / 2; --y) // Y축은 바닥부터 충돌체크하면 더 좋을것 같아서 반대로 뒤집어서 충돌체크
-	//{
-	//	for (int x = -spriteWidth / 2; x < spriteWidth / 2; ++x)
-	//	{
-	//		Vector lemingCollisionPos = Vector(lemingTexturePos.x + x, lemingTexturePos.y + y);
-
-	//		// 레밍스 원본 텍스처의 픽셀을 구하는 좌표계
-	//		if (_sprite->getTexture()->getPixelData()[lemingCollisionPos.y * textureWidth + lemingCollisionPos.x] != 0)
-	//		{
-	//			Vector mapCollisionPos = Vector(nextPos.x + (x*3), nextPos.y + (y*3));
-	//			if (gameScene->GetTerrain()->isSolid(mapCollisionPos.x, mapCollisionPos.y))
-	//			{
-	//				return true; 
-	//			}
-	//		}
-	//	}
-	//}
-
-
-	return true;
 }
 
 bool Lemming::outOfMap()

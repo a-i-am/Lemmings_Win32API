@@ -8,7 +8,7 @@ Texture::Texture()
 
 }
 
-void Texture::load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount)
+void Texture::Load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount)
 {
 	// BMP Texture Load 
 	
@@ -64,7 +64,7 @@ void Texture::load(string key, string texturePath, int32 transparent, int32 xFra
 	ReleaseDC(Game::getInstance().getHwnd(), hdc);
 }
 
-void Texture::generateCollisionData(int32 targetWidth, int32 targetHeight)
+void Texture::GenerateCollisionData(int32 targetWidth, int32 targetHeight)
 {
 	_pixelData.resize(targetWidth * targetHeight);
 
@@ -107,7 +107,7 @@ void Texture::generateCollisionData(int32 targetWidth, int32 targetHeight)
 }
 
 
-void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vector ratio)
+void Texture::Render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize)
 {
 	// 월드좌표를 카메라 좌표로 변환
 	Vector screenPos = _centerAlign ? Vector(pos.x - frameSize.x * 0.5f, pos.y - frameSize.y * 0.5f) : pos;
@@ -134,12 +134,12 @@ void Texture::render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, Vecto
 		{
 			// 텍스처의 전체 크기를 구하고, 애니메이션 되어야 하는 개수로 나누기를 하면, 한장의 Sprite 크기를 구할수 있다.
 			::TransparentBlt(hdc,
-					(int32)screenPos.x,	// 텍스처를 중심좌표로 그리기위해 size의 절반만큼 빼준다.
+					(int32)screenPos.x,
 					(int32)screenPos.y,
 					
 					// 텍스쳐가 화면에 보여질 크기
-					frameSize.x * ratio.x,
-					frameSize.y * ratio.y,
+					frameSize.x,
+					frameSize.y,
 					_hdc,										// 텍스처의 정보
 					(int32)srcPos.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
 					(int32)srcPos.y,								// 원본 텍스쳐의 Y	

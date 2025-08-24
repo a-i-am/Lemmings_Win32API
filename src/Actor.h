@@ -10,10 +10,11 @@ public:
 
     virtual void init();
     virtual void update(float deltaTime);
-    virtual void render(HDC hdc);
+    virtual void Render(HDC hdc);
 
     void setPosition(Vector pos);
     Vector getPosition() const;
+
 
     // 구현 포함된 템플릿 함수들
     //template <typename T, typename... Args>

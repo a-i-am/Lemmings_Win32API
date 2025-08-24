@@ -14,15 +14,10 @@ class Lemming : public Actor
 public:
 	Lemming(Vector pos);
 	void update(float deltaTime) override;
-	void render(HDC hdc) override;
+	void Render(HDC hdc) override;
 
 	void setWalkingRight(bool right);
 
-
-private:
-	bool _debugDrawCollision = false;
-	std::vector<Vector> _debugFloorPoints;
-	std::vector<Vector> _debugWallPoints;
 
 private:
 	enum WalkerState
@@ -31,10 +26,11 @@ private:
 	};
 private:
 	WalkerState state;
-
+	std::vector<Vector> _debugFrontPoints; // 벽 검사 픽셀들
+	std::vector<Vector> _debugFloorPoints;     // 바닥 검사 픽셀들
 private:
-	int isSolidFloor(int maxFall);
-	bool isSolid();
+	int isSolidFloor(Vector nextPos, int maxFall);
+	bool isSolid(Vector nextPos);
 	bool outOfMap();
 	//Job* job;
 	SpriteRenderer* _sprite = nullptr;  // 원본 생성된 객체중에서 현재는 무슨 상태를 그려야하는지 나타내는 변수
@@ -46,6 +42,4 @@ private:
 	bool  _isWalkingRight;
 	bool _isOnGround = false;
 	float _speed = 50.f;
-	
-	void toggleDebugDraw() { _debugDrawCollision = false; }
 };

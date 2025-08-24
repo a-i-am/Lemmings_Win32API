@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include "common_defs.h"
 
 class Texture;
 
@@ -21,14 +22,21 @@ public:
 		_frameSizeX = sizeX, _frameSizeY = sizeY;
 		_frameRatioX = xRatio, _frameRatioY = yRatio;
 	}
-	
+
+	int32 getSpriteWidth()  const { return  _spriteWidth; }
+	int32 getSpriteHeight() const { return _spriteHeight; }
+
 	Texture* getTexture() { return _texture; }
 
 	int32 srcX = 0;
 	int32 srcY = 0;
 
-private:
 
+
+
+
+
+private:
 	Texture* _texture = nullptr; // 리소스 매니저를 통해 가져온 정보 : 공용 자산
 
 	// 개별 텍스처가 현재 어떤 프레임을 그리고 있는지
@@ -44,7 +52,9 @@ private:
 	int32 _currFrameY = 0;
 
 
-
+	int32 _spriteWidth = 16;
+	int32 _spriteHeight = 16;
+	float _scale = 3.f;
 
 	// 프레임 수 기반 애니메이션 재생
 	int32 _startFrameIndex = 0;

@@ -82,12 +82,12 @@ bool Game::update(float deltaTime)
 	//	_currScene->PostUpdate(TimeManager::GetInstance()->GetDeltaTime());
 	//}
 
-void Game::render()
+void Game::Render()
 {
 	// 프론트 버퍼에 복사가 끝났으면, 백버퍼는 초기화
 	::PatBlt(_hdcBack, 0, 0, _rect.right, _rect.bottom, BLACKNESS);
 
-	_currScene->render(_hdcBack);
+	_currScene->Render(_hdcBack);
 
 	// 여분 도화지에 렌더링 끝.
 	// 한번 그림을 다 그렸으니, 이제는 프론트 버퍼에 복사.

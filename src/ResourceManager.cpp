@@ -39,6 +39,6 @@ Texture* ResourceManager::getTexture(string key)
 void ResourceManager::loadTexture(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount)
 {
     Texture* texture = new Texture();
-    texture->load(key, texturePath, transparent, xFrameCount, yFrameCount);
+    texture->Load(key, texturePath, transparent, xFrameCount, yFrameCount);
     _textures[key] = texture;
 }

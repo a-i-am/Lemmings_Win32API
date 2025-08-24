@@ -5,41 +5,32 @@ class Texture
 public:
 	Texture();
 
-	void load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount);
-	void render(HDC hdc, Vector pos, Vector srcPos, Vector srcSize, Vector ratio);
+	void Load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount);
+	void Render(HDC hdc, Vector pos, Vector srcPos, Vector srcSize);
 
-	void setTextureWidth(int32 width) { _width = width; }
-	void setTextureHeight(int32 height) { _height = height; }
-	int32 getTextureWidth() const  { return _width;  }
-	int32 getTextureHeight() const { return _height; }
+	void SetTextureWidth(int32 width) { _width = width; }
+	void SetTextureHeight(int32 height) { _height = height; }
+	int32 GetTextureWidth() const  { return _width;  }
+	int32 GetTextureHeight() const { return _height; }
 
-	int32 getoriginTextureWidth() const { return _originTexSizeX; }
-	int32 getoriginTextureHeight() const { return _originTexSizeY; }
+	int32 GetOriginTextureWidth() const { return _originTexSizeX; }
+	int32 GetOriginTextureHeight() const { return _originTexSizeY; }
 
-	int32 getFrameCountX() const { return _frameCountX; }
-	int32 getFrameCountY() const { return _frameCountY; }
+	int32 GetFrameCountX() const { return _frameCountX; }
+	int32 GetFrameCountY() const { return _frameCountY; }
 
-	int32 getFrameWidth() const { return _frameWidth; }
-	int32 getFrameHeight() const { return _frameHeight; }
+	int32 GetFrameWidth() const { return _frameWidth; }
+	int32 GetFrameHeight() const { return _frameHeight; }
 
-	HDC getHDC() const { return _hdc; }
-	HBITMAP getBitmap() const { return _hBitmap; }
-	const vector<COLORREF>& getPixelData() const { return _pixelData; }
+	HDC GetHDC() const { return _hdc; }
+	HBITMAP GetBitmap() const { return _hBitmap; }
+	const vector<COLORREF>& GetPixelData() const { return _pixelData; }
 
-	bool isCenterAligned() const { return _centerAlign; }
-	void setCenterAlign(bool center) { _centerAlign = center; }
+	bool IsCenterAligned() const { return _centerAlign; }
+	void SetCenterAlign(bool center) { _centerAlign = center; }
 
-	void generateCollisionData(int32 targetWidth, int32 targetHeight);
+	void GenerateCollisionData(int32 targetWidth, int32 targetHeight);
 	
-
-
-	//COLORREF getPixelColor(int x, int y) const
-	//{
-	//	if (x < 0 || y < 0 || x >= _width || y >= _height)
-	//		return RGB(0, 0, 0);
-	//	return _pixels[y * _width + x];
-	//}
-
 
 private:
 	// GDI ฐüทร

@@ -33,7 +33,7 @@ void Actor::update(float deltaTime)
         comp->updateComponent(deltaTime);
 }
 
-void Actor::render(HDC hdc)
+void Actor::Render(HDC hdc)
 {
     for (Component* comp : _components)
         comp->renderComponent(hdc, _pos);
@@ -49,6 +49,10 @@ Vector Actor::getPosition() const
     return _pos;
 }
 
+
+
+
+
 SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, int32 dur, int32 width, int32 height)
 {
     SpriteRenderer* sprite = new SpriteRenderer(spriteInfo, dur);
@@ -60,8 +64,8 @@ SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, int32 dur, int32
 ImageRenderer* Actor::CreateTextureComponent(string bitmapKey, int32 width, int32 height)
 {
     ImageRenderer* sprite = new ImageRenderer(bitmapKey, width, height);
-    sprite->getTexture()->setTextureWidth(width);
-    sprite->getTexture()->setTextureHeight(height);
+    sprite->getTexture()->SetTextureWidth(width);
+    sprite->getTexture()->SetTextureHeight(height);
     _components.emplace_back(sprite);
     return sprite;
 }

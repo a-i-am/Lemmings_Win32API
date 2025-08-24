@@ -77,7 +77,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
               float deltaTime = timeManager->getDeltaTime();
               
               game.update(deltaTime);
-              game.render();
+              game.Render();
 
               prev = now;
         }

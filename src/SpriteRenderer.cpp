@@ -12,8 +12,8 @@ SpriteRenderer::SpriteRenderer(string textureKey, float dur)
 	// TextureInfo에 추가하는 걸 고려 : 공용 자산. 객체마다 다르게 적용할 일이 없게
 	if (_texture)
 	{
-		int32 frameSizeX = _texture->getFrameCountX() != 0 ? (_texture->getTextureWidth() / _texture->getFrameCountX()) : _texture->getTextureWidth();
-		int32 frameSizeY = _texture->getFrameCountY() != 0 ? (_texture->getTextureHeight() / _texture->getFrameCountY()) : _texture->getTextureHeight();
+		int32 frameSizeX = _texture->GetFrameCountX() != 0 ? (_texture->GetTextureWidth() / _texture->GetFrameCountX()) : _texture->GetTextureWidth();
+		int32 frameSizeY = _texture->GetFrameCountY() != 0 ? (_texture->GetTextureHeight() / _texture->GetFrameCountY()) : _texture->GetTextureHeight();
 	
 		_frameSizeX = frameSizeX;
 		_frameSizeY = frameSizeY;
@@ -66,22 +66,20 @@ void SpriteRenderer::renderComponent(HDC hdc, Vector pos)
 
 	// 원본텍스처의 시작 위치를 계산한다.
 	// 텍스처의 특정 frame 으로 그려야 해서
-	srcX = frameX * _texture->getFrameWidth();
-	srcY = frameY * _texture->getFrameHeight();
+	srcX = frameX * _texture->GetFrameWidth();
+	srcY = frameY * _texture->GetFrameHeight();
 
 
 
-	_texture->render(hdc, pos, Vector(srcX, srcY),
-		Vector(_frameSizeX, _frameSizeY), Vector(_frameRatioX, _frameRatioY)
-		);
+	_texture->Render(hdc, pos, Vector(srcX, srcY), Vector(_frameSizeX, _frameSizeY));
 }
 
 void SpriteRenderer::setAnimationClip(int32 startIndex, int32 totalCount)
 {
 	_startFrameIndex = startIndex;
 	_totalFrameCount = totalCount;
-	_framePerRow = _texture->getFrameCountX(); // 자동 계산
-	_framePerCol = _texture->getFrameCountY();
+	_framePerRow = _texture->GetFrameCountX(); // 자동 계산
+	_framePerCol = _texture->GetFrameCountY();
  	_currentFrameIndex = 0;
 	_isEnd = false;
 	_sumTime = 0.f;

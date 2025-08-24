@@ -27,7 +27,7 @@ public:
 	void destroy();
 
 	bool update(float deltaTime);
-	void render();
+	void Render();
 
 	HWND getHwnd() { return _hwnd; }
 

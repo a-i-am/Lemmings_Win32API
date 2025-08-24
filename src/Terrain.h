@@ -8,7 +8,7 @@ class Terrain : public Actor
     using Super = Actor;
 public:
     Terrain(Vector pos);
-    void load();
+    
     /*void update(float deltaTime) override;*/
 
     Vector worldToLocal(float worldX, float worldY) const;

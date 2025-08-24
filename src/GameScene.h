@@ -21,7 +21,7 @@ public:
 	virtual	void init();
 	virtual void destory();
 	virtual void update(float deltaTime);
-	virtual void render(HDC hdc);
+	virtual void Render(HDC hdc);
 
 protected:
 	virtual void eraseMask(int x, int y);
