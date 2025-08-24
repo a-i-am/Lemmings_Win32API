@@ -59,6 +59,6 @@ public:
     // 충돌은 Actor가 거의 레밍 혹은 레벨 뿐이고 레벨도 통 이미지니까 픽셀 충돌로 처리
 
 protected:
-	Vector _pos = {};
+    Vector _pos = {};
 	vector<Component*> _components;
 };
