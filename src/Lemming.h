@@ -22,15 +22,17 @@ public:
 private:
 	enum WalkerState
 	{
-		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_LEFT_STATE, FALLING_RIGHT_STATE
+		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING
 	};
 private:
 	WalkerState state;
 	std::vector<Vector> _debugFrontPoints; // 벽 검사 픽셀들
 	std::vector<Vector> _debugFloorPoints;     // 바닥 검사 픽셀들
 private:
-	int isSolidFloor(Vector nextPos, int maxFall);
+
+	bool isSolidWall(Vector nextPos);
 	bool isSolid(Vector nextPos);
+	int isSolidFloor(Vector nextPos, int maxFall);
 	bool outOfMap();
 	//Job* job;
 	SpriteRenderer* _sprite = nullptr;  // 원본 생성된 객체중에서 현재는 무슨 상태를 그려야하는지 나타내는 변수
@@ -41,5 +43,10 @@ private:
 
 	bool  _isWalkingRight;
 	bool _isOnGround = false;
-	float _speed = 50.f;
+	float _speed = 25.0f;
+	float _fallSpeed = 0;
+
+
+	float _footOffsetY = 23.0f; // 발 위치 (Sprite 기준)
+	int _groundClearance = 1;   // 바닥 위 여유 공간 (픽셀)
 };
