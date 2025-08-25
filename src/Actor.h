@@ -4,14 +4,14 @@
 
 class Actor
 {
+   
 public:
     Actor(Vector pos);
     virtual ~Actor();
 
-    virtual void init();
-    virtual void update(float deltaTime);
+    virtual void Init();
+    virtual void Update(float deltaTime);
     virtual void Render(HDC hdc);
-
     void setPosition(Vector pos);
     Vector getPosition() const;
 

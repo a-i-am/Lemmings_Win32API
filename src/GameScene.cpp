@@ -24,6 +24,7 @@ void GameScene::destory()
 {
 
 }
+
 void GameScene::init()
 {
 	keyboardManager = &SceneKeyboardManager::getInstance();
@@ -38,41 +39,24 @@ void GameScene::init()
 	trapdoors->getComponent<SpriteRenderer>()->setAnimationClip(0, 10);
 	_actors.push_back(trapdoors);
 
-	Actor* doors = new Actor(Vector{ 875.f, 335.f });
-	doors->CreateSpriteComponent("doors", 1.0f, 40 * 3.f, 32 * 3.f);
-	doors->getComponent<SpriteRenderer>()->setAnimationClip(0, 6);
-	_actors.push_back(doors);
+	_door = new Door(Vector{ 875.f, 335.f });
+	_actors.push_back(_door);
 
-	_lemmingPos = { 540.f, 325.f };
-	Lemming* lemming = new Lemming(Vector{ _lemmingPos });
-
+	_lemmingPos = { 820.f, 325.f };
+	Lemming* lemming = new Lemming(_lemmingPos);
 	_actors.push_back(lemming);
 }
 
 void GameScene::update(float deltaTime)
 {
-	/*for (auto& lemming : _lemmings)
-	{
-
-	}*/
-	//Vector lemmingLocalPos = _terrain->worldToLocal(_lemmingPos.x, _lemmingPos.y);
-	//if (_terrain->isSolid(static_cast<int>(lemmingLocalPos.x), static_cast<int>(lemmingLocalPos.y)))
-	{
-
-	}
 	for (Actor* actor : _actors)
 	{
-		actor->update(deltaTime);
+		actor->Update(deltaTime);
 	}
 }
 
 void GameScene::Render(HDC hdc)
 {
-	/*for (auto& lemming : _lemmings)
-	{
-		lemming->Render(hdc);
-	
-	}*/
 	for (Actor* actor : _actors)
 	{
 		//lemming->Render(hdc);

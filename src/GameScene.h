@@ -1,6 +1,9 @@
 #pragma once
 #include "Terrain.h"
 #include "Lemming.h"
+#include "Door.h"
+
+
 #include "ResourceManager.h"
 #include "GameState.h"
 #include "Actor.h"
@@ -18,6 +21,8 @@ private:
 
 public:
 	Terrain* GetTerrain() { return _terrain; }
+	Door* GetDoor() const { return _door; }
+
 	virtual	void init();
 	virtual void destory();
 	virtual void update(float deltaTime);
@@ -35,6 +40,7 @@ protected:
 	virtual bool isSpeedUp();
 
 private:
+	Door* _door = nullptr;
 	Terrain* _terrain = nullptr;
 	vector<Lemming> _lemmings;
 	Vector _lemmingPos;

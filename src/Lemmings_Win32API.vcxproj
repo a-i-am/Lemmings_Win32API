@@ -132,7 +132,9 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cursor.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Door.h" />
     <ClInclude Include="EasyMaskManager.h" />
+    <ClInclude Include="Escaper.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameScene.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="UIManager.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Walker.h" />
     <ClInclude Include="Word.h" />
   </ItemGroup>
@@ -169,7 +172,9 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Defines.cpp" />
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="EasyMaskManager.cpp" />
+    <ClCompile Include="Escaper.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -194,6 +199,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="UIManager.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Walker.cpp" />
     <ClCompile Include="Word.cpp" />
   </ItemGroup>

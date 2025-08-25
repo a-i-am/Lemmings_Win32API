@@ -37,6 +37,8 @@ public:
 
 
 private:
+	Vector _pos;
+
 	Texture* _texture = nullptr; // 리소스 매니저를 통해 가져온 정보 : 공용 자산
 
 	// 개별 텍스처가 현재 어떤 프레임을 그리고 있는지

@@ -21,6 +21,9 @@ SpriteRenderer::SpriteRenderer(string textureKey, float dur)
 
 }
 
+
+
+
 void SpriteRenderer::initComponent()
 {
 	Super::initComponent();
@@ -68,8 +71,6 @@ void SpriteRenderer::renderComponent(HDC hdc, Vector pos)
 	// 텍스처의 특정 frame 으로 그려야 해서
 	srcX = frameX * _texture->GetFrameWidth();
 	srcY = frameY * _texture->GetFrameHeight();
-
-
 
 	_texture->Render(hdc, pos, Vector(srcX, srcY), Vector(_frameSizeX, _frameSizeY));
 }

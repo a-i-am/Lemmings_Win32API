@@ -189,3 +189,5 @@ struct Vector
 
 // 선분과 사각형의 충돌체크
 bool LineIntersectsAABB(Vector p0, Vector p1, const RECT& rect, Vector& outNormal, Vector& outPos, float& t);
+
+

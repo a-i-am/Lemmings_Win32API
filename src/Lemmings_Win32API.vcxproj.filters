@@ -165,6 +165,15 @@
     <ClInclude Include="Component.h">
       <Filter>소스 파일\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>소스 파일\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
+      <Filter>소스 파일\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Escaper.h">
+      <Filter>소스 파일\Game\Lemmings Acting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Defines.cpp">
@@ -253,6 +262,15 @@
     </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>소스 파일\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>소스 파일\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>소스 파일\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Escaper.cpp">
+      <Filter>소스 파일\Game\Lemmings Acting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

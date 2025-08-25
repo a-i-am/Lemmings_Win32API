@@ -1,6 +1,5 @@
 ﻿#include "pch.h"
 #include "Lemming.h"
-#include "ResourceManager.h"
 #include "Game.h"
 #include "GameScene.h"
 
@@ -12,8 +11,15 @@ Lemming::Lemming(Vector pos) : Super(pos)
     _spriteMoveLeft = CreateSpriteComponent("rotated_lemming", 1.0f, 16 * 3.f, 14 * 3.f);
     _spriteMoveLeft->setAnimationClip(6, 15);
 
+    _spriteEscaper = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
+    _spriteEscaper->setAnimationClip(18, 9);
+
     _spriteMoveRight->getTexture()->GenerateCollisionData(256, 224);
     _spriteMoveLeft->getTexture()->GenerateCollisionData(256, 224);
+    _spriteEscaper->getTexture()->GenerateCollisionData(256, 224);
+    
+    _jobSprite = new Job();
+    _jobSprite->jobSprite = _spriteMoveRight;
 
     setWalkingRight(true);
     _sprite = _spriteMoveRight;
@@ -41,7 +47,7 @@ void Lemming::setWalkingRight(bool value)
     }
 }
 
-void Lemming::update(float deltaTime)
+void Lemming::Update(float deltaTime)
 {
     GameScene* gameScene = Game::getGameScene();
     if (!gameScene || !gameScene->GetTerrain()) return;
@@ -83,6 +89,23 @@ void Lemming::update(float deltaTime)
                 nextPos.y += fallCheck - _groundClearance; // 바닥 위 1픽셀
                 _fallSpeed = 0;
                 state = _isWalkingRight ? WALKING_RIGHT_STATE : WALKING_LEFT_STATE;
+            
+                RECT escape = gameScene->GetDoor()->GetEscapeBounds();
+
+                // 레밍 발 위치 기준으로 체크
+                POINT lemmingFoot = { static_cast<LONG>(nextPos.x), static_cast<LONG>(nextPos.y + _footOffsetY) };
+
+                if (IsInPoint(escape, lemmingFoot))
+                {
+                    _jobSprite->isFinished = true;
+                    _sprite = _spriteEscaper;
+                    nextPos = _pos;
+                }
+            }
+            else
+            {
+                _jobSprite->isFinished = true;
+
             }
         }
         break;
@@ -119,6 +142,22 @@ void Lemming::update(float deltaTime)
                 nextPos.y += fallCheck - _groundClearance; // 바닥 위 1픽셀
                 _fallSpeed = 0;
                 state = _isWalkingRight ? WALKING_RIGHT_STATE : WALKING_LEFT_STATE;
+
+                RECT escape = gameScene->GetDoor()->GetEscapeBounds();
+
+                // 레밍 발 위치 기준으로 체크
+                POINT lemmingFoot = { static_cast<LONG>(nextPos.x), static_cast<LONG>(nextPos.y + _footOffsetY) };
+
+                if (IsInPoint(escape, lemmingFoot))
+                {
+                    _jobSprite->isFinished = true;
+                    _sprite = _spriteEscaper;
+                    nextPos = _pos;
+                }
+            }
+            else
+            {
+                _jobSprite->isFinished = true;
             }
         }
         break;
@@ -143,8 +182,8 @@ void Lemming::update(float deltaTime)
 
     _pos = nextPos;
     _sprite->updateComponent(deltaTime);
-}
 
+}
 
 // 벽 충돌 검사 (머리 점만)
 bool Lemming::isSolidWall(Vector nextPos)
@@ -240,6 +279,17 @@ void Lemming::Render(HDC hdc)
             FillRect(hdc, &rc, floorBrush);
         }
         DeleteObject(floorBrush);
+    
+        Door* door = gameScene->GetDoor();
+        if (door)
+        {
+            RECT escape = door->GetEscapeBounds();
+            HBRUSH doorBrush = CreateSolidBrush(RGB(0, 0, 255)); // 파란색
+            FillRect(hdc, &escape, doorBrush);
+            DeleteObject(doorBrush);
+        }
+    
+    
     }
 }
 

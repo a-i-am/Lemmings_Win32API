@@ -21,13 +21,13 @@ Actor::~Actor()
     }
     _components.clear();
 }
-void Actor::init()
+void Actor::Init()
 {
     for (Component* comp : _components)
         comp->initComponent();
 }
 
-void Actor::update(float deltaTime)
+void Actor::Update(float deltaTime)
 {
     for (Component* comp : _components)
         comp->updateComponent(deltaTime);
