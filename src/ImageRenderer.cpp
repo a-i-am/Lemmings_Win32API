@@ -8,19 +8,19 @@ ImageRenderer::ImageRenderer(string textureKey, int32 width, int32 height)
 	_texture = ResourceManager::getInstance()->getTexture(textureKey);
 }
 
-void ImageRenderer::initComponent()
+void ImageRenderer::InitComponent()
 {
-	Super::initComponent();
+	Super::InitComponent();
 }
 
-void ImageRenderer::updateComponent(float deltaTime)
+void ImageRenderer::UpdateComponent(float deltaTime)
 {
-	Super::updateComponent(deltaTime);
+	Super::UpdateComponent(deltaTime);
 }
 
-void ImageRenderer::renderComponent(HDC hdc, Vector pos)
+void ImageRenderer::RenderComponent(HDC hdc, Vector pos)
 {
-	Super::renderComponent(hdc, pos);
+	Super::RenderComponent(hdc, pos);
 
 	if (_texture == nullptr)
 		return;

@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include "Component.h"
+class SpriteRenderer;
+class ImageRenderer;
 
 class Actor
 {
@@ -12,8 +14,8 @@ public:
     virtual void Init();
     virtual void Update(float deltaTime);
     virtual void Render(HDC hdc);
-    void setPosition(Vector pos);
-    Vector getPosition() const;
+    void SetPosition(Vector pos);
+    Vector GetPosition() const;
 
 
     // 구현 포함된 템플릿 함수들
@@ -52,10 +54,11 @@ public:
 
         _components.erase(it, _components.end());
     }
+    
 
-//protected:
-    class SpriteRenderer* CreateSpriteComponent(string spriteInfo, int32 dur, int32 width = 0, int32 height = 0);
-    class ImageRenderer* CreateTextureComponent(string bitmapKey, int32 width = 0, int32 height = 0);
+    SpriteRenderer* CreateSpriteComponent(string spriteInfo, int32 dur, int32 width = 0, int32 height = 0);
+protected:
+    ImageRenderer* CreateTextureComponent(string bitmapKey, int32 width = 0, int32 height = 0);
     
     // 충돌은 Actor가 거의 레밍 혹은 레벨 뿐이고 레벨도 통 이미지니까 픽셀 충돌로 처리
 

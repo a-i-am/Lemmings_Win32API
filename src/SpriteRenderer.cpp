@@ -21,17 +21,14 @@ SpriteRenderer::SpriteRenderer(string textureKey, float dur)
 
 }
 
-
-
-
-void SpriteRenderer::initComponent()
+void SpriteRenderer::InitComponent()
 {
-	Super::initComponent();
+	Super::InitComponent();
 }
 
-void SpriteRenderer::updateComponent(float deltaTime)
+void SpriteRenderer::UpdateComponent(float deltaTime)
 {
-	Super::updateComponent(deltaTime);
+	Super::UpdateComponent(deltaTime);
 
 	if (_duration == 0 || _isEnd || _texture == nullptr || _totalFrameCount <= 0)
 		return;
@@ -55,9 +52,9 @@ void SpriteRenderer::updateComponent(float deltaTime)
 
 }
 
-void SpriteRenderer::renderComponent(HDC hdc, Vector pos)
+void SpriteRenderer::RenderComponent(HDC hdc, Vector pos)
 {
-	Super::renderComponent(hdc, pos);
+	Super::RenderComponent(hdc, pos);
 
 	if (_texture == nullptr)
 		return;
@@ -75,7 +72,7 @@ void SpriteRenderer::renderComponent(HDC hdc, Vector pos)
 	_texture->Render(hdc, pos, Vector(srcX, srcY), Vector(_frameSizeX, _frameSizeY));
 }
 
-void SpriteRenderer::setAnimationClip(int32 startIndex, int32 totalCount)
+void SpriteRenderer::SetAnimationClip(int32 startIndex, int32 totalCount)
 {
 	_startFrameIndex = startIndex;
 	_totalFrameCount = totalCount;

@@ -1,7 +1,7 @@
 #pragma once
 #include "Job.h"
 
-class Escaper : public Job
+class Digger : public Job
 {
 public:
 	void InitAnims(Actor* owner) override;
@@ -9,5 +9,18 @@ public:
 	string GetName() override;
 
 	void SetWalkingRight(bool value);
+private:
+	void Dig();
+	bool CanDig();
+private:
+	enum DiggerState
+	{
+		DIGGING_STATE
+	};
+
+
+private:
+	DiggerState state;
+
 };
 

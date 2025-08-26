@@ -52,7 +52,7 @@
     <Filter Include="소스 파일\Objects">
       <UniqueIdentifier>{6eb203c9-d3e5-4ba1-93e2-9453225cb500}</UniqueIdentifier>
     </Filter>
-    <Filter Include="소스 파일\Game\Lemmings Acting">
+    <Filter Include="소스 파일\Game\Lemmings Actings">
       <UniqueIdentifier>{b6300b46-c329-4aeb-ae1b-90b7f01bc0f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -135,9 +135,6 @@
     <ClInclude Include="ImageRenderer.h">
       <Filter>소스 파일\Image</Filter>
     </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>소스 파일\Game</Filter>
-    </ClInclude>
     <ClInclude Include="Lemming.h">
       <Filter>소스 파일\Objects</Filter>
     </ClInclude>
@@ -147,17 +144,8 @@
     <ClInclude Include="Scene.h">
       <Filter>소스 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Walker.h">
-      <Filter>소스 파일\Game\Lemmings Acting</Filter>
-    </ClInclude>
-    <ClInclude Include="Job.h">
-      <Filter>소스 파일\Game\Lemmings Acting</Filter>
-    </ClInclude>
     <ClInclude Include="TimeManager.h">
       <Filter>소스 파일\Manager\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>소스 파일\Game</Filter>
     </ClInclude>
     <ClInclude Include="Lemmings_Win32API.h">
       <Filter>헤더 파일</Filter>
@@ -171,8 +159,29 @@
     <ClInclude Include="Door.h">
       <Filter>소스 파일\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
+    </ClInclude>
     <ClInclude Include="Escaper.h">
-      <Filter>소스 파일\Game\Lemmings Acting</Filter>
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
+    </ClInclude>
+    <ClInclude Include="Job.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="JobFactory.h">
+      <Filter>소스 파일\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor.h">
+      <Filter>소스 파일\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Faller.h">
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
+    </ClInclude>
+    <ClInclude Include="Digger.h">
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +245,6 @@
     <ClCompile Include="ImageRenderer.cpp">
       <Filter>소스 파일\Image</Filter>
     </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>소스 파일\Game</Filter>
-    </ClCompile>
     <ClCompile Include="Lemming.cpp">
       <Filter>소스 파일\Objects</Filter>
     </ClCompile>
@@ -247,12 +253,6 @@
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Walker.cpp">
-      <Filter>소스 파일\Game\Lemmings Acting</Filter>
-    </ClCompile>
-    <ClCompile Include="Job.cpp">
-      <Filter>소스 파일\Game\Lemmings Acting</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>소스 파일\Manager\System</Filter>
@@ -269,8 +269,26 @@
     <ClCompile Include="Door.cpp">
       <Filter>소스 파일\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
+    </ClCompile>
     <ClCompile Include="Escaper.cpp">
-      <Filter>소스 파일\Game\Lemmings Acting</Filter>
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
+    </ClCompile>
+    <ClCompile Include="Job.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="JobFactory.cpp">
+      <Filter>소스 파일\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor.cpp">
+      <Filter>소스 파일\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Faller.cpp">
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
+    </ClCompile>
+    <ClCompile Include="Digger.cpp">
+      <Filter>소스 파일\Game\Lemmings Actings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

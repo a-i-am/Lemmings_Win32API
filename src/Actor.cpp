@@ -24,39 +24,35 @@ Actor::~Actor()
 void Actor::Init()
 {
     for (Component* comp : _components)
-        comp->initComponent();
+        comp->InitComponent();
 }
 
 void Actor::Update(float deltaTime)
 {
     for (Component* comp : _components)
-        comp->updateComponent(deltaTime);
+        comp->UpdateComponent(deltaTime);
 }
 
 void Actor::Render(HDC hdc)
 {
     for (Component* comp : _components)
-        comp->renderComponent(hdc, _pos);
+        comp->RenderComponent(hdc, _pos);
 }
 
-void Actor::setPosition(Vector pos)
+void Actor::SetPosition(Vector pos)
 {
     _pos = pos;
 }
 
-Vector Actor::getPosition() const
+Vector Actor::GetPosition() const
 {
     return _pos;
 }
 
-
-
-
-
 SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, int32 dur, int32 width, int32 height)
 {
     SpriteRenderer* sprite = new SpriteRenderer(spriteInfo, dur);
-    sprite->setFrameSize(width, height, 1.0f, 1.0f);
+    sprite->SetFrameSize(width, height, 1.0f, 1.0f);
     _components.emplace_back(sprite);
     return sprite;
 }

@@ -6,7 +6,7 @@
 Door::Door(Vector pos) : Super(pos)
 {
 	_doorSprite = CreateSpriteComponent("doors", 1.0f, 40 * 3.f, 32 * 3.f);
-	_doorSprite->setAnimationClip(0, 6);
+	_doorSprite->SetAnimationClip(0, 6);
 
 	_sprite = _doorSprite;
 }
@@ -16,14 +16,14 @@ void Door::Update(float deltaTime)
 	GameScene* gameScene = Game::getGameScene();
 	if (!gameScene || !gameScene->GetTerrain()) return;
 
-	_sprite->updateComponent(deltaTime);
+	_sprite->UpdateComponent(deltaTime);
 }
 
 void Door::Render(HDC hdc)
 {
 	if (_sprite)
 	{
-		_sprite->renderComponent(hdc, _pos);
+		_sprite->RenderComponent(hdc, _pos);
 	}
 }
 

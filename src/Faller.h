@@ -1,7 +1,8 @@
 #pragma once
+
 #include "Job.h"
 
-class Escaper : public Job
+class Faller : public Job
 {
 public:
 	void InitAnims(Actor* owner) override;

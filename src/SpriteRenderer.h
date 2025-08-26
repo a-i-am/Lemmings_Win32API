@@ -11,33 +11,29 @@ class SpriteRenderer : public Component
 public:
 	SpriteRenderer(string textureKey, float dur);
 
-	virtual void initComponent() override;
-	virtual void updateComponent(float deltaTime) override;
-	virtual void renderComponent(HDC hdc, Vector pos) override;
+	virtual void InitComponent() override;
+	virtual void UpdateComponent(float deltaTime) override;
+	virtual void RenderComponent(HDC hdc, Vector pos) override;
 	bool IsEnd() { return _isEnd; }
 
-	void setAnimationClip(int32 startIndex, int32 totalCount);
-	void setFrameSize(int32 sizeX, int32 sizeY, float xRatio, float yRatio)
+	void SetAnimationClip(int32 startIndex, int32 totalCount);
+	void SetFrameSize(int32 sizeX, int32 sizeY, float xRatio, float yRatio)
 	{
 		_frameSizeX = sizeX, _frameSizeY = sizeY;
 		_frameRatioX = xRatio, _frameRatioY = yRatio;
 	}
 
-	int32 getSpriteWidth()  const { return  _spriteWidth; }
-	int32 getSpriteHeight() const { return _spriteHeight; }
+	int32 GetSpriteWidth()  const { return  _spriteWidth; }
+	int32 GetSpriteHeight() const { return _spriteHeight; }
 
 	Texture* getTexture() { return _texture; }
 
+public:
 	int32 srcX = 0;
 	int32 srcY = 0;
 
-
-
-
-
-
 private:
-	Vector _pos;
+
 
 	Texture* _texture = nullptr; // 리소스 매니저를 통해 가져온 정보 : 공용 자산
 

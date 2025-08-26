@@ -9,9 +9,9 @@ class ImageRenderer : public Component
 public:
 	ImageRenderer(string textureKey, int32 width, int32 height);
 
-	virtual void initComponent() override;
-	virtual void updateComponent(float deltaTime) override;
-	virtual void renderComponent(HDC hdc, Vector pos) override;
+	virtual void InitComponent() override;
+	virtual void UpdateComponent(float deltaTime) override;
+	virtual void RenderComponent(HDC hdc, Vector pos) override;
 
 	Texture* getTexture() { return _texture; }
 

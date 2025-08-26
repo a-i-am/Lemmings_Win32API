@@ -25,7 +25,7 @@ Terrain::Terrain(Vector pos) : Super(pos)
 //
 //void Terrain::update(float deltaTime)
 //{
-//	_levelTexture->updateComponent(deltaTime);
+//	_levelTexture->UpdateComponent(deltaTime);
 //}
 
 Vector Terrain::worldToLocal(float worldX, float worldY) const

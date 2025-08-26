@@ -166,5 +166,5 @@ void SceneMouseManager::updateCursorPosition()
 	//	cursorPosition.y = CAMERA_HEIGHT - 13;
 	//}
 
-	//Cursor::getInstance().setPosition(cursorPosition);
+	//Cursor::getInstance().SetPosition(cursorPosition);
 }
