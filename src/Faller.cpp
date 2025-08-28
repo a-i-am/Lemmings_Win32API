@@ -7,23 +7,23 @@ enum FallerAnims
 	FALLING_DEATH
 };
 
-void InitAnims(Actor* owner)
+void Faller::InitAnims(Actor* owner)
 {
 
 }
 
-void SetWalkingRight(bool value)
+void Faller::SetWalkingRight(bool value)
 {
 
 }
 
-void UpdateStateMachine(float deltaTime)
+void Faller::UpdateStateMachine(float deltaTime)
 {
 
 }
 
-string GetName()
+string Faller::GetName()
 {
-
+	return "FALLER";
 }
 

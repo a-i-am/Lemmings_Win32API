@@ -110,23 +110,10 @@ void Texture::GenerateCollisionData(int32 targetWidth, int32 targetHeight)
 	_isCollisionGenerated = true;
 }
 
-
 void Texture::Render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, bool isFlipX)
 {
 	// 월드좌표를 카메라 좌표로 변환
 	Vector screenPos = _centerAlign ? Vector(pos.x - frameSize.x * 0.5f, pos.y - frameSize.y * 0.5f) : pos;
-
-	int32 destX = screenPos.x;
-	int32 destY = screenPos.y;
-	int32 destW = frameSize.x;
-	int32 destH = frameSize.y;
-
-	// flipX 처리: StretchBlt/TransparentBlt에서 width 음수로 좌우 반전
-	if (isFlipX)
-	{
-		destX += destW;   // 오른쪽부터 시작
-		destW = -destW;   // width 음수로 좌우 반전
-	}
 
 		// 불투명 처리(맵 이미지 여백을 배경색으로 변환해 출력)
 		if (_transparent == -1) //  렌더링 시 게임 씬 맵 이미지 기본 배경색(Black)과 통일할 이미지인지 확인
@@ -134,10 +121,10 @@ void Texture::Render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, bool 
 			// 2. 전체 이미지 출력
 			//픽셀 버퍼를 통째로 HDC에 한 번에 그려줌(SetPixel보다 빠름
 			StretchDIBits(hdc,
-				destX,
-				destY,
-				destW,
-				destH,
+				(int32)screenPos.x,
+				(int32)screenPos.y,
+				frameSize.x,
+				frameSize.y,
 				0, 0, // DIB 원본 좌상귀 X, Y 좌표
 				_originTexSizeX, _originTexSizeY, // 첫번째 스캔 라인, 출력할 스캔 라인 개수
 				_rawData,
@@ -149,11 +136,11 @@ void Texture::Render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, bool 
 		else // 투명 처리
 		{
 			// 텍스처의 전체 크기를 구하고, 애니메이션 되어야 하는 개수로 나누기를 하면, 한장의 Sprite 크기를 구할수 있다.
-			::TransparentBlt(hdc,
-				destX,
-				destY,
-				destW,
-				destH,
+			TransparentBlt(hdc,
+				(int32)screenPos.x,
+				(int32)screenPos.y,
+				frameSize.x,
+				frameSize.y,
 				_hdc,										// 텍스처의 정보
 				(int32)srcPos.x,								// 원본 텍스쳐의 X						// 0~15번의 인덱스로 돌아가면서 그려야한다.
 				(int32)srcPos.y,								// 원본 텍스쳐의 Y	
@@ -161,6 +148,7 @@ void Texture::Render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, bool 
 				_frameWidth,
 				_frameHeight,
 				_transparent);								// 어떤색상을 투명하게 그릴까
+
 		}
 }
 

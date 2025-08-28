@@ -58,8 +58,15 @@ void SpriteRenderer::PlayLemmingAnimation(int32 animId)
 {
 	if (animId >= int32(_animations.size())) return;
 
+	// 만약 이미 같은 애니메이션이 재생 중이라면, 아무것도 하지 않음.
+		// (또는 필요에 따라 같은 애니메이션을 다시 재생하도록 허용할 수 있습니다)
+	if (_currentAnimation == animId) return;
+
 	_currentAnimation = animId;
 
+	// 새로운 애니메이션이 재생될 때 프레임 인덱스와 시간을 초기화합니다.
+	_currentFrameIndex = 0;
+	_sumTime = 0.f;
 	_isEnd = false;
 	_isLoop = _animations[animId].isLoop;
 }
@@ -77,40 +84,62 @@ void SpriteRenderer::UpdateComponent(float deltaTime)
 
 	_sumTime += deltaTime;
 
-	int32 lemmingAnimtotalCount = 0;
 	int32 myTotalAnimIndexCount = 0;
 	float myDelta = 0.f;
+	bool lemmingFlipX = false;
 
 	if (_currentAnimation >= 0 && _currentAnimation < (int32)_animations.size())
 	{	// 레밍 애니메이션 전용(상태에 따라 전환이 필요해서 AnimData로 따로 관리)
-		lemmingAnimtotalCount = _animations[_currentAnimation].totalCount;
-		float delta = _duration / lemmingAnimtotalCount;
+		myTotalAnimIndexCount = _animations[_currentAnimation].totalCount;
+		lemmingFlipX = _animations[_currentAnimation].isFlipX;
+
+		float delta = _duration / myTotalAnimIndexCount;
 		myDelta = delta;
-		myTotalAnimIndexCount = lemmingAnimtotalCount;
 	}
 	else
 	{
 		// 레밍 외 다른 액터들 애니메이션 전용
+		myTotalAnimIndexCount = _totalFrameCount;
 		float delta = _duration / _totalFrameCount;
 		myDelta = delta;
-		myTotalAnimIndexCount = _totalFrameCount;
 	}
 
 		while (_sumTime >= myDelta)
 		{
-			_currentFrameIndex++;
-			_sumTime -= myDelta;
-
-			if (_currentFrameIndex >= myTotalAnimIndexCount)
+			if (lemmingFlipX)
 			{
-				if (_isLoop)
+				_currentFrameIndex = _animations[_currentAnimation].startIndex;
+				_currentFrameIndex--;
+				_sumTime -= myDelta;
+
+				if (_currentFrameIndex <= myTotalAnimIndexCount)
 				{
-					_currentFrameIndex = 0;
+					if (_isLoop)
+					{
+						_currentFrameIndex = _animations[_currentAnimation].startIndex;
+					}
+					else
+					{
+						_currentFrameIndex = myTotalAnimIndexCount - 1;
+						_isEnd = true;
+					}
 				}
-				else
+			}
+			else
+			{
+				_currentFrameIndex++;
+				_sumTime -= myDelta;
+				if (_currentFrameIndex >= myTotalAnimIndexCount)
 				{
-					_currentFrameIndex = myTotalAnimIndexCount - 1;
-					_isEnd = true;
+					if (_isLoop)
+					{
+						_currentFrameIndex = 0;
+					}
+					else
+					{
+						_currentFrameIndex = myTotalAnimIndexCount - 1;
+						_isEnd = true;
+					}
 				}
 			}
 		}
@@ -128,6 +157,7 @@ void SpriteRenderer::RenderComponent(HDC hdc, Vector pos)
 
 	int32 frameX = 0;
 	int32 frameY = 0;
+
 
 	if (_currentAnimation >= 0 && _currentAnimation < (int32)_animations.size())
 	{
@@ -147,5 +177,7 @@ void SpriteRenderer::RenderComponent(HDC hdc, Vector pos)
 	int32 srcX = frameX * _spriteSheet->GetFrameWidth();
 	int32 srcY = frameY * _spriteSheet->GetFrameHeight();
 
+
 	_spriteSheet->Render(hdc, pos, Vector(srcX, srcY), Vector(_frameSizeX, _frameSizeY), _isFlipX);
+	
 }

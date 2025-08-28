@@ -25,7 +25,7 @@ bool Job::IsCollisionFront(Vector nextPos)
 
     Vector offsets[2] = {
         Vector(7, 5),   // 머리 (디버그용)
-        Vector(7, 22),  // 몸통 (발 위치 포함)
+        Vector(7, 23),  // 몸통 (발 위치 포함)
     };
 
     for (auto& off : offsets)
@@ -33,7 +33,7 @@ bool Job::IsCollisionFront(Vector nextPos)
         Vector checkPos = nextPos + (isWalkingRight ? off : Vector(-off.x, off.y));
         debugFrontPoints.push_back(checkPos);
 
-        if (off.y != 22) // 머리 제외
+        if (off.y != 23) // 머리 제외
             continue;
 
         // 몸통/발 근처만 바닥 충돌 용도로 판단

@@ -54,7 +54,7 @@ private:
 	uint64 _prevCount = 0;
 
 	// 이전프레임과 현재 프레임 사이의 시간 가격
-	float _deltaTime = 0.0f;
+	float _deltaTime = 0.f;
 
 private:
 

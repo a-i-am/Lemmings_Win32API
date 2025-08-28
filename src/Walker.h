@@ -10,6 +10,11 @@ public:
 	string GetName() override;
 
 	void SetWalkingRight(bool value);
+	SpriteRenderer* GetCurrentJobSprite() const override;
+
+protected:
+	SpriteRenderer* jobSprite = nullptr;
+	SpriteRenderer* jobSprite_rotated = nullptr;
 
 private:
 	enum WalkerState
@@ -17,8 +22,12 @@ private:
 		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_STATE
 	};
 
-private:
 	WalkerState state;
+private:
+	void CheckEscape(const Vector& pos);
+	bool TryStepOver(Vector& nextPos, bool right);
+
+	void HandleWalking(bool right, float deltaTime, Vector& nextPos);
+	void HandleFalling(float deltaTime, Vector& nextPos);
+
 };
-
-

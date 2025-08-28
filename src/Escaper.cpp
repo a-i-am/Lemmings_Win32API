@@ -1,23 +1,27 @@
 #include "pch.h"
 #include "Escaper.h"
 
+enum EscaperAnims
+{
+	ESCAPING
+};
 
-void InitAnims(Actor* owner)
+void Escaper::InitAnims(Actor* owner)
 {
 
 }
 
-void SetWalkingRight(bool value)
+void Escaper::SetWalkingRight(bool value)
 {
 
 }
 
-void UpdateStateMachine(float deltaTime)
+void Escaper::UpdateStateMachine(float deltaTime)
 {
 
 }
 
-string GetName()
+string Escaper::GetName()
 {
-
+	return "ESCAPER";
 }

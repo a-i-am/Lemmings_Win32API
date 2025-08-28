@@ -11,15 +11,12 @@ Lemming::Lemming(Vector pos) : Super(pos)
     //job = JobFactory::instance().CreateFallerJob();
     job = JobFactory::instance().CreateWalkerJob();
     job->InitAnims(this);
-    _jobSprite = job->GetJobSprite(); // job 클래스의 SpriteRenderer* jobSprite 넘겨받음
-
-    // GameScene에서 레밍 객체(pos) 생성, 레밍 클래스에서 pos 할당
-    SetPosition(pos); // pos = _pos;
+    _jobSprite = job->GetCurrentJobSprite();
+    SetPosition(pos);
     //countdown = NULL;
     _isAlive = true;
     _isSaved = false;
     _fallSpeed = 0;
-
 }
 
 void Lemming::SetWalkingRight(bool value)
@@ -47,8 +44,7 @@ void Lemming::ChangeJob(Job* nextJob)
 
     Vector oldPosition = _pos;
 
-    delete _jobSprite;
-    _jobSprite = this->job->GetJobSprite();
+    //_jobSprite = this->job->GetJobSprite();
     SetPosition(oldPosition);
 }
 
@@ -60,9 +56,7 @@ bool Lemming::IsOutOfMap()
 
 void Lemming::Update(float deltaTime)
 {
-    _jobSprite->UpdateComponent(deltaTime); 
-    job->UpdateStateMachine(deltaTime); // Walker*
-
+    job->UpdateStateMachine(deltaTime);
     // TODO : digger 구현 후 Countdown 클래스 작성, 
     // 레밍 점수 계산 등 시스템 로직 작성 같이하기
     // 
@@ -103,9 +97,11 @@ void Lemming::Update(float deltaTime)
 
 void Lemming::Render(HDC hdc)
 {
-    if (_jobSprite)
-    {
-        _jobSprite->RenderComponent(hdc, GetPosition());
+    _jobSprite->RenderComponent(hdc, GetPosition());
+    SpriteRenderer* currentSprite = job->GetCurrentJobSprite();
+    if (currentSprite) {
+        // RenderComponent 함수를 호출하여 스프라이트 렌더링
+        currentSprite->RenderComponent(hdc, GetPosition());
 
         GameScene* gameScene = Game::getGameScene();
         if (!gameScene || !gameScene->GetTerrain()) return;
@@ -126,7 +122,7 @@ void Lemming::Render(HDC hdc)
             FillRect(hdc, &rc, floorBrush);
         }
         DeleteObject(floorBrush);
-    
+
         Door* door = gameScene->GetDoor();
         if (door)
         {
@@ -136,4 +132,6 @@ void Lemming::Render(HDC hdc)
             DeleteObject(doorBrush);
         }
     }
+
+        
 }

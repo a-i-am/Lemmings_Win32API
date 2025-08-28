@@ -11,8 +11,9 @@ public:
 
 	virtual void InitAnims(Actor* owner) = 0;
 	virtual void UpdateStateMachine(float deltaTime) = 0;
-	virtual SpriteRenderer* GetJobSprite() { return jobSprite; }
+	virtual SpriteRenderer* GetCurrentJobSprite() const = 0;
 	virtual string GetName() = 0;
+
 
 	//virtual void SetWalkingRight(bool value) = 0;
 	void SetWalkingRight(bool value) { isWalkingRight = value; }
@@ -34,15 +35,15 @@ protected:
 
 protected:
 	Actor* jobActor;
-	SpriteRenderer* jobSprite;
-	bool  isWalkingRight = true;
-
-	vector<Vector> debugFrontPoints;	 // º® °Ë»ç ÇÈ¼¿µé
-	vector<Vector> debugFloorPoints;     // ¹Ù´Ú °Ë»ç ÇÈ¼¿µé
 	Job* nextJob;
 
+
+	bool  isWalkingRight = true;
+	vector<Vector> debugFrontPoints;	 // º® °Ë»ç ÇÈ¼¿µé
+	vector<Vector> debugFloorPoints;     // ¹Ù´Ú °Ë»ç ÇÈ¼¿µé
+
 	float walkSpeed = 25.0f;
-	float fallSpeed = 0.f;
+	float fallSpeed = 25.0f;
 	float footOffsetY = 23.0f;			// ¹ß À§Ä¡ (Sprite ±âÁØ)
 	int32 groundClearance = 1;			// ¹Ù´Ú À§ ¿©À¯ °ø°£ (ÇÈ¼¿)
 

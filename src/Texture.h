@@ -30,7 +30,6 @@ public:
 	void SetCenterAlign(bool center) { _centerAlign = center; }
 
 	void GenerateCollisionData(int32 targetWidth, int32 targetHeight);
-
 private:
 	// GDI 관련
 	HBITMAP		_hBitmap = nullptr;
@@ -59,5 +58,11 @@ private:
 
 	bool		_centerAlign = true; // 기본은 가운데 위치를 기준으로 텍스처 그리기
 	bool		_isCollisionGenerated = false; // collision 생성 여부
-	//vector<BYTE> _pixels; // 픽셀 데이터 보관용
+
+	   // flip 캐싱
+	HDC     _flipHDC = nullptr;
+	HBITMAP _flipBitmap = nullptr;
+	bool    _flipCached = false;
+
+	
 };
