@@ -10,9 +10,8 @@ class ResourceManager : public Singleton<ResourceManager>
 	ResourceManager() {}
 public:
 
-	void init();
+	void Init();
 	void destroy(); // 리소스 정리
-
 	void loadTexture(string key, string texturePath, int32 transparnet, int32 xFrameCount = 1, int32 yFrameCount = 1);
 	Texture* getTexture(string key);
 

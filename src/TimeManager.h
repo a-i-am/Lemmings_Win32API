@@ -16,7 +16,7 @@ public:
 	Timer(TimerFunc func, float interval, bool loop) : _func(func), _interval(interval), _loop(loop) {}
 
 	// 반환값 : 타이머가 만료되었는지 (true : 유지, false:만료)
-	bool update(float deltaTime);
+	bool Update(float deltaTime);
 
 private:
 	//@TODO: 콜백 받는 객체의 생명 주기도 신경써야 한다.
@@ -39,8 +39,8 @@ private:
 	TimeManager() {}
 
 public:
-	void init();
-	void update();
+	void Init();
+	void Update();
 	void destroy();
 
 	uint32 getFps() { return _fps; }

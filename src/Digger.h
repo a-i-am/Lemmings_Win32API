@@ -5,7 +5,7 @@ class Digger : public Job
 {
 public:
 	void InitAnims(Actor* owner) override;
-	void UpdateStateMachine(int deltaTime) override;
+	void UpdateStateMachine(float deltaTime) override;
 	string GetName() override;
 
 	void SetWalkingRight(bool value);

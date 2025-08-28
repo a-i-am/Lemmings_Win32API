@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "TimeManager.h"
 
-void TimeManager::init()
+void TimeManager::Init()
 {
 	::QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&_frequency));
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&_prevCount)); // CPU 클럭
 }
 
-void TimeManager::update()
+void TimeManager::Update()
 {
 	uint64 currentCount;
 	::QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentCount));
@@ -31,7 +31,7 @@ void TimeManager::update()
 	for (auto iter = _timers.begin(); iter != _timers.end();)
 	{
 		Timer* timer = *iter;
-		if (false == timer->update(_deltaTime))
+		if (false == timer->Update(_deltaTime))
 		{
 			// 만료된 타이머
 			iter = _timers.erase(iter);
@@ -60,7 +60,7 @@ Timer* TimeManager::addTimer(TimerFunc func, float interval, bool loop)
 	return timer;
 }
 
-bool Timer::update(float deltaTime)
+bool Timer::Update(float deltaTime)
 {
 	_sumTime += deltaTime;
 	if (_sumTime >= _interval)

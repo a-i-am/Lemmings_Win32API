@@ -1,6 +1,6 @@
-// Component.h
 #pragma once
 #include "pch.h"
+// Component.h
 
 class Actor; // 전방 선언
 

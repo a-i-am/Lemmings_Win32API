@@ -23,14 +23,14 @@ Terrain::Terrain(Vector pos) : Super(pos)
 
 
 //
-//void Terrain::update(float deltaTime)
+//void Terrain::Update(float deltaTime)
 //{
 //	_levelTexture->UpdateComponent(deltaTime);
 //}
 
 Vector Terrain::worldToLocal(float worldX, float worldY) const
 {
-	const Vector& terrainPos = getPosition();
+	const Vector& terrainPos = GetPosition();
 	float mapLeft = terrainPos.x - (_width * 0.5f);
 	float mapTop = terrainPos.y - (_height * 0.5f);
 	return Vector{ worldX - mapLeft, worldY - mapTop };

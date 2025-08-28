@@ -1,17 +1,21 @@
 #pragma once
 
-#include "Job.h"
 #include "Singleton.h"
-
+#include "Job.h" 
 
 class JobFactory
 {
-
+public:
+	static JobFactory& instance()
+	{
+		static JobFactory instance;
+		return instance;
+	};
 public:
 	Job* CreateWalkerJob();
-	Job* CreateDiggerJob();
-	Job* CreateEscaperJob();
-	Job* CreateFallerJob();
+	//Job* CreateDiggerJob();
+	//Job* CreateEscaperJob();
+	//Job* CreateFallerJob();
 
 	//Job* createExploderJob();
 	//Job* createMinerJob();

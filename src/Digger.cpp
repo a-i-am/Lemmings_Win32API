@@ -12,12 +12,12 @@ enum DiggerAnims
 void Digger::InitAnims(Actor* owner)
 {
 	jobSprite = owner->CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-	jobSprite->SetAnimationClip(9, 8);
+	jobSprite->SetLemmingAnimationData(0, 9, 8, false, true);
 
 	state = DIGGING_STATE;
 }
 
-void Digger::UpdateStateMachine(int deltaTime)
+void Digger::UpdateStateMachine(float deltaTime)
 {
 }
 

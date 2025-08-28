@@ -2,8 +2,6 @@
 #include "Terrain.h"
 #include "Lemming.h"
 #include "Door.h"
-
-
 #include "ResourceManager.h"
 #include "GameState.h"
 #include "Actor.h"
@@ -23,16 +21,16 @@ public:
 	Terrain* GetTerrain() { return _terrain; }
 	Door* GetDoor() const { return _door; }
 
-	virtual	void init();
+	virtual	void Init();
 	virtual void destory();
-	virtual void update(float deltaTime);
+	virtual void Update(float deltaTime);
 	virtual void Render(HDC hdc);
 
 protected:
-	virtual void eraseMask(int x, int y);
-	virtual void applyMask(int x, int y);
-	virtual void eraseSpecialMask(int x, int y);
-	virtual void applySpecialMask(int x, int y);
+	virtual void eraseMask(int32 x, int32 y);
+	virtual void applyMask(int32 x, int32 y);
+	virtual void eraseSpecialMask(int32 x, int32 y);
+	virtual void applySpecialMask(int32 x, int32 y);
 
 	virtual void changePauseStatus();
 	virtual void changeSpeedUpStatus();

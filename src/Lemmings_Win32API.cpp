@@ -17,14 +17,14 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름�
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
+BOOL                InitInstance(HINSTANCE, int32);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+int32 APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+                     _In_ int32       nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -52,7 +52,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     TimeManager* timeManager = TimeManager::getInstance();
     
 
-    game.init(hWnd);
+    game.Init(hWnd);
 
     const float targetFrameTime = 1000.0f / 120.f;  // 초당(1000ms) 120 프레임
 
@@ -72,18 +72,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             ::QueryPerformanceCounter(&now);
-              timeManager->update();
+              timeManager->Update();
 
               float deltaTime = timeManager->getDeltaTime();
               
-              game.update(deltaTime);
+              game.Update(deltaTime);
               game.Render();
 
               prev = now;
         }
     }
 
-    return (int) msg.wParam;
+    return (int32) msg.wParam;
 }
 
 
@@ -115,7 +115,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 }
 
 //
-//   함수: InitInstance(HINSTANCE, int)
+//   함수: InitInstance(HINSTANCE, int32)
 //
 //   용도: 인스턴스 핸들을 저장하고 주 창을 만듭니다.
 //
@@ -124,7 +124,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //        이 함수를 통해 인스턴스 핸들을 전역 변수에 저장하고
 //        주 프로그램 창을 만든 다음 표시합니다.
 //
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
+BOOL InitInstance(HINSTANCE hInstance, int32 nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
    RECT windowRect = { 0, 0, GWinSizeX, GWinSizeY };
@@ -160,7 +160,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
     case WM_COMMAND:
         {
-            int wmId = LOWORD(wParam);
+            int32 wmId = LOWORD(wParam);
             // 메뉴 선택을 구문 분석합니다:
             switch (wmId)
             {

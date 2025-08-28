@@ -33,20 +33,20 @@ public:
 		RIGHT_MOUSE_PRESSED
 	};
 
-	void mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton);
-	void update();
+	void mouseMoved(int32 mouseX, int32 mouseY, bool bLeftButton, bool bRightButton);
+	void Update();
 
 private:
-	ScreenClickedArea getClickedScreenArea(int mouseX, int mouseY);
-	ScreenMovedArea getMovedScreenArea(int mouseX, int mouseY);
+	ScreenClickedArea getClickedScreenArea(int32 mouseX, int32 mouseY);
+	ScreenMovedArea getMovedScreenArea(int32 mouseX, int32 mouseY);
 
-	void leftClickOnUI(int posX, int posY);
-	void leftClickOnMap(int posX, int posY);
+	void leftClickOnUI(int32 posX, int32 posY);
+	void leftClickOnMap(int32 posX, int32 posY);
 
 	void updateCursorPosition();
 
 private:
-	int posX, posY;
+	int32 posX, posY;
 
 	MouseStates mouseState = MouseStates::NONE;
 	ScreenMovedArea screenMovedArea;

@@ -4,14 +4,14 @@
 constexpr int32 GWinSizeX = 1250;
 constexpr int32 GWinSizeY = 750;
 
-//const int LEVEL_SIZE_X = 20;
-//const int LEVEL_SIZE_Y = 36;
+//const int32 LEVEL_SIZE_X = 20;
+//const int32 LEVEL_SIZE_Y = 36;
 
 
 // 엔씨에 있을때 사용하던 방식 & 언리얼도 이렇게 씁니다.
 using int8 = char;					// 정수 저장하는데 1bit 짜리
 using int16 = short;
-using int32 = int;
+using int32 = int32;
 using int64 = long long;		// 매번 long long 쓰기 귀찮아서 int64
 using uint8 = unsigned char;
 using uint16 = unsigned short;
@@ -71,7 +71,7 @@ struct Vector
 	//Vector p3 = p1 + p2;
 	//p1 += p2;	// 이런 덧셈도 할수 있을지도
 	//
-	//int a = 10;
+	//int32 a = 10;
 	//a += 1;
 
 	// 사칙연산 정의

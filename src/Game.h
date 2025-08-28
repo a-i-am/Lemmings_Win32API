@@ -23,10 +23,10 @@ public:
 	}
 
 	// 초기화, 삭제, 업데이트, 렌더링
-	void init(HWND hwnd);
+	void Init(HWND hwnd);
 	void destroy();
 
-	bool update(float deltaTime);
+	bool Update(float deltaTime);
 	void Render();
 
 	HWND getHwnd() { return _hwnd; }

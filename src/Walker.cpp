@@ -11,8 +11,13 @@ enum WalkerAnims
 
 void Walker::InitAnims(Actor* owner)
 {
-    jobSprite = owner->CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-    jobSprite->SetAnimationClip(0, 10);
+    jobActor = owner;
+    jobSprite = jobActor->CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
+    jobSprite->getTexture()->GenerateCollisionData(256, 224);
+
+    //jobSprite->SetLemmingAnimationData(FALLING, 2, 4, false, true);
+    //jobSprite->SetLemmingAnimationData(WALKING_LEFT, 0, 10, false, true);
+    jobSprite->SetLemmingAnimationData(WALKING_RIGHT, 1, 10, false, true);
 
     state = WALKING_RIGHT_STATE;
 }
@@ -22,21 +27,21 @@ void Walker::SetWalkingRight(bool value)
 	isWalkingRight = value;
 
 	if (isWalkingRight) {
-		jobSprite->changeAnimation(WALKING_RIGHT);
+		jobSprite->ChangeAnimation(WALKING_RIGHT);
 		state = WALKING_RIGHT_STATE;
 	}
 	else {
-		jobSprite->changeAnimation(WALKING_LEFT);
+		jobSprite->ChangeAnimation(WALKING_LEFT);
 		state = WALKING_LEFT_STATE;
 	}
 }
 
-void Walker::UpdateStateMachine(int deltaTime)
+void Walker::UpdateStateMachine(float deltaTime)
 {
 	GameScene* gameScene = Game::getGameScene();
 	if (!gameScene || !gameScene->GetTerrain()) return;
 
-    Vector nextPos = lemming->GetPosition();
+    Vector nextPos = jobActor->GetPosition();
 	int32 fall;
 
     switch (state)
@@ -47,12 +52,12 @@ void Walker::UpdateStateMachine(int deltaTime)
         if (IsCollisionFront(nextPos)) {
             // Step Over 로직
             bool climbed = false;
-            const int stepHeight = 3; // 최대 3픽셀까지만 올라감
+            const int32 stepHeight = 3; // 최대 3픽셀까지만 올라감
 
-            for (int dy = 1; dy <= stepHeight; ++dy) {
+            for (int32 dy = 1; dy <= stepHeight; ++dy) {
                 Vector tryPos = nextPos - Vector(0, dy);
                 if (!IsCollisionWall(tryPos)) {
-                    int fall = CollideFloor(tryPos, 2);
+                    int32 fall = CollideFloor(tryPos, 2);
                     if (fall <= stepHeight) {
                         // 발이 바닥보다 1픽셀 위에 오도록 조정
                         nextPos = tryPos + Vector(0, fall - groundClearance);
@@ -64,12 +69,12 @@ void Walker::UpdateStateMachine(int deltaTime)
 
             if (!climbed) {
                 // 못 올라감 → 방향 전환
-                nextPos = lemming->GetPosition();
+                nextPos = jobActor->GetPosition();
                 SetWalkingRight(true);
             }
         }
         else {
-            int fallCheck = CollideFloor(nextPos, 2);
+            int32 fallCheck = CollideFloor(nextPos, 2);
             if (fallCheck > 0) {
                 nextPos.y += fallCheck - groundClearance; // 바닥 위 1픽셀
                 fallSpeed = 0;
@@ -85,7 +90,7 @@ void Walker::UpdateStateMachine(int deltaTime)
                     //isFinished = true;
                     //_sprite = _spriteEscaper;
                     //nextJob = JobFactory::instance().createEscaperJob();
-                    nextPos = lemming->GetPosition();
+                    nextPos = jobActor->GetPosition();
                 }
             }
             else
@@ -102,12 +107,12 @@ void Walker::UpdateStateMachine(int deltaTime)
         if (IsCollisionFront(nextPos)) {
             // Step Over 로직
             bool climbed = false;
-            const int stepHeight = 3;
+            const int32 stepHeight = 3;
 
-            for (int dy = 1; dy <= stepHeight; ++dy) {
+            for (int32 dy = 1; dy <= stepHeight; ++dy) {
                 Vector tryPos = nextPos - Vector(0, dy);
                 if (!IsCollisionWall(tryPos)) {
-                    int fall = CollideFloor(tryPos, 2);
+                    int32 fall = CollideFloor(tryPos, 2);
                     if (fall <= stepHeight) {
                         // 발이 바닥보다 1픽셀 위에 오도록 조정
                         nextPos = tryPos + Vector(0, fall - groundClearance);
@@ -118,12 +123,12 @@ void Walker::UpdateStateMachine(int deltaTime)
             }
 
             if (!climbed) {
-                nextPos = lemming->GetPosition();
+                nextPos = jobActor->GetPosition();
                 SetWalkingRight(false);
             }
         }
         else {
-            int fallCheck = CollideFloor(nextPos, 2);
+            int32 fallCheck = CollideFloor(nextPos, 2);
             if (fallCheck > 0) {
                 nextPos.y += fallCheck - groundClearance; // 바닥 위 1픽셀
                 fallSpeed = 0;
@@ -139,7 +144,7 @@ void Walker::UpdateStateMachine(int deltaTime)
                     //isFinished = true;
                     //_sprite = _spriteEscaper;
                     //nextJob = JobFactory::instance().CreateEscaperJob();
-                    nextPos = lemming->GetPosition();
+                    nextPos = jobActor->GetPosition();
                 }
             }
             else
@@ -153,7 +158,7 @@ void Walker::UpdateStateMachine(int deltaTime)
     case FALLING:
         nextPos.y += 1 * fallSpeed;
 
-        int fallCheck = CollideFloor(nextPos, 2);
+        int32 fallCheck = CollideFloor(nextPos, 2);
         if (fallCheck == 0) {
             // 아직 공중
         }
@@ -168,7 +173,7 @@ void Walker::UpdateStateMachine(int deltaTime)
         break;
     }
 
-    lemming->GetPosition() = nextPos;
+    jobActor->GetPosition() = nextPos;
     jobSprite->UpdateComponent(deltaTime);
 }
 

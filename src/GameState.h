@@ -10,16 +10,16 @@ public:
 	virtual ~GameState() {}
 
 	// Input 콜백 메서드
-	void keyPressed(int key);
-	void keyReleased(int key);
-	void specialKeyPressed(int key);
-	void specialKeyReleased(int key);
-	void mouseMove(int x, int y, HWND hWnd);
-	void mousePress(int button);
-	void mouseRelease(int button);
+	void keyPressed(int32 key);
+	void keyReleased(int32 key);
+	void specialKeyPressed(int32 key);
+	void specialKeyReleased(int32 key);
+	void mouseMove(int32 x, int32 y, HWND hWnd);
+	void mousePress(int32 button);
+	void mouseRelease(int32 button);
 
-	bool getKey(int key) const;
-	bool getSpecialKey(int key) const;
+	bool getKey(int32 key) const;
+	bool getSpecialKey(int32 key) const;
 
 protected:
 	MouseManager *mouseManager;
@@ -30,7 +30,7 @@ private:
 
 	bool keys[256], specialKeys[256]; // 키 상태를 저장
 
-	int mouseX, mouseY;
+	int32 mouseX, mouseY;
 	bool bLeftMouse, bRightMouse;
 
 };

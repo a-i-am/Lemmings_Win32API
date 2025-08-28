@@ -3,8 +3,8 @@ class KeyboardManager
 {
 
 public:
-	virtual void keyPressed(int key) = 0;
-	virtual void keyReleased(int key) = 0;
-	virtual void specialKeyPressed(int key) = 0;
-	virtual void specialKeyReleased(int key) = 0;
+	virtual void keyPressed(int32 key) = 0;
+	virtual void keyReleased(int32 key) = 0;
+	virtual void specialKeyPressed(int32 key) = 0;
+	virtual void specialKeyReleased(int32 key) = 0;
 };

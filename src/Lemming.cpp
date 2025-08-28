@@ -2,45 +2,26 @@
 #include "Lemming.h"
 #include "Game.h"
 #include "GameScene.h"
+#include "JobFactory.h"
+#include "Job.h"
+#include <cassert>
 
 Lemming::Lemming(Vector pos) : Super(pos)
 {
-    //_spriteMoveRight = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-    //_spriteMoveRight->SetAnimationClip(0, 10);
+    //job = JobFactory::instance().CreateFallerJob();
+    job = JobFactory::instance().CreateWalkerJob();
+    job->InitAnims(this);
+    _jobSprite = job->GetJobSprite(); // job 클래스의 SpriteRenderer* jobSprite 넘겨받음
 
-    //_spriteMoveLeft = CreateSpriteComponent("rotated_lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-    //_spriteMoveLeft->SetAnimationClip(6, 15);
 
-    //_spriteEscape = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-    //_spriteEscape->SetAnimationClip(18, 9);
-
-    //_spriteFall = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-    //_spriteFall->SetAnimationClip(3, 4);
-
-    //_spriteDig = CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
-    //_spriteDig->SetAnimationClip(9, 8);
-
-    //_spriteMoveRight->getTexture()->GenerateCollisionData(256, 224);
-    //_spriteMoveLeft->getTexture()->GenerateCollisionData(256, 224);
-    //_spriteEscape->getTexture()->GenerateCollisionData(256, 224);
-    //_spriteDig->getTexture()->GenerateCollisionData(256, 224);
-
-    SetWalkingRight(true);
-    _jobSprite = _spriteMoveRight;
-
-    //state = WALKING_RIGHT_STATE;
+    // GameScene에서 레밍 객체(pos) 생성, 레밍 클래스에서 pos 할당
+    SetPosition(pos); // pos = _pos;
+    //countdown = NULL;
+    _isAlive = true;
+    _isSaved = false;
     _fallSpeed = 0;
 
-    //this->shaderProgram = &ShaderManager::getInstance().getShaderProgram();
-    //this->job = JobFactory::instance().createFallerJob();
-    //this->job->initAnims(*shaderProgram);
-    //sprite = this->job->getJobSprite();
-    //sprite->SetPosition(initialPosition);
-    //countdown = NULL;
-    //alive = true;
-    //isSaved = false;
 }
-
 
 void Lemming::SetWalkingRight(bool value)
 {
@@ -48,9 +29,78 @@ void Lemming::SetWalkingRight(bool value)
      job->SetWalkingRight(value);
 }
 
+void Lemming::WriteDestiny()
+{
+
+}
+
+void Lemming::ChangeJob(Job* nextJob)
+{
+    if (job) {
+        delete job;
+    }
+
+    _isWalkingRight = job->GetIsWalkingRight();
+    delete this->job;
+    this->job = nextJob;
+    this->job->InitAnims(this);
+    nextJob->SetWalkingRight(_isWalkingRight);
+
+    Vector oldPosition = _pos;
+
+    delete _jobSprite;
+    _jobSprite = this->job->GetJobSprite();
+    SetPosition(oldPosition);
+}
+
+bool Lemming::IsOutOfMap()
+{
+    Vector pos = GetPosition();
+    return (pos.x < 0 || pos.y < 0 || pos.x > GWinSizeX || pos.y > GWinSizeY);
+}
+
 void Lemming::Update(float deltaTime)
 {
-    
+
+    _jobSprite->UpdateComponent(deltaTime); 
+    job->UpdateStateMachine(deltaTime); // Walker*
+
+    // TODO : digger 구현 후 Countdown 클래스 작성, 
+    // 레밍 점수 계산 등 시스템 로직 작성 같이하기
+    // 
+    //if (IsOutOfMap()) {
+    //    _isAlive = false;
+    //    delete this->job;
+    //}
+    //else {
+    //    if (/*countdown != NULL && countdown->isOver()*/) {
+    //        //ChangeJob(JobFactory::instance().createExploderJob());
+    //        //delete countdown;
+    //        //countdown = NULL;
+    //    }
+    //    else {
+    //        job->UpdateStateMachine(deltaTime);
+    //        if (/*countdown != NULL*/) {
+    //            /*countdown->setPosition(glm::vec2(6, -8) + sprite->position());
+    //            countdown->Update(deltaTime);*/
+    //        }
+    //        if (job->IsFinished()) {
+    //            if (job->GetNextJob() == NULL) {
+    //                if (job->GetName() == "ESCAPER") {
+    //                    _isSaved = true;
+    //                }
+    //                else {
+    //                    _isAlive = false;
+    //                }
+    //            }
+    //            if (_isAlive && !_isSaved) {
+    //                ChangeJob(job->GetNextJob());
+    //            }
+    //        }
+    //    }
+    //}
+
+
 }
 
 void Lemming::Render(HDC hdc)
@@ -66,7 +116,7 @@ void Lemming::Render(HDC hdc)
         HBRUSH frontBrush = CreateSolidBrush(RGB(0, 255, 0));
         for (auto& p : job->GetDebugFrontPoints()) {
             Vector local = terrain->worldToLocal(p.x, p.y);
-            RECT rc = { (int)local.x, (int)local.y, (int)local.x + 2, (int)local.y + 2 };
+            RECT rc = { (int32)local.x, (int32)local.y, (int32)local.x + 2, (int32)local.y + 2 };
             FillRect(hdc, &rc, frontBrush);
         }
         DeleteObject(frontBrush);
@@ -74,7 +124,7 @@ void Lemming::Render(HDC hdc)
         HBRUSH floorBrush = CreateSolidBrush(RGB(255, 0, 0));
         for (auto& p : job->GetDebugFloorPoints()) {
             Vector local = terrain->worldToLocal(p.x, p.y);
-            RECT rc = { (int)local.x, (int)local.y, (int)local.x + 2, (int)local.y + 2 };
+            RECT rc = { (int32)local.x, (int32)local.y, (int32)local.x + 2, (int32)local.y + 2 };
             FillRect(hdc, &rc, floorBrush);
         }
         DeleteObject(floorBrush);
@@ -88,10 +138,4 @@ void Lemming::Render(HDC hdc)
             DeleteObject(doorBrush);
         }
     }
-}
-
-bool Lemming::outOfMap()
-{
-    Vector pos = GetPosition();
-    return (pos.x < 0 || pos.y < 0 || pos.x > GWinSizeX || pos.y > GWinSizeY);
 }

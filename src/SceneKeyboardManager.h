@@ -13,10 +13,10 @@ public:
 		return instance;
 	};
 
-	void keyPressed(int key);
-	void keyReleased(int key);
-	void specialKeyPressed(int key);
-	void specialKeyReleased(int key);
+	void keyPressed(int32 key);
+	void keyReleased(int32 key);
+	void specialKeyPressed(int32 key);
+	void specialKeyReleased(int32 key);
 
 private:
 };

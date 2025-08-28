@@ -6,7 +6,7 @@ public:
 	Texture();
 
 	void Load(string key, string texturePath, int32 transparent, int32 xFrameCount, int32 yFrameCount);
-	void Render(HDC hdc, Vector pos, Vector srcPos, Vector srcSize);
+	void Render(HDC hdc, Vector pos, Vector srcPos, Vector frameSize, bool isFlipX);
 
 	void SetTextureWidth(int32 width) { _width = width; }
 	void SetTextureHeight(int32 height) { _height = height; }
@@ -30,7 +30,6 @@ public:
 	void SetCenterAlign(bool center) { _centerAlign = center; }
 
 	void GenerateCollisionData(int32 targetWidth, int32 targetHeight);
-	
 
 private:
 	// GDI 관련
@@ -59,6 +58,6 @@ private:
 	int32		_frameHeight = 0;
 
 	bool		_centerAlign = true; // 기본은 가운데 위치를 기준으로 텍스처 그리기
-
+	bool		_isCollisionGenerated = false; // collision 생성 여부
 	//vector<BYTE> _pixels; // 픽셀 데이터 보관용
 };

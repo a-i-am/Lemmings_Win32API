@@ -1,9 +1,6 @@
 #pragma once
 #include "Actor.h"
-#include "SpriteRenderer.h"
-#include "Texture.h"
-
-
+class SpriteRenderer;
 class Door : public Actor
 {
 	using Super = Actor;

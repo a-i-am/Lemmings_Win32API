@@ -2,7 +2,6 @@
 #include "Job.h"
 #include "Game.h"
 #include "GameScene.h"
-#include "Lemming.h"
 
 bool Job::IsCollisionWall(Vector nextPos)
 {
@@ -14,7 +13,7 @@ bool Job::IsCollisionWall(Vector nextPos)
     debugFrontPoints.clear();
     debugFrontPoints.push_back(checkPos);
 
-    return gameScene->GetTerrain()->isSolid((int)checkPos.x, (int)checkPos.y) != 0;
+    return gameScene->GetTerrain()->isSolid((int32)checkPos.x, (int32)checkPos.y) != 0;
 }
 
 bool Job::IsCollisionFront(Vector nextPos)
@@ -38,14 +37,14 @@ bool Job::IsCollisionFront(Vector nextPos)
             continue;
 
         // 몸통/발 근처만 바닥 충돌 용도로 판단
-        if (gameScene->GetTerrain()->isSolid((int)checkPos.x, (int)checkPos.y) != 0)
+        if (gameScene->GetTerrain()->isSolid((int32)checkPos.x, (int32)checkPos.y) != 0)
             return true;
     }
 
     return false;
 }
 
-int Job::CollideFloor(Vector nextPos, int maxFall)
+int32 Job::CollideFloor(Vector nextPos, int32 maxFall)
 {
     GameScene* gameScene = Game::getGameScene();
     if (!gameScene || !gameScene->GetTerrain()) return 0;
@@ -55,15 +54,15 @@ int Job::CollideFloor(Vector nextPos, int maxFall)
     Vector foot1(-2, footOffsetY);
     Vector foot2(2,  footOffsetY);
 
-    for (int dy = 0; dy < maxFall; ++dy) {
+    for (int32 dy = 0; dy < maxFall; ++dy) {
         Vector c1 = nextPos + foot1 + Vector(0, dy);
         Vector c2 = nextPos + foot2 + Vector(0, dy);
 
         debugFloorPoints.push_back(c1);
         debugFloorPoints.push_back(c2);
 
-        if (gameScene->GetTerrain()->isSolid((int)c1.x, (int)c1.y) != 0 ||
-            gameScene->GetTerrain()->isSolid((int)c2.x, (int)c2.y) != 0) {
+        if (gameScene->GetTerrain()->isSolid((int32)c1.x, (int32)c1.y) != 0 ||
+            gameScene->GetTerrain()->isSolid((int32)c2.x, (int32)c2.y) != 0) {
             return dy; // 땅 찾음
         }
     }

@@ -25,7 +25,7 @@ void GameScene::destory()
 
 }
 
-void GameScene::init()
+void GameScene::Init()
 {
 	keyboardManager = &SceneKeyboardManager::getInstance();
 	mouseManager = &SceneMouseManager::getInstance();
@@ -36,9 +36,10 @@ void GameScene::init()
 
 	Actor* trapdoors = new Actor(Vector{ 540.f, 150.f });
 	trapdoors->CreateSpriteComponent("trapdoors", 1.0f, 41 * 3.f, 25 * 3.f);
-	trapdoors->getComponent<SpriteRenderer>()->SetAnimationClip(0, 10);
+	trapdoors->getComponent<SpriteRenderer>()->SetAllDoorsAnimationData(0, 10);
 	_actors.push_back(trapdoors);
 
+	
 	_door = new Door(Vector{ 875.f, 335.f });
 	_actors.push_back(_door);
 
@@ -47,7 +48,7 @@ void GameScene::init()
 	_actors.push_back(lemming);
 }
 
-void GameScene::update(float deltaTime)
+void GameScene::Update(float deltaTime)
 {
 	for (Actor* actor : _actors)
 	{
@@ -82,19 +83,19 @@ bool GameScene::isSpeedUp()
 	return false;
 }
 
-void GameScene::eraseMask(int x, int y)
+void GameScene::eraseMask(int32 x, int32 y)
 {
 }
 
-void GameScene::applyMask(int x, int y)
+void GameScene::applyMask(int32 x, int32 y)
 {
 
 }
 
-void GameScene::eraseSpecialMask(int x, int y)
+void GameScene::eraseSpecialMask(int32 x, int32 y)
 {
 }
 
-void GameScene::applySpecialMask(int x, int y)
+void GameScene::applySpecialMask(int32 x, int32 y)
 {
 }

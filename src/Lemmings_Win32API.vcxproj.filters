@@ -183,6 +183,9 @@
     <ClInclude Include="Digger.h">
       <Filter>소스 파일\Game\Lemmings Actings</Filter>
     </ClInclude>
+    <ClInclude Include="AnimData.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Defines.cpp">

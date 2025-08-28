@@ -9,7 +9,7 @@ class Terrain : public Actor
 public:
     Terrain(Vector pos);
     
-    /*void update(float deltaTime) override;*/
+    /*void Update(float deltaTime) override;*/
 
     Vector worldToLocal(float worldX, float worldY) const;
     bool isSolid(int32 x, int32 y) const;

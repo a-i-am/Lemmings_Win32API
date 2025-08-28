@@ -16,7 +16,7 @@ Actor::~Actor()
 {
     for (Component* comp : _components)
     {
-        comp->setOwner(nullptr); // 이 줄 추가 권장
+        comp->setOwner(nullptr);
         delete comp;
     }
     _components.clear();
@@ -52,7 +52,9 @@ Vector Actor::GetPosition() const
 SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, int32 dur, int32 width, int32 height)
 {
     SpriteRenderer* sprite = new SpriteRenderer(spriteInfo, dur);
-    sprite->SetFrameSize(width, height, 1.0f, 1.0f);
+    sprite->InitComponent();
+
+    sprite->SetFrameSize(width, height);
     _components.emplace_back(sprite);
     return sprite;
 }
@@ -60,6 +62,8 @@ SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, int32 dur, int32
 ImageRenderer* Actor::CreateTextureComponent(string bitmapKey, int32 width, int32 height)
 {
     ImageRenderer* sprite = new ImageRenderer(bitmapKey, width, height);
+    sprite->InitComponent();
+
     sprite->getTexture()->SetTextureWidth(width);
     sprite->getTexture()->SetTextureHeight(height);
     _components.emplace_back(sprite);

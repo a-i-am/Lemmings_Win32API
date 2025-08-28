@@ -2,7 +2,7 @@
 #include "common_defs.h"
 #include "SceneMouseManager.h"
 
-void SceneMouseManager::mouseMoved(int mouseX, int mouseY, bool bLeftButton, bool bRightButton)
+void SceneMouseManager::mouseMoved(int32 mouseX, int32 mouseY, bool bLeftButton, bool bRightButton)
 {
 	posX = mouseX;
 	posY = mouseY;
@@ -11,7 +11,7 @@ void SceneMouseManager::mouseMoved(int mouseX, int mouseY, bool bLeftButton, boo
 	screenMovedArea = getMovedScreenArea(mouseX, mouseY);
 	if (screenMovedArea == SCROLL_AREA_LEFT) // 레벨 씬에서의 현재 마우스 스크롤링 상태
 	{
-		int a = 2;
+		int32 a = 2;
 	}
 
 	switch (mouseState)
@@ -65,7 +65,7 @@ void SceneMouseManager::mouseMoved(int mouseX, int mouseY, bool bLeftButton, boo
 	}
 }
 
-void SceneMouseManager::update()
+void SceneMouseManager::Update()
 {
 	//updateCursorPostion();
 	/*
@@ -79,7 +79,7 @@ void SceneMouseManager::update()
 	}
 	else if (screenMovedArea == ScreenMovedArea::LEVEL) {
 
-		int lemmingIndex = LevelManager::getInstance().getLemmingIndexInPos(posX, posY);
+		int32 lemmingIndex = LevelManager::getInstance().getLemmingIndexInPos(posX, posY);
 		UIAdapter::getInstance().changeFocusedLemming(lemmingIndex);
 
 		if (lemmingIndex != -1) {
@@ -97,7 +97,7 @@ void SceneMouseManager::update()
 
 }
 
-SceneMouseManager::ScreenClickedArea SceneMouseManager::getClickedScreenArea(int mouseX, int mouseY)
+SceneMouseManager::ScreenClickedArea SceneMouseManager::getClickedScreenArea(int32 mouseX, int32 mouseY)
 {
 	if (
 		0 <= mouseX
@@ -116,7 +116,7 @@ SceneMouseManager::ScreenClickedArea SceneMouseManager::getClickedScreenArea(int
 		return ScreenClickedArea::UI;
 	}
 }
-SceneMouseManager::ScreenMovedArea SceneMouseManager::getMovedScreenArea(int mouseX, int mouseY)
+SceneMouseManager::ScreenMovedArea SceneMouseManager::getMovedScreenArea(int32 mouseX, int32 mouseY)
 {
 	if (0 <= mouseX && mouseX < SCROLL_WIDTH && mouseY < LEVEL_HEIGHT) {
 		return ScreenMovedArea::SCROLL_AREA_LEFT;
@@ -133,17 +133,17 @@ SceneMouseManager::ScreenMovedArea SceneMouseManager::getMovedScreenArea(int mou
 	}
 }
 
-void SceneMouseManager::leftClickOnUI(int posX, int posY)
+void SceneMouseManager::leftClickOnUI(int32 posX, int32 posY)
 {
-	//int clickedButtonIndex = UI::getInstance().getButtonIndexInPos(posX, posY);
+	//int32 clickedButtonIndex = UI::getInstance().getButtonIndexInPos(posX, posY);
 	//UIAdapter::getInstance().changeSelectedButton(clickedButtonIndex);
 }
-void SceneMouseManager::leftClickOnMap(int posX, int posY) 
+void SceneMouseManager::leftClickOnMap(int32 posX, int32 posY) 
 {
 
 	//if (JobAssigner::getInstance().hasJobToAssign()) {
 
-		//int selectedLemmingIndex = LevelManager::getInstance().getLemmingIndexInPos(posX, posY);
+		//int32 selectedLemmingIndex = LevelManager::getInstance().getLemmingIndexInPos(posX, posY);
 		//JobAssigner::getInstance().assigJobLemming(selectedLemmingIndex);
 	//}
 	

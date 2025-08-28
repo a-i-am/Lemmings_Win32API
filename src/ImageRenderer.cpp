@@ -25,5 +25,6 @@ void ImageRenderer::RenderComponent(HDC hdc, Vector pos)
 	if (_texture == nullptr)
 		return;
 
-	_texture->Render(hdc, pos, Vector(0, 0), Vector(_texture->GetTextureWidth(), _texture->GetTextureHeight()));
+	// ÀÌ¹ÌÁö ·»´õ·¯ = ¸Ê = FlipX false
+	_texture->Render(hdc, pos, Vector(0, 0), Vector(_texture->GetTextureWidth(), _texture->GetTextureHeight()), false);
 }
