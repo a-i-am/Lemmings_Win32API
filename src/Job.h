@@ -42,7 +42,7 @@ protected:
 	Job* nextJob;
 
 	float walkSpeed = 25.0f;
-	float fallSpeed = 0;
+	float fallSpeed = 0.f;
 	float footOffsetY = 23.0f;			// 발 위치 (Sprite 기준)
 	int32 groundClearance = 1;			// 바닥 위 여유 공간 (픽셀)
 

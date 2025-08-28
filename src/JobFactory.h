@@ -13,9 +13,9 @@ public:
 	};
 public:
 	Job* CreateWalkerJob();
-	//Job* CreateDiggerJob();
-	//Job* CreateEscaperJob();
-	//Job* CreateFallerJob();
+	Job* CreateDiggerJob();
+	Job* CreateEscaperJob();
+	Job* CreateFallerJob();
 
 	//Job* createExploderJob();
 	//Job* createMinerJob();

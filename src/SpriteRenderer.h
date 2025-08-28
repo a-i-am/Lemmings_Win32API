@@ -16,7 +16,7 @@ public:
 	virtual void UpdateComponent(float deltaTime) override;
 	virtual void RenderComponent(HDC hdc, Vector pos) override;
 	bool IsEnd() { return _isEnd; }
-	void ChangeAnimation(int32 animId);
+	void PlayLemmingAnimation(int32 animId);
 
 	void SetLemmingAnimationData(int32 animId, int32 startIndex, int32 totalCount, bool flipX, bool loop);
 	void SetAllDoorsAnimationData(int32 startIndex, int32 totalCount, bool isLoop, bool isEnd);
@@ -68,6 +68,8 @@ private:
 	bool  _isEnd = false;
 	bool _isFlipX = false;
 	bool _isLoop = false;
+
+	
 
 	float _sumTime = 0.0f;
 	float _duration = 0.1f; // 한 프레임 당 0.1초(10fps)

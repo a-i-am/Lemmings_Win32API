@@ -13,7 +13,6 @@ Lemming::Lemming(Vector pos) : Super(pos)
     job->InitAnims(this);
     _jobSprite = job->GetJobSprite(); // job 클래스의 SpriteRenderer* jobSprite 넘겨받음
 
-
     // GameScene에서 레밍 객체(pos) 생성, 레밍 클래스에서 pos 할당
     SetPosition(pos); // pos = _pos;
     //countdown = NULL;
@@ -37,10 +36,10 @@ void Lemming::WriteDestiny()
 void Lemming::ChangeJob(Job* nextJob)
 {
     if (job) {
+        _isWalkingRight = job->GetIsWalkingRight();
         delete job;
     }
 
-    _isWalkingRight = job->GetIsWalkingRight();
     delete this->job;
     this->job = nextJob;
     this->job->InitAnims(this);
@@ -61,7 +60,6 @@ bool Lemming::IsOutOfMap()
 
 void Lemming::Update(float deltaTime)
 {
-
     _jobSprite->UpdateComponent(deltaTime); 
     job->UpdateStateMachine(deltaTime); // Walker*
 

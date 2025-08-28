@@ -1,6 +1,5 @@
 #pragma once
 
-// TODO : Job 클래스 상속
 #include "Job.h"
 
 class Walker : public Job
@@ -15,7 +14,7 @@ public:
 private:
 	enum WalkerState
 	{
-		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING
+		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_STATE
 	};
 
 private:

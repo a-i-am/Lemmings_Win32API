@@ -18,10 +18,22 @@ SpriteRenderer::SpriteRenderer(string textureKey, float dur)
 		_frameSizeY = _spriteSheet->GetFrameCountY() != 0 ?
 			(_spriteSheet->GetTextureHeight() / _spriteSheet->GetFrameCountY()) : _spriteSheet->GetTextureHeight();
 	}
+
 	_currentAnimation = 0;
 	_currentFrameIndex = 0;
 	_sumTime = 0.f;
 	_isFlipX = false;
+}
+void SpriteRenderer::SetAllDoorsAnimationData(int32 startIndex, int32 totalCount, bool isLoop, bool isEnd)
+{
+	_startFrameIndex = startIndex;
+	_totalFrameCount = totalCount;
+	_framePerRow = _spriteSheet->GetFrameCountX(); // 자동 계산
+	_framePerCol = _spriteSheet->GetFrameCountY();
+	_currentFrameIndex = 0;
+	_isLoop = isLoop;
+	_isEnd = isEnd;
+	_sumTime = 0.f;
 }
 
 void SpriteRenderer::SetLemmingAnimationData(int32 animId, int32 startIndex, int32 totalCount, bool isFlipX, bool isLoop)
@@ -32,71 +44,64 @@ void SpriteRenderer::SetLemmingAnimationData(int32 animId, int32 startIndex, int
 	if (animId >= int32(_animations.size()))
 		_animations.resize(animId + 1);
 
-	// 먼저 AnimData를 초기화
+	// AnimData 초기화
 	_animations[animId].startIndex = startIndex;
 	_animations[animId].totalCount = totalCount;
 	_animations[animId].isFlipX = isFlipX;
 	_animations[animId].isLoop = isLoop;
 	_animations[animId].isEnd = false;
 
-	// 그 다음에 현재 애니메이션으로 지정
-	_currentAnimation = animId;
-	_currentFrameIndex = startIndex;
-	_startFrameIndex = startIndex;
-	_totalFrameCount = totalCount;
-	_isFlipX = isFlipX;
-	_isLoop = isLoop;
-	_isEnd = false;
+	_currentFrameIndex = 0;
 }
 
-void SpriteRenderer::SetAllDoorsAnimationData(int32 startIndex, int32 totalCount, bool isLoop, bool isEnd)
-{
-	_startFrameIndex = startIndex;
-	_totalFrameCount = totalCount;
-	_isLoop = isLoop;
-	_isEnd = isEnd;
-}
-
-void SpriteRenderer::ChangeAnimation(int32 animId)
+void SpriteRenderer::PlayLemmingAnimation(int32 animId)
 {
 	if (animId >= int32(_animations.size())) return;
-	
+
 	_currentAnimation = animId;
-	_isFlipX = _animations[_currentAnimation].isFlipX;
-	_isLoop = _animations[_currentAnimation].isLoop;
-	_isEnd = _animations[_currentAnimation].isEnd;
-	
-	_currentFrameIndex = 0;
-	_sumTime = 0.f;
 
-	_animations[_currentAnimation].isEnd = false;
+	_isEnd = false;
+	_isLoop = _animations[animId].isLoop;
 }
-
 
 void SpriteRenderer::InitComponent()
 {
 	Super::InitComponent();
 }
-
 void SpriteRenderer::UpdateComponent(float deltaTime)
 {
 	Super::UpdateComponent(deltaTime);
 
-	if (_duration == 0 || _spriteSheet == nullptr || _totalFrameCount <= 0)
+	if (_duration == 0 || _isEnd || _spriteSheet == nullptr)
 		return;
 
 	_sumTime += deltaTime;
 
-	if (_currentAnimation >= 0 && _currentAnimation < (int32)_animations.size())
-	{
-		float delta = _duration / _animations[_currentAnimation].totalCount;
+	int32 lemmingAnimtotalCount = 0;
+	int32 myTotalAnimIndexCount = 0;
+	float myDelta = 0.f;
 
-		while (_sumTime >= delta)
+	if (_currentAnimation >= 0 && _currentAnimation < (int32)_animations.size())
+	{	// 레밍 애니메이션 전용(상태에 따라 전환이 필요해서 AnimData로 따로 관리)
+		lemmingAnimtotalCount = _animations[_currentAnimation].totalCount;
+		float delta = _duration / lemmingAnimtotalCount;
+		myDelta = delta;
+		myTotalAnimIndexCount = lemmingAnimtotalCount;
+	}
+	else
+	{
+		// 레밍 외 다른 액터들 애니메이션 전용
+		float delta = _duration / _totalFrameCount;
+		myDelta = delta;
+		myTotalAnimIndexCount = _totalFrameCount;
+	}
+
+		while (_sumTime >= myDelta)
 		{
 			_currentFrameIndex++;
-			_sumTime -= delta;
+			_sumTime -= myDelta;
 
-			if (_currentFrameIndex >= _animations[_currentAnimation].totalCount)
+			if (_currentFrameIndex >= myTotalAnimIndexCount)
 			{
 				if (_isLoop)
 				{
@@ -104,37 +109,11 @@ void SpriteRenderer::UpdateComponent(float deltaTime)
 				}
 				else
 				{
-					_currentFrameIndex = _animations[_currentAnimation].totalCount - 1;
+					_currentFrameIndex = myTotalAnimIndexCount - 1;
 					_isEnd = true;
 				}
 			}
 		}
-	}
-	else
-	{
-		float delta = _duration / _totalFrameCount;
-
-		while (_sumTime >= delta)
-		{
-			_currentFrameIndex++;
-			_sumTime -= delta;
-
-			if (_currentFrameIndex >= _totalFrameCount)
-			{
-				if (_isLoop)
-				{
-					_currentFrameIndex = 0;
-				}
-				else
-				{
-					_currentFrameIndex = _totalFrameCount - 1;
-				}
-			}
-		}
-	}
-
-	
-
 }
 
 void SpriteRenderer::RenderComponent(HDC hdc, Vector pos)
@@ -143,11 +122,25 @@ void SpriteRenderer::RenderComponent(HDC hdc, Vector pos)
 		return;
 
 	Super::RenderComponent(hdc, pos);
+	
+	int32 lemmingFrameIndex = 0;
+	int32 frameIndex = 0;
 
-	int32 frameIndex = _startFrameIndex + _currentFrameIndex;
+	int32 frameX = 0;
+	int32 frameY = 0;
 
-	int32 frameX = frameIndex % _spriteSheet->GetFrameCountX();
-	int32 frameY = frameIndex / _spriteSheet->GetFrameCountX();
+	if (_currentAnimation >= 0 && _currentAnimation < (int32)_animations.size())
+	{
+		lemmingFrameIndex = _animations[_currentAnimation].startIndex + _currentFrameIndex;
+		frameX = lemmingFrameIndex % _spriteSheet->GetFrameCountX();
+		frameY = lemmingFrameIndex / _spriteSheet->GetFrameCountX();
+	}
+	else
+	{
+		frameIndex = _startFrameIndex + _currentFrameIndex;
+		frameX = frameIndex % _spriteSheet->GetFrameCountX();
+		frameY = frameIndex / _spriteSheet->GetFrameCountX();
+	}
 
 	// 원본텍스처의 시작 위치를 계산한다.
 	// 텍스처의 특정 frame 으로 그려야 해서
@@ -156,4 +149,3 @@ void SpriteRenderer::RenderComponent(HDC hdc, Vector pos)
 
 	_spriteSheet->Render(hdc, pos, Vector(srcX, srcY), Vector(_frameSizeX, _frameSizeY), _isFlipX);
 }
-
