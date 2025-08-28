@@ -7,7 +7,7 @@
 Door::Door(Vector pos) : Super(pos)
 {
 	_doorSprite = CreateSpriteComponent("doors", 1.0f, 40 * 3.f, 32 * 3.f);
-	_doorSprite->SetAllDoorsAnimationData(0, 0);
+	_doorSprite->SetAllDoorsAnimationData(0, 6, true, false);
 
 	_sprite = _doorSprite;
 }

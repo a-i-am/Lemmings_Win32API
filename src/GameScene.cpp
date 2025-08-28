@@ -36,11 +36,11 @@ void GameScene::Init()
 
 	Actor* trapdoors = new Actor(Vector{ 540.f, 150.f });
 	trapdoors->CreateSpriteComponent("trapdoors", 1.0f, 41 * 3.f, 25 * 3.f);
-	trapdoors->getComponent<SpriteRenderer>()->SetAllDoorsAnimationData(0, 10);
+	trapdoors->getComponent<SpriteRenderer>()->SetAllDoorsAnimationData(0, 10, false, false);
 	_actors.push_back(trapdoors);
-
 	
 	_door = new Door(Vector{ 875.f, 335.f });
+
 	_actors.push_back(_door);
 
 	_lemmingPos = { 540.f, 150.f };

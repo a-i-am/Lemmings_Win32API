@@ -19,8 +19,7 @@ public:
 	void ChangeAnimation(int32 animId);
 
 	void SetLemmingAnimationData(int32 animId, int32 startIndex, int32 totalCount, bool flipX, bool loop);
-	void SetAllDoorsAnimationData(int32 startIndex, int32 totalCount);
-	void SetCurrentAnimation(int32 animId);
+	void SetAllDoorsAnimationData(int32 startIndex, int32 totalCount, bool isLoop, bool isEnd);
 	void SetFrameSize(int32 sizeX, int32 sizeY)
 	{
 		_frameSizeX = sizeX, _frameSizeY = sizeY;

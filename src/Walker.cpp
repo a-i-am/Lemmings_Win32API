@@ -12,12 +12,12 @@ enum WalkerAnims
 void Walker::InitAnims(Actor* owner)
 {
     jobActor = owner;
-    jobSprite = jobActor->CreateSpriteComponent("lemming", 1.0f, 16 * 3.f, 14 * 3.f);
+    jobSprite = jobActor->CreateSpriteComponent("lemming", 2.f, 16 * 3.f, 14 * 3.f);
     jobSprite->getTexture()->GenerateCollisionData(256, 224);
 
-    //jobSprite->SetLemmingAnimationData(FALLING, 2, 4, false, true);
+    jobSprite->SetLemmingAnimationData(FALLING, 2, 4, false, true);
     //jobSprite->SetLemmingAnimationData(WALKING_LEFT, 0, 10, false, true);
-    jobSprite->SetLemmingAnimationData(WALKING_RIGHT, 1, 10, false, true);
+    jobSprite->SetLemmingAnimationData(WALKING_RIGHT, 1, 9, false, true);
 
     state = WALKING_RIGHT_STATE;
 }

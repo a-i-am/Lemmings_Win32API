@@ -49,13 +49,12 @@ void SpriteRenderer::SetLemmingAnimationData(int32 animId, int32 startIndex, int
 	_isEnd = false;
 }
 
-void SpriteRenderer::SetAllDoorsAnimationData(int32 startIndex, int32 totalCount)
+void SpriteRenderer::SetAllDoorsAnimationData(int32 startIndex, int32 totalCount, bool isLoop, bool isEnd)
 {
 	_startFrameIndex = startIndex;
 	_totalFrameCount = totalCount;
-
-	_startFrameIndex = startIndex;
-	_totalFrameCount = totalCount;
+	_isLoop = isLoop;
+	_isEnd = isEnd;
 }
 
 void SpriteRenderer::ChangeAnimation(int32 animId)
@@ -88,7 +87,7 @@ void SpriteRenderer::UpdateComponent(float deltaTime)
 
 	_sumTime += deltaTime;
 
-	if (_currentAnimation >= 0 && _currentAnimation < (int)_animations.size())
+	if (_currentAnimation >= 0 && _currentAnimation < (int32)_animations.size())
 	{
 		float delta = _duration / _animations[_currentAnimation].totalCount;
 
@@ -128,7 +127,7 @@ void SpriteRenderer::UpdateComponent(float deltaTime)
 				}
 				else
 				{
-					_isEnd = true;
+					_currentFrameIndex = _totalFrameCount - 1;
 				}
 			}
 		}

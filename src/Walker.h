@@ -6,8 +6,6 @@
 class Walker : public Job
 {
 public:
-	Walker() {}
-
 	void InitAnims(Actor* owner) override;
 	void UpdateStateMachine(float deltaTime) override;
 	string GetName() override;
