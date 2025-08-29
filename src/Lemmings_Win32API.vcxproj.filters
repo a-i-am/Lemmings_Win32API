@@ -93,9 +93,6 @@
     <ClInclude Include="HardMaskManager.h">
       <Filter>소스 파일\Manager\Mask</Filter>
     </ClInclude>
-    <ClInclude Include="LobbyScene.h">
-      <Filter>소스 파일\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>소스 파일\Scene</Filter>
     </ClInclude>
@@ -122,9 +119,6 @@
     </ClInclude>
     <ClInclude Include="Word.h">
       <Filter>소스 파일\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="CheckLevelScene.h">
-      <Filter>소스 파일\Scene</Filter>
     </ClInclude>
     <ClInclude Include="SpriteRenderer.h">
       <Filter>소스 파일\Image</Filter>
@@ -203,9 +197,6 @@
     <ClCompile Include="UIManager.cpp">
       <Filter>소스 파일\UI</Filter>
     </ClCompile>
-    <ClCompile Include="CheckLevelScene.cpp">
-      <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="EasyMaskManager.cpp">
       <Filter>소스 파일\Manager\Mask</Filter>
     </ClCompile>
@@ -220,9 +211,6 @@
     </ClCompile>
     <ClCompile Include="Texture.cpp">
       <Filter>소스 파일\Image</Filter>
-    </ClCompile>
-    <ClCompile Include="LobbyScene.cpp">
-      <Filter>소스 파일\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Cursor.cpp">
       <Filter>소스 파일\UI</Filter>

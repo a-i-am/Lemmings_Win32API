@@ -119,6 +119,9 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,7 +131,6 @@
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimData.h" />
-    <ClInclude Include="CheckLevelScene.h" />
     <ClInclude Include="common_defs.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Cursor.h" />
@@ -149,7 +151,6 @@
     <ClInclude Include="KeyboardManager.h" />
     <ClInclude Include="Lemming.h" />
     <ClInclude Include="Lemmings_Win32API.h" />
-    <ClInclude Include="LobbyScene.h" />
     <ClInclude Include="MaskManager.h" />
     <ClInclude Include="MouseManager.h" />
     <ClInclude Include="pch.h" />
@@ -172,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="CheckLevelScene.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Defines.cpp" />
@@ -190,11 +190,11 @@
     <ClCompile Include="JobFactory.cpp" />
     <ClCompile Include="Lemming.cpp" />
     <ClCompile Include="Lemmings_Win32API.cpp" />
-    <ClCompile Include="LobbyScene.cpp" />
     <ClCompile Include="MaskManager.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Scene.cpp" />

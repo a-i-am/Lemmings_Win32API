@@ -5,7 +5,7 @@ template<typename T>
 class Singleton
 {
 public:
-	static T* getInstance()
+	static T* GetInstance()
 	{
 		// 1) 힙 할당
 		//if (_instance == nullptr)
@@ -17,7 +17,7 @@ public:
 		// 2) static 변수 : 안정성
 		return &_instance;
 	}
-	static void destroyInstance()
+	static void DestroyInstance()
 	{
 		//if (_instance != nullptr)
 		//{

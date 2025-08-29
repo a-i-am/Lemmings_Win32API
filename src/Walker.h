@@ -19,7 +19,7 @@ protected:
 private:
 	enum WalkerState
 	{
-		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_STATE
+		WALKING_LEFT_STATE, WALKING_RIGHT_STATE, FALLING_STATE, DIGGING_STATE
 	};
 
 	WalkerState state;
@@ -29,5 +29,4 @@ private:
 
 	void HandleWalking(bool right, float deltaTime, Vector& nextPos);
 	void HandleFalling(float deltaTime, Vector& nextPos);
-
 };

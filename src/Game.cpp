@@ -29,8 +29,8 @@ void Game::Init(HWND hwnd)
 
 	// 게임과 관련된 초기화가 필요한 항목들은 여기서
 	//InputManager::GetInstance()->Init(hwnd);	// 객체를 생성
-	TimeManager::getInstance()->Init();
-	ResourceManager::getInstance()->Init();	// 모든 리소스 로딩
+	TimeManager::GetInstance()->Init();
+	ResourceManager::GetInstance()->Init();	// 모든 리소스 로딩
 
 	//// 시작씬은 게임으로 설정
 	_currScene = new GameScene();
@@ -42,7 +42,7 @@ void Game::destroy()
 {
 	// 게임과 관련된 삭제가 필요한 항목들은 여기서
 	//InputManager::DestroyInstance();	// 객체를 생성
-	TimeManager::destroyInstance();
+	TimeManager::DestroyInstance();
 
 	//ResourceManager::GetInstance()->Destroy();
 

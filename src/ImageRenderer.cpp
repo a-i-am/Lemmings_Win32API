@@ -5,7 +5,7 @@
 
 ImageRenderer::ImageRenderer(string textureKey, int32 width, int32 height)
 {
-	_texture = ResourceManager::getInstance()->getTexture(textureKey);
+	_texture = ResourceManager::GetInstance()->GetTexture(textureKey);
 }
 
 void ImageRenderer::InitComponent()

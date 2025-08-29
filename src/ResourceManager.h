@@ -11,9 +11,9 @@ class ResourceManager : public Singleton<ResourceManager>
 public:
 
 	void Init();
-	void destroy(); // 府家胶 沥府
-	void loadTexture(string key, string texturePath, int32 transparnet, int32 xFrameCount = 1, int32 yFrameCount = 1);
-	Texture* getTexture(string key);
+	void Destroy(); // 府家胶 沥府
+	void LoadTexture(string key, string texturePath, int32 transparnet, int32 xFrameCount = 1, int32 yFrameCount = 1);
+	Texture* GetTexture(string key);
 
 private:
 	unordered_map<string, Texture*> _textures;

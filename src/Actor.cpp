@@ -49,7 +49,7 @@ Vector Actor::GetPosition() const
     return _pos;
 }
 
-SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, int32 dur, int32 width, int32 height)
+SpriteRenderer* Actor::CreateSpriteComponent(string spriteInfo, float dur, int32 width, int32 height)
 {
     SpriteRenderer* sprite = new SpriteRenderer(spriteInfo, dur);
     sprite->InitComponent();

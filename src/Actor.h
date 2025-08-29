@@ -56,7 +56,7 @@ public:
     }
     
 
-    SpriteRenderer* CreateSpriteComponent(string spriteInfo, int32 dur, int32 width = 0, int32 height = 0);
+    SpriteRenderer* CreateSpriteComponent(string spriteInfo, float dur, int32 width = 0, int32 height = 0);
 protected:
     ImageRenderer* CreateTextureComponent(string bitmapKey, int32 width = 0, int32 height = 0);
     

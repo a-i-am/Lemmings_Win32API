@@ -49,7 +49,7 @@ int32 APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HWND hWnd = FindWindow(szWindowClass, szTitle);
 
     Game& game = Game::getInstance();
-    TimeManager* timeManager = TimeManager::getInstance();
+    TimeManager* timeManager = TimeManager::GetInstance();
     
 
     game.Init(hWnd);

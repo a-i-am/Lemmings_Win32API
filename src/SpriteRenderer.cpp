@@ -3,10 +3,12 @@
 #include "ResourceManager.h"
 #include "Texture.h"
 
+// TODO : 역재생 스프라이트만 멈춰서 출력되는 원인 찾기
+
 SpriteRenderer::SpriteRenderer(string textureKey, float dur)
 {
 	_animations.clear();
-	_spriteSheet = ResourceManager::getInstance()->getTexture(textureKey);
+	_spriteSheet = ResourceManager::GetInstance()->GetTexture(textureKey);
 	_duration = dur;
 
 	// 한 프레임의 사이즈를 미리 계산
